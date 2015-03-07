@@ -1,7 +1,13 @@
 Dungeon.prototype.generate = function() {
 	var this_ = this;
 	this.map = new Array(this.width * this.height);
-	var gen = new ROT.Map.Digger(this.width, this.height);
+	var gen = new ROT.Map.Digger(this.width, this.height, {
+		roomWidth: [5, 8],
+		roomHeight: [5, 6],
+		corridorLength: [2, 4],
+		dugPercentage: 0.2,
+		timeLimit: 3000
+	});
 	// General layout
 	gen.create(function(x, y, wall) {
 		this_.setTile(x, y, wall ? TILES.wall : TILES.floor);
