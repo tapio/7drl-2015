@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Rogue</title>
+	<!--<link rel="shortcut icon" href="favicon.png" />-->
+	<link href="css/style.css" rel="stylesheet"/>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+</head>
+<body>
+
+	<script>
+		function $(selector) { return document.querySelector(selector); }
+		if (!String.prototype.contains)
+			String.prototype.contains = function() { return String.prototype.indexOf.apply(this, arguments) !== -1; };
+	</script>
+	<script src="libs/rot.min.js"></script>
+</body>
+</html>
