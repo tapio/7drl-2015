@@ -20,6 +20,21 @@ function Dungeon() {
 		});
 	}
 	this.start = rooms[0].getCenter();
+	this.freeTiles = [];
+	for (var y = 0; y < this.height; ++y) {
+		for (var x = 0; x < this.width; ++x) {
+			if (this.getTile(x, y).ch == TILES.floor.ch)
+				this.freeTiles.push([x, y]);
+		}
+	}
+	shuffle(this.freeTiles);
+	// Items
+	this.items = [];
+	for (var i = 0; i < 20; ++i) {
+		var item = new Item(randProp(ITEMS));
+		item.pos = clone(this.freeTiles.splice(0, 1)[0]);
+		this.items.push(item);
+	}
 }
 
 Dungeon.prototype.getTile = function(x, y) {
@@ -97,6 +112,20 @@ Dungeon.prototype.updateVisibility = function(actor) {
 	fov.compute(actor.pos[0], actor.pos[1], actor.vision, callback.bind(this));
 };
 
+Dungeon.prototype.drawCollection = function(stuff, camera, display, player, threshold) {
+	for (var i = 0, l = stuff.length; i < l; ++i) {
+		var thing = stuff[i];
+		var visibility = player.visibility(thing.pos[0], thing.pos[1]);
+		if (visibility >= threshold) {
+			var color = ROT.Color.fromString(thing.color);
+			if (visibility < 1) ROT.Color.multiply_(color, [64, 64, 64]);
+			var x = thing.pos[0] - camera.pos[0];
+			var y = thing.pos[1] - camera.pos[1];
+			display.draw(x, y, thing.ch, ROT.Color.toHex(color));
+		}
+	}
+};
+
 Dungeon.prototype.draw = function(camera, display, player) {
 	for (var i = 0, l = this.map.length; i < l; ++i) {
 		var x = (i % this.width) - camera.pos[0];
@@ -108,10 +137,6 @@ Dungeon.prototype.draw = function(camera, display, player) {
 		if (visibility < 1) ROT.Color.multiply_(color, [64, 64, 64]);
 		display.draw(x, y, tile.ch, ROT.Color.toHex(color));
 	}
-	for (var i = 0, l = this.actors.length; i < l; ++i) {
-		var actor = this.actors[i];
-		var x = actor.pos[0] - camera.pos[0];
-		var y = actor.pos[1] - camera.pos[1];
-		display.draw(x, y, actor.ch, actor.color);
-	}
+	this.drawCollection(this.items, camera, display, player, 1);
+	this.drawCollection(this.actors, camera, display, player, 1);
 };

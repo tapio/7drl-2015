@@ -4,4 +4,5 @@ function Item(def) {
 	this.desc = def.desc || "";
 	this.ch = def.ch || "*";
 	this.color = def.color || "#ccc";
+	this.pos = [0, 0];
 }

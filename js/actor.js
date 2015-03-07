@@ -10,6 +10,10 @@ function Actor(x, y) {
 	this.inv = [];
 }
 
+Actor.prototype.visibility = function(x, y) {
+	return this.fov[x + y * dungeon.width];
+}
+
 Actor.prototype.act = function() {
 	if (this.path.length) {
 		// Pathing
