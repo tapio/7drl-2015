@@ -16,3 +16,13 @@ Actor.prototype.act = function() {
 		this.pos[1] = waypoint[1];
 	}
 };
+
+Actor.prototype.moveTo = function(x, y) {
+	var target = dungeon.getTile(x, y);
+	if (!target.walkable) return;
+	dungeon.findPath(x, y, pl);
+};
+
+Actor.prototype.move = function(dx, dy) {
+	this.moveTo(this.pos[0] + dx, this.pos[1] + dy);
+};
