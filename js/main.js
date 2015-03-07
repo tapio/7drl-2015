@@ -2,9 +2,13 @@
 var dungeon = new Dungeon();
 var pl = new Actor(dungeon.start[0], dungeon.start[1]);
 dungeon.actors.push(pl);
+var ui = new UI();
 var w = Math.floor(window.innerWidth / 30);
 var h = Math.floor(window.innerHeight / 50);
 var camera = { pos: [0, 0], center: [(w/2)|0, (h/2)|0] };
+
+ui.msg("Welcome!");
+ui.msg("You are likely to be eaten by a grue.");
 
 var display = new ROT.Display({
 	width: w,
@@ -31,6 +35,7 @@ function render() {
 	camera.pos[0] = pl.pos[0] - camera.center[0];
 	camera.pos[1] = pl.pos[1] - camera.center[1];
 	dungeon.draw(camera, display, pl);
+	ui.update();
 }
 
 window.setInterval(function () {

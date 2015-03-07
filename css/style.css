@@ -1,4 +1,14 @@
 
 body {
+	color: whitesmoke;
 	background-color: #111;
+	font-family: monospace;
+	font-size: 12px;
+}
+
+#messages {
+	position: absolute;
+	bottom: 5px;
+	text-shadow: black 0 0 2px;
+	background-color: rgba(0, 0, 0, 0.5);
 }
