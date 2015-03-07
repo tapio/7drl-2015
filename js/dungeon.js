@@ -1,5 +1,5 @@
 
-function Dungeon() {
+function Dungeon(mapType) {
 	var this_ = this;
 	this.width = 60;
 	this.height = 24;
@@ -8,7 +8,11 @@ function Dungeon() {
 	this.doors = [];
 	this.start = [0,0];
 	this.items = [];
-	this.generate();
+	if (mapType == "base")
+		this.generateBase();
+	else if (mapType == "overworld")
+		this.generateOverworld();
+	else throw new Error("Unknown map type " + mapType);
 }
 
 Dungeon.prototype.getTile = function(x, y) {

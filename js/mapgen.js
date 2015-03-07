@@ -1,4 +1,4 @@
-Dungeon.prototype.generate = function() {
+Dungeon.prototype.generateBase = function() {
 	var this_ = this;
 	this.map = new Array(this.width * this.height);
 	var gen = new ROT.Map.Digger(this.width, this.height, {
@@ -41,3 +41,8 @@ Dungeon.prototype.generate = function() {
 		this.items.push(item);
 	}
 };
+
+Dungeon.prototype.generateOverworld = function() {
+	var this_ = this;
+	this.map = new Array(this.width * this.height);
+}

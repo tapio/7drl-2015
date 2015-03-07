@@ -1,5 +1,5 @@
 
-var dungeon = new Dungeon();
+var world = new World();
 var pl = new Actor(dungeon.start[0], dungeon.start[1]);
 dungeon.actors.push(pl);
 resetDisplay();
