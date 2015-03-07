@@ -41,4 +41,5 @@ function render() {
 window.setInterval(function () {
 	dungeon.update();
 	render();
+	display.getContainer().style.cursor = pl.path.length ? "wait" : "crosshair";
 }, 75);
