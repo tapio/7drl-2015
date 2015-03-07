@@ -18,6 +18,10 @@
 		function $(selector) { return document.querySelector(selector); }
 		if (!String.prototype.contains)
 			String.prototype.contains = function() { return String.prototype.indexOf.apply(this, arguments) !== -1; };
+		var CONFIG = {
+			// Not really correct/reliable, but detecting touch screen is currently impossible
+			touch: (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))
+		};
 	</script>
 	<script src="libs/rot.min.js"></script>
 	<script src="js/data.js"></script>

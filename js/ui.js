@@ -38,7 +38,7 @@ function UI() {
 	this.dom.lookButton.addEventListener("click", function() {
 		this_.lookMode = !this_.lookMode;
 		if (this_.lookMode) {
-			this_.msg("Click a tile to examine it.");
+			this_.msg((CONFIG.touch ? "Touch" : "Click") + " a tile to examine it.");
 			this_.dom.lookButton.innerHTML = "✖";
 		} else this_.dom.lookButton.innerHTML = "🔍";
 	}, true);
@@ -58,4 +58,9 @@ UI.prototype.update = function() {
 		this.dom.messages.innerHTML = msgBuf;
 		this.messagesDirty = false;
 	}
+
+	var cursor = "crosshair";
+	if (ui.lookMode) cursor = "help";
+	else if (pl.path.length) cursor = "wait";
+	display.getContainer().style.cursor = cursor;
 };
