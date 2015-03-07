@@ -7,8 +7,10 @@ function onClick(e) {
 	if (ui.state == STATE.GAME) {
 		pl.moveTo(x, y);
 	} else if (ui.state == STATE.LOOK) {
-		var thing = dungeon.collide([x, y]);
-		ui.msg(thing.desc ? thing.desc : (thing.name ? thing.name : "Nothing interesting..."));
+		if (pl.visibility(x, y) > 0.1) {
+			var thing = dungeon.collide([x, y]);
+			ui.msg(thing.desc ? thing.desc : (thing.name ? thing.name : "Nothing interesting..."));
+		}
 	}
 }
 
