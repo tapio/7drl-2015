@@ -40,7 +40,7 @@ Dungeon.prototype.generateBase = function() {
 	this.items = [];
 	for (var i = 0; i < 20; ++i) {
 		var item = new Item(randProp(ITEMS));
-		item.pos = clone(freeTiles.splice(0, 1)[0]);
+		item.pos = freeTiles.splice(0, 1)[0];
 		this.items.push(item);
 	}
 };
@@ -54,8 +54,28 @@ Dungeon.prototype.generateOverworld = function() {
 	var gen = new ROT.Map.Arena(this.width, this.height);
 	// General layout
 	var grounds = [ TILES.ground, TILES.ground2 ];
+	var rocks = [ TILES.rock, TILES.rock2, TILES.rock3 ];
+	var noise = new ROT.Noise.Simplex();
+	var freeTiles = [];
 	gen.create(function(x, y, wall) {
-		this_.setTile(x, y, wall ? TILES.mountain : grounds.random());
+		if (wall || noise.get(x/20, y/20) > 0.2)
+			this_.setTile(x, y, TILES.mountain);
+		else if (rnd() > 0.95)
+			this_.setTile(x, y, rocks.random());
+		else {
+			this_.setTile(x, y, grounds.random());
+			freeTiles.push([x, y]);
+		}
 	});
-	this.start = [10, this.height - 5];
+	shuffle(freeTiles);
+	this.start = freeTiles.splice(0, 1)[0];
+
+	// Items
+	this.items = [];
+	var itemChoices = [ ITEMS.metal ];
+	for (var i = 0; i < 50; ++i) {
+		var item = new Item(itemChoices.random());
+		item.pos = freeTiles.splice(0, 1)[0];
+		this.items.push(item);
+	}
 };
