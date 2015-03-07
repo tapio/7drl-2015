@@ -6,7 +6,7 @@ function Actor(x, y) {
 	this.color = "#ddd";
 	this.path = [];
 	this.fov = [];
-	this.vision = 15;
+	this.vision = 10;
 	this.inv = [];
 }
 
@@ -27,6 +27,14 @@ Actor.prototype.act = function() {
 		// Move
 		this.pos[0] = waypoint[0];
 		this.pos[1] = waypoint[1];
+		if (dungeon.getTile(waypoint[0], waypoint[1]).id == "airlock") {
+			removeElem(dungeon.actors, this);
+			dungeon = world.maps.overworld;
+			dungeon.actors.push(this);
+			this.pos[0] = dungeon.start[0];
+			this.pos[1] = dungeon.start[1];
+			this.fov = [];
+		}
 	}
 };
 

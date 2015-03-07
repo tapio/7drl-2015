@@ -1,5 +1,7 @@
 Dungeon.prototype.generateBase = function() {
 	var this_ = this;
+	this.width = randInt(40, 50);
+	this.height = randInt(20, 30);
 	this.map = new Array(this.width * this.height);
 	var gen = new ROT.Map.Digger(this.width, this.height, {
 		roomWidth: [5, 8],
@@ -23,6 +25,7 @@ Dungeon.prototype.generateBase = function() {
 		});
 	}
 	this.start = rooms[0].getCenter();
+	this.setTile(this.start[0]+1, this.start[1]+1, TILES.airlock);
 
 	var freeTiles = [];
 	for (var y = 0; y < this.height; ++y) {
@@ -44,5 +47,15 @@ Dungeon.prototype.generateBase = function() {
 
 Dungeon.prototype.generateOverworld = function() {
 	var this_ = this;
+	this.width = randInt(80, 100);
+	this.height = randInt(60, 80);
 	this.map = new Array(this.width * this.height);
-}
+
+	var gen = new ROT.Map.Arena(this.width, this.height);
+	// General layout
+	var grounds = [ TILES.ground, TILES.ground2 ];
+	gen.create(function(x, y, wall) {
+		this_.setTile(x, y, wall ? TILES.mountain : grounds.random());
+	});
+	this.start = [10, this.height - 5];
+};

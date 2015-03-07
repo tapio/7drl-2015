@@ -39,6 +39,34 @@ var TILES = {
 		walkable: false,
 		transparent: false,
 		desc: "Locked door."
+	},
+	airlock: {
+		ch: "A",
+		color: "#00f",
+		walkable: true,
+		transparent: false,
+		desc: "Airlock."
+	},
+	ground: {
+		ch: ";",
+		color: "#c60",
+		walkable: true,
+		transparent: true,
+		desc: "Sandy ground."
+	},
+	ground2: {
+		ch: ":",
+		color: "#c70",
+		walkable: true,
+		transparent: true,
+		desc: "Sandy ground."
+	},
+	mountain: {
+		ch: "▲",
+		color: "#f40",
+		walkable: false,
+		transparent: false,
+		desc: "Impassable mountains."
 	}
 };
 

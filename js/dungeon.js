@@ -1,8 +1,8 @@
 
 function Dungeon(mapType) {
 	var this_ = this;
-	this.width = 60;
-	this.height = 24;
+	this.width = 0;
+	this.height = 0;
 	this.map = [];
 	this.actors = [];
 	this.doors = [];
