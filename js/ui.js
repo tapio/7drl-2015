@@ -85,18 +85,30 @@ function resetDisplay() {
 	});
 	document.body.appendChild(display.getContainer());
 	display.getContainer().addEventListener("click", onClick, true);
+	display.width = w;
+	display.height = h;
+	display. cx = (w/2)|0;
+	display. cy = (h/2)|0;
 }
 window.addEventListener('resize', function() { resetDisplay(); render(); });
 
+ROT.Display.prototype.drawTextCentered = function(y, str) {
+	var x = (this.getOptions().width * 0.5 - str.length * 0.5)|0;
+	this.drawText(x, y, str);
+};
 
-function renderCharacterScreen(display) {
-	display.drawText(0, 0, "Player");
+function renderCharacterScreen(display, pl) {
+	display.drawTextCentered(2, pl.name);
 }
 
-function renderInventoryScreen(display) {
-	display.drawText(0, 0, "Inventory");
+function renderInventoryScreen(display, pl) {
+	display.drawTextCentered(2, "Inventory");
+
+	for (var i = 0; i < pl.inv.length; ++i) {
+		display.drawTextCentered(4+i, pl.inv[i].name);
+	}
 }
 
 function renderMenuScreen(display) {
-	display.drawText(0, 0, "Menu");
+	display.drawTextCentered(2, "Menu");
 }

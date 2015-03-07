@@ -15,9 +15,9 @@ function render() {
 		camera.pos[1] = pl.pos[1] - camera.center[1];
 		dungeon.draw(camera, display, pl);
 	} else if (ui.state == STATE.CHAR) {
-		renderCharacterScreen(display);
+		renderCharacterScreen(display, pl);
 	} else if (ui.state == STATE.INV) {
-		renderInventoryScreen(display);
+		renderInventoryScreen(display, pl);
 	} else if (ui.state == STATE.MENU) {
 		renderMenuScreen(display);
 	}

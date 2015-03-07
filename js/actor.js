@@ -1,5 +1,6 @@
 
 function Actor(x, y) {
+	this.name = "Player";
 	this.pos = [ x || 0, y || 0 ];
 	this.ch = "@";
 	this.color = "#ddd";
