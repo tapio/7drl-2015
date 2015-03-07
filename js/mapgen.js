@@ -37,12 +37,8 @@ Dungeon.prototype.generateBase = function() {
 	shuffle(freeTiles);
 
 	// Items
-	this.items = [];
-	for (var i = 0; i < 20; ++i) {
-		var item = new Item(randProp(ITEMS));
-		item.pos = freeTiles.splice(0, 1)[0];
-		this.items.push(item);
-	}
+	var itemChoices = [ ITEMS.oxygentank, ITEMS.gluetube, ITEMS.battery ];
+	this.generateItems(randInt(4,8), itemChoices, freeTiles);
 };
 
 Dungeon.prototype.generateOverworld = function() {
@@ -58,11 +54,11 @@ Dungeon.prototype.generateOverworld = function() {
 	var noise = new ROT.Noise.Simplex();
 	var freeTiles = [];
 	gen.create(function(x, y, wall) {
-		if (wall || noise.get(x/20, y/20) > 0.2)
+		if (wall || noise.get(x/20, y/20) > 0.2) {
 			this_.setTile(x, y, TILES.mountain);
-		else if (rnd() > 0.95)
+		} else if (rnd() > 0.95) {
 			this_.setTile(x, y, rocks.random());
-		else {
+		} else {
 			this_.setTile(x, y, grounds.random());
 			freeTiles.push([x, y]);
 		}
@@ -71,10 +67,12 @@ Dungeon.prototype.generateOverworld = function() {
 	this.start = freeTiles.splice(0, 1)[0];
 
 	// Items
-	this.items = [];
-	var itemChoices = [ ITEMS.metal ];
-	for (var i = 0; i < 50; ++i) {
-		var item = new Item(itemChoices.random());
+	this.generateItems(randInt(40,60), [ ITEMS.metal ], freeTiles);
+};
+
+Dungeon.prototype.generateItems = function(amount, choices, freeTiles) {
+	for (var i = 0; i < amount; ++i) {
+		var item = new Item(choices.random());
 		item.pos = freeTiles.splice(0, 1)[0];
 		this.items.push(item);
 	}
