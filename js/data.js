@@ -56,7 +56,7 @@ var TILES = {
 	},
 	ground2: {
 		ch: ":",
-		color: "#c70",
+		color: "#c90",
 		walkable: true,
 		transparent: true,
 		desc: "Sandy ground."
@@ -70,21 +70,21 @@ var TILES = {
 	},
 	rock2: {
 		ch: "☁",
-		color: "#f40",
+		color: "#c50",
 		walkable: false,
 		transparent: true,
 		desc: "Rock."
 	},
 	rock3: {
 		ch: "O",
-		color: "#f40",
+		color: "#d00",
 		walkable: false,
 		transparent: false,
 		desc: "Big rock"
 	},
 	mountain: {
 		ch: "▲",
-		color: "#f40",
+		color: "#f20",
 		walkable: false,
 		transparent: false,
 		desc: "Impassable mountains."
