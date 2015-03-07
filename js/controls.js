@@ -7,8 +7,8 @@ function onClick(e) {
 	if (ui.state == STATE.GAME) {
 		pl.moveTo(x, y);
 	} else if (ui.state == STATE.LOOK) {
-		var tile = dungeon.getTile(x, y);
-		ui.msg(tile.desc ? tile.desc : "Nothing interesting...");
+		var thing = dungeon.collide([x, y]);
+		ui.msg(thing.desc ? thing.desc : (thing.name ? thing.name : "Nothing interesting..."));
 	}
 }
 

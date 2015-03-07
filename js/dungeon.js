@@ -140,3 +140,20 @@ Dungeon.prototype.draw = function(camera, display, player) {
 	this.drawCollection(this.items, camera, display, player, 1);
 	this.drawCollection(this.actors, camera, display, player, 1);
 };
+
+Dungeon.prototype.collideCollection = function(stuff, pos) {
+	for (var i = 0, l = stuff.length; i < l; ++i) {
+		var thing = stuff[i];
+		if (thing.pos[0] == pos[0] && thing.pos[1] == pos[1])
+			return thing;
+	}
+	return null;
+};
+
+Dungeon.prototype.collide = function(pos) {
+	var actor = this.collideCollection(this.actors, pos);
+	if (actor) return actor;
+	var item = this.collideCollection(this.items, pos);
+	if (item) return item;
+	return this.getTile(pos[0], pos[1]);
+};
