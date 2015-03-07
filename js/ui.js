@@ -1,3 +1,24 @@
+var camera, display;
+
+function resetDisplay() {
+	var w = Math.floor(window.innerWidth / 30);
+	var h = Math.floor(window.innerHeight / 50);
+	camera = { pos: [0, 0], center: [(w/2)|0, (h/2)|0] };
+
+	if (display)
+		document.body.removeChild(display.getContainer());
+
+	display = new ROT.Display({
+		width: w,
+		height: h,
+		//bg: "transparent",
+		fontSize: 48,
+		layout: "rect"
+	});
+	document.body.appendChild(display.getContainer());
+	display.getContainer().addEventListener("click", onClick, true);
+}
+window.addEventListener('resize', function() { resetDisplay(); render(); });
 
 function UI() {
 	this.dom = {

@@ -2,22 +2,11 @@
 var dungeon = new Dungeon();
 var pl = new Actor(dungeon.start[0], dungeon.start[1]);
 dungeon.actors.push(pl);
+resetDisplay();
 var ui = new UI();
-var w = Math.floor(window.innerWidth / 30);
-var h = Math.floor(window.innerHeight / 50);
-var camera = { pos: [0, 0], center: [(w/2)|0, (h/2)|0] };
 
 ui.msg("Welcome!");
 ui.msg("You are likely to be eaten by a grue.");
-
-var display = new ROT.Display({
-	width: w,
-	height: h,
-	//bg: "transparent",
-	fontSize: 48,
-	layout: "rect"
-});
-document.body.appendChild(display.getContainer());
 
 function onClick(e) {
 	var coords = display.eventToPosition(e);
@@ -27,8 +16,6 @@ function onClick(e) {
 	if (!target.walkable) return;
 	dungeon.findPath(x, y, pl);
 };
-
-display.getContainer().addEventListener("click", onClick, true);
 
 function render() {
 	display.clear();
