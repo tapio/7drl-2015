@@ -6,6 +6,7 @@ function Actor(x, y) {
 	this.path = [];
 	this.fov = [];
 	this.vision = 15;
+	this.inv = [];
 }
 
 Actor.prototype.act = function() {

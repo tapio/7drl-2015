@@ -8,14 +8,14 @@ function Dungeon() {
 	var gen = new ROT.Map.Digger(this.width, this.height);
 	// General layout
 	gen.create(function(x, y, wall) {
-		this_.setTile(x, y, wall ? tiles.wall : tiles.floor);
+		this_.setTile(x, y, wall ? TILES.wall : TILES.floor);
 	});
 	// Doors
 	this.doors = [];
 	var rooms = gen.getRooms();
 	for (var i = 0; i < rooms.length; i++) {
 		rooms[i].getDoors(function(x, y) {
-			this_.setTile(x, y, tiles.door_closed);
+			this_.setTile(x, y, TILES.door_closed);
 			this_.doors.push({ pos: [x, y], open: false });
 		});
 	}
@@ -23,12 +23,12 @@ function Dungeon() {
 }
 
 Dungeon.prototype.getTile = function(x, y) {
-	if (x < 0 || y < 0 || x >= this.width || y >= this.height) return tiles.empty;
+	if (x < 0 || y < 0 || x >= this.width || y >= this.height) return TILES.empty;
 	return this.map[x + y * this.width];
 };
 
 Dungeon.prototype.setTile = function(x, y, tile) {
-	this.map[x + y * this.width] = typeof tile == "string" ? tiles[tile] : tile;
+	this.map[x + y * this.width] = typeof tile == "string" ? TILES[tile] : tile;
 };
 
 Dungeon.prototype.getPassable = function(x, y) {
@@ -65,7 +65,7 @@ Dungeon.prototype.update = function() {
 	// Update doors
 	for (var i = 0, l = this.doors.length; i < l; ++i) {
 		var pos = this.doors[i].pos;
-		var tile = this.doors[i].open ? tiles.door_open : tiles.door_closed;
+		var tile = this.doors[i].open ? TILES.door_open : TILES.door_closed;
 		this.setTile(pos[0], pos[1], tile);
 	}
 };
@@ -102,7 +102,7 @@ Dungeon.prototype.draw = function(camera, display, player) {
 		var x = (i % this.width) - camera.pos[0];
 		var y = ((i / this.width)|0) - camera.pos[1];
 		var visibility = player.fov[i];
-		var tile = visibility > 0 ? this.map[i] : tiles.empty;
+		var tile = visibility > 0 ? this.map[i] : TILES.empty;
 		var color = ROT.Color.fromString(tile.color);
 
 		if (visibility < 1) ROT.Color.multiply_(color, [64, 64, 64]);

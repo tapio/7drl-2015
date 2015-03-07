@@ -1,4 +1,4 @@
-var tiles = {
+var TILES = {
 	empty: {
 		ch: "",
 		color: "#000",
@@ -42,5 +42,40 @@ var tiles = {
 	}
 };
 
-for (var i in tiles)
-	tiles[i].id = i;
+for (var i in TILES)
+	TILES[i].id = i;
+
+
+
+var RESOURCES = {
+	oxygen: { name: "O₂" },
+	co2: { name: "CO₂" },
+	energy: { name: "Energy" },
+	metal: { name: "Metal" },
+	glue: { name: "Glue" }
+};
+
+for (var i in RESOURCES)
+	RESOURCES[i].id = i;
+
+
+
+var ITEMS = {
+	gluetube: { name: "Tube of Glue", resource: "glue", amount: 100 },
+	oxygentank: { name: "O₂ tank", resource: "oxygen", amount: 100 },
+	battery: { name: "Battery", resource: "energy", amount: 100 }
+};
+
+for (var i in ITEMS)
+	ITEMS[i].id = i;
+
+
+
+var DEVICES = {
+	oxygenator: { name: "Oxygenator" },
+	rtg: { name: "RTG", desc: "Radioisotope thermoelectric generator produces electricity from radioactive decay." },
+	solarpanel: { name: "Solar Panel" }
+};
+
+for (var i in DEVICES)
+	DEVICES[i].id = i;
