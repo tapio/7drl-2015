@@ -30,6 +30,11 @@ canvas {
 	border: 1px solid white;
 }
 
+/*#cond_button { color: #fd2e2e; }
+#inv_button { color: #702e05; }
+#look_button { color: #53e6ff; }
+#menu_button { color: #bbbbbb; }*/
+
 #messages {
 	position: absolute;
 	bottom: 5px;

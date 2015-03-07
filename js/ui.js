@@ -24,14 +24,20 @@ function UI() {
 	var this_ = this;
 	this.dom = {
 		messages: $("#messages"),
-		menuButton: $("#menu_button"),
+		condButton: $("#cond_button"),
+		invButton: $("#inv_button"),
 		lookButton: $("#look_button"),
+		menuButton: $("#menu_button"),
 	};
 	this.messages = [];
 	this.messagesDirty = false;
 	this.lookMode = false;
 
-	this.dom.menuButton.addEventListener("click", function() {
+	this.dom.condButton.addEventListener("click", function() {
+		//TODO
+	}, true);
+
+	this.dom.invButton.addEventListener("click", function() {
 		//TODO
 	}, true);
 
@@ -41,6 +47,10 @@ function UI() {
 			this_.msg((CONFIG.touch ? "Touch" : "Click") + " a tile to examine it.");
 			this_.dom.lookButton.innerHTML = "✖";
 		} else this_.dom.lookButton.innerHTML = "🔍";
+	}, true);
+
+	this.dom.menuButton.addEventListener("click", function() {
+		//TODO
 	}, true);
 };
 
