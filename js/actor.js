@@ -16,8 +16,15 @@ Actor.prototype.visibility = function(x, y) {
 
 Actor.prototype.act = function() {
 	if (this.path.length) {
-		// Pathing
 		var waypoint = this.path.shift();
+		// Check items
+		var item = dungeon.collide(waypoint);
+		if (item instanceof Item) {
+			this.inv.push(item);
+			removeElem(dungeon.items, item);
+			ui.msg("Picked up " + item.name);
+		}
+		// Move
 		this.pos[0] = waypoint[0];
 		this.pos[1] = waypoint[1];
 	}
