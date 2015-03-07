@@ -9,31 +9,36 @@ var tiles = {
 		ch: "·",
 		color: "#666",
 		walkable: true,
-		transparent: true
+		transparent: true,
+		desc: "Empty floor."
 	},
 	wall: {
 		ch: "#", // █
 		color: "#777",
 		walkable: false,
-		transparent: false
+		transparent: false,
+		desc: "Sturdy wall."
 	},
 	door_open: {
 		ch: "/",
 		color: "#064",
 		walkable: true,
-		transparent: true
+		transparent: true,
+		desc: "Open door."
 	},
 	door_closed: {
 		ch: "+",
 		color: "#830",
 		walkable: true,
-		transparent: false
+		transparent: false,
+		desc: "Closed door, will open when somebody is near."
 	},
 	door_locked: {
 		ch: "+",
 		color: "#d00",
 		walkable: false,
-		transparent: false
+		transparent: false,
+		desc: "Locked door."
 	}
 };
 

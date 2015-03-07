@@ -6,6 +6,30 @@ body {
 	font-size: 12px;
 }
 
+canvas {
+	position: absolute;
+	z-index: -1;
+}
+
+.button {
+	float: right;
+	width: 48px;
+	height: 48px;
+	line-height: 48px;
+	font-size: 48px;
+	margin: 3px;
+	text-align: center;
+	vertical-align: middle;
+	background-color: #222;
+	border-radius: 3px;
+	cursor: pointer;
+	border: 1px solid black;
+}
+
+.button:hover {
+	border: 1px solid white;
+}
+
 #messages {
 	position: absolute;
 	bottom: 5px;

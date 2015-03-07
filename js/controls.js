@@ -3,7 +3,11 @@ function onClick(e) {
 	var coords = display.eventToPosition(e);
 	var x = coords[0] + camera.pos[0]
 	var y = coords[1] + camera.pos[1];
-	pl.moveTo(x, y);
+
+	if (ui.lookMode) {
+		var tile = dungeon.getTile(x, y);
+		ui.msg(tile.desc ? tile.desc : "Nothing interesting...");
+	} else pl.moveTo(x, y);
 }
 
 var pressed = [];

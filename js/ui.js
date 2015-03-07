@@ -21,11 +21,27 @@ function resetDisplay() {
 window.addEventListener('resize', function() { resetDisplay(); render(); });
 
 function UI() {
+	var this_ = this;
 	this.dom = {
-		messages: $("#messages")	
+		messages: $("#messages"),
+		menuButton: $("#menu_button"),
+		lookButton: $("#look_button"),
 	};
 	this.messages = [];
 	this.messagesDirty = false;
+	this.lookMode = false;
+
+	this.dom.menuButton.addEventListener("click", function() {
+		//TODO
+	}, true);
+
+	this.dom.lookButton.addEventListener("click", function() {
+		this_.lookMode = !this_.lookMode;
+		if (this_.lookMode) {
+			this_.msg("Click a tile to examine it.");
+			this_.dom.lookButton.innerHTML = "✖";
+		} else this_.dom.lookButton.innerHTML = "🔍";
+	}, true);
 };
 
 UI.prototype.msg = function(msg) {
