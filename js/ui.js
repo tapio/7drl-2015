@@ -1,8 +1,8 @@
 var camera, display;
 
 function resetDisplay() {
-	var w = Math.floor(window.innerWidth / 30);
-	var h = Math.floor(window.innerHeight / 50);
+	var w = Math.floor(window.innerWidth / 30 / CONFIG.spacing);
+	var h = Math.floor(window.innerHeight / 50 / CONFIG.spacing);
 	camera = { pos: [0, 0], center: [(w/2)|0, (h/2)|0] };
 
 	if (display)
@@ -13,7 +13,8 @@ function resetDisplay() {
 		height: h,
 		//bg: "transparent",
 		fontSize: 48,
-		layout: "rect"
+		layout: "rect",
+		spacing: CONFIG.spacing
 	});
 	document.body.appendChild(display.getContainer());
 	display.getContainer().addEventListener("click", onClick, true);

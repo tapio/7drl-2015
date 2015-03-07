@@ -1,5 +1,7 @@
 
 body {
+	padding: 0;
+	margin: 0;
 	color: whitesmoke;
 	background-color: #111;
 	font-family: monospace;
@@ -17,7 +19,7 @@ canvas {
 	height: 48px;
 	line-height: 48px;
 	font-size: 48px;
-	margin: 3px;
+	margin: 6px 6px 6px 0px;
 	text-align: center;
 	vertical-align: middle;
 	background-color: #222;
@@ -37,7 +39,8 @@ canvas {
 
 #messages {
 	position: absolute;
-	bottom: 5px;
+	bottom: 0;
+	padding: 10px;
 	text-shadow: black 0 0 2px;
 	background-color: rgba(0, 0, 0, 0.5);
 }
