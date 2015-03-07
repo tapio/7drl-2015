@@ -36,9 +36,46 @@ function randElem(arr) { return arr[(Math.random() * arr.length) | 0]; }
 
 function removeElem(arr, elem) { arr.splice(arr.indexOf(elem), 1); }
 
+function last(arr) { return arr[arr.length-1]; }
+
+function shuffle(arr) {
+	var s = [];
+	while (arr.length) s.push(arr.splice((Math.random() * arr.length)|0, 1)[0]);
+	while (s.length) arr.push(s.pop());
+}
+
 function buildString(char, amount) {
 	var ret = "";
 	for (var i = 0; i < amount; ++i)
 		ret += char;
 	return ret;
+}
+
+// If an object has clone() function, it is assumed to return a copy.
+function clone(obj) {
+	// Handle the 3 simple types, and null or undefined
+	if (null === obj || "object" != typeof obj) return obj;
+	var copy;
+	// Handle Array
+	if (obj instanceof Array) {
+		copy = [];
+		for (var i = 0, len = obj.length; i < len; ++i)
+			copy[i] = clone(obj[i]);
+		return copy;
+	}
+	// Handle Object
+	if (obj instanceof Object) {
+		if (obj.constructor) copy = new obj.constructor();
+		else copy = {};
+		for (var attr in obj)
+			if (obj.hasOwnProperty(attr)) copy[attr] = clone(obj[attr]);
+		return copy;
+	}
+	// Handle Date
+	if (obj instanceof Date) {
+		copy = new Date();
+		copy.setTime(obj.getTime());
+		return copy;
+	}
+	throw new Error("Unable to copy obj! Its type isn't supported.");
 }
