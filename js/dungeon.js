@@ -1,50 +1,9 @@
 
-var tiles = {
-	empty: {
-		ch: "",
-		color: "#000",
-		walkable: false,
-		transparent: false
-	},
-	floor: {
-		ch: "·",
-		color: "#666",
-		walkable: true,
-		transparent: true
-	},
-	wall: {
-		ch: "#", // █
-		color: "#777",
-		walkable: false,
-		transparent: false
-	},
-	door_open: {
-		ch: "/",
-		color: "#064",
-		walkable: true,
-		transparent: true
-	},
-	door_closed: {
-		ch: "+",
-		color: "#830",
-		walkable: true,
-		transparent: false
-	},
-	door_locked: {
-		ch: "+",
-		color: "#d00",
-		walkable: false,
-		transparent: false
-	}
-};
-
-for (var i in tiles)
-	tiles[i].id = i;
-
 function Dungeon() {
 	var this_ = this;
 	this.width = 60;
 	this.height = 24;
+	this.actors = [];
 	this.map = new Array(this.width * this.height);
 	var gen = new ROT.Map.Digger(this.width, this.height);
 	gen.create(function(x, y, wall) {
@@ -89,6 +48,14 @@ Dungeon.prototype.findPath = function(x, y, actor) {
 	return success;
 };
 
+Dungeon.prototype.update = function() {
+	for (var i = 0, l = this.actors.length; i < l; ++i) {
+		var actor = this.actors[i];
+		actor.act();
+		this.updateVisibility(actor);
+	}
+};
+
 Dungeon.prototype.updateVisibility = function(actor) {
 	if (actor.fov.length != this.map.length)
 		actor.fov = new Array(this.width * this.height);
@@ -104,15 +71,21 @@ Dungeon.prototype.updateVisibility = function(actor) {
 	fov.compute(actor.pos[0], actor.pos[1], actor.vision, callback.bind(this));
 };
 
-Dungeon.prototype.draw = function(camera, display, actor) {
+Dungeon.prototype.draw = function(camera, display, player) {
 	for (var i = 0, l = this.map.length; i < l; ++i) {
 		var x = (i % this.width) - camera.pos[0];
 		var y = ((i / this.width)|0) - camera.pos[1];
-		var visibility = actor.fov[i];
+		var visibility = player.fov[i];
 		var tile = visibility > 0 ? this.map[i] : tiles.empty;
 		var color = ROT.Color.fromString(tile.color);
 
 		if (visibility < 1) ROT.Color.multiply_(color, [64, 64, 64]);
 		display.draw(x, y, tile.ch, ROT.Color.toHex(color));
+	}
+	for (var i = 0, l = this.actors.length; i < l; ++i) {
+		var actor = this.actors[i];
+		var x = actor.pos[0] - camera.pos[0];
+		var y = actor.pos[1] - camera.pos[1];
+		display.draw(x, y, actor.ch, actor.color);
 	}
 };

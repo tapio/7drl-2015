@@ -16,9 +16,3 @@ Actor.prototype.act = function() {
 		this.pos[1] = waypoint[1];
 	}
 };
-
-Actor.prototype.draw = function(camera, display) {
-	var x = this.pos[0] - camera.pos[0];
-	var y = this.pos[1] - camera.pos[1];
-	display.draw(x, y, this.ch, this.color);
-};
