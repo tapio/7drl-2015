@@ -17,9 +17,6 @@
 	<div id="messages"></div>
 
 	<script>
-		function $(selector) { return document.querySelector(selector); }
-		if (!String.prototype.contains)
-			String.prototype.contains = function() { return String.prototype.indexOf.apply(this, arguments) !== -1; };
 		var CONFIG = {
 			spacing: 0.9,
 			// Not really correct/reliable, but detecting touch screen is currently impossible
@@ -27,6 +24,7 @@
 		};
 	</script>
 	<script src="libs/rot.min.js"></script>
+	<script src="js/utils.js"></script>
 	<script src="js/data.js"></script>
 	<script src="js/ui.js"></script>
 	<script src="js/controls.js"></script>

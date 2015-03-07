@@ -1,0 +1,44 @@
+"use strict";
+
+if (!String.prototype.contains)
+	String.prototype.contains = function() {
+		return String.prototype.indexOf.apply(this, arguments) !== -1;
+	};
+
+if (!Math.sign)
+	Math.sign = function(x) {
+		x = +x; // Convert to a number
+		if (x === 0 || isNaN(x)) return x;
+		else return x > 0 ? 1 : -1;
+	};
+
+function $(selector) { return document.querySelector(selector); }
+
+function lerp(a, b, f) { return a + (b - a) * f; }
+
+function distSq(x1, y1, x2, y2) {
+	var dx = x2 - x1, dy = y2 - y1;
+	return dx * dx + dy * dy;
+}
+
+function rand(min, max) { return Math.random() * (max - min) + min; }
+
+function randInt(lo, hi) { return lo + Math.floor(Math.random() * (hi - lo + 1)); }
+
+function randProp(obj) {
+	var result, count = 0;
+	for (var prop in obj)
+		if (Math.random() < 1.0 / ++count) result = prop;
+	return obj[result];
+}
+
+function randElem(arr) { return arr[(Math.random() * arr.length) | 0]; }
+
+function removeElem(arr, elem) { arr.splice(arr.indexOf(elem), 1); }
+
+function buildString(char, amount) {
+	var ret = "";
+	for (var i = 0; i < amount; ++i)
+		ret += char;
+	return ret;
+}
