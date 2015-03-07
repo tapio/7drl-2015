@@ -6,14 +6,17 @@ function Dungeon() {
 	this.actors = [];
 	this.map = new Array(this.width * this.height);
 	var gen = new ROT.Map.Digger(this.width, this.height);
+	// General layout
 	gen.create(function(x, y, wall) {
 		this_.setTile(x, y, wall ? tiles.wall : tiles.floor);
 	});
+	// Doors
+	this.doors = [];
 	var rooms = gen.getRooms();
-	var doors = [ tiles.floor, tiles.door_open, tiles.door_closed, tiles.door_closed/*, tiles.door_locked*/ ];
 	for (var i = 0; i < rooms.length; i++) {
 		rooms[i].getDoors(function(x, y) {
-			this_.setTile(x, y, doors.random());
+			this_.setTile(x, y, tiles.door_closed);
+			this_.doors.push({ pos: [x, y], open: false });
 		});
 	}
 	this.start = rooms[0].getCenter();
@@ -49,10 +52,33 @@ Dungeon.prototype.findPath = function(x, y, actor) {
 };
 
 Dungeon.prototype.update = function() {
+	// Close all doors
+	for (var i = 0, l = this.doors.length; i < l; ++i)
+		this.doors[i].open = false;
+	// Update actors
 	for (var i = 0, l = this.actors.length; i < l; ++i) {
 		var actor = this.actors[i];
 		actor.act();
+		this.autoOpenDoors(actor);
 		this.updateVisibility(actor);
+	}
+	// Update doors
+	for (var i = 0, l = this.doors.length; i < l; ++i) {
+		var pos = this.doors[i].pos;
+		var tile = this.doors[i].open ? tiles.door_open : tiles.door_closed;
+		this.setTile(pos[0], pos[1], tile);
+	}
+};
+
+Dungeon.prototype.autoOpenDoors = function(actor) {
+	var x = actor.pos[0];
+	var y = actor.pos[1];
+	for (var i = 0, l = this.doors.length; i < l; ++i) {
+		var door = this.doors[i];
+		var dx = Math.abs(x - door.pos[0]);
+		var dy = Math.abs(y - door.pos[1]);
+		if (Math.max(dx, dy) <= 1)
+			door.open = true;
 	}
 };
 
