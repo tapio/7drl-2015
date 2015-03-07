@@ -10,9 +10,17 @@ ui.msg("You are likely to be eaten by a grue.");
 
 function render() {
 	display.clear();
-	camera.pos[0] = pl.pos[0] - camera.center[0];
-	camera.pos[1] = pl.pos[1] - camera.center[1];
-	dungeon.draw(camera, display, pl);
+	if (ui.state == STATE.GAME || ui.state == STATE.LOOK) {
+		camera.pos[0] = pl.pos[0] - camera.center[0];
+		camera.pos[1] = pl.pos[1] - camera.center[1];
+		dungeon.draw(camera, display, pl);
+	} else if (ui.state == STATE.CHAR) {
+		renderCharacterScreen(display);
+	} else if (ui.state == STATE.INV) {
+		renderInventoryScreen(display);
+	} else if (ui.state == STATE.MENU) {
+		renderMenuScreen(display);
+	}
 	ui.update();
 }
 

@@ -22,26 +22,26 @@ function UI() {
 	this.messagesDirty = false;
 
 	this.dom.condButton.addEventListener("click", function() {
-		//TODO
+		this_.state = this_.state == STATE.CHAR ? STATE.GAME : STATE.CHAR;
 	}, true);
 
 	this.dom.invButton.addEventListener("click", function() {
-		//TODO
+		this_.state = this_.state == STATE.INV ? STATE.GAME : STATE.INV;
 	}, true);
 
 	this.dom.lookButton.addEventListener("click", function() {
-		if (this_.state == STATE.GAME) {
+		if (this_.state != STATE.LOOK) {
 			this_.msg((CONFIG.touch ? "Touch" : "Click") + " a tile to examine it.");
-			this_.dom.lookButton.innerHTML = "✖";
+			//this_.dom.lookButton.innerHTML = "✖";
 			this_.state = STATE.LOOK;
 		} else {
-			this_.dom.lookButton.innerHTML = "🔍";
+			//this_.dom.lookButton.innerHTML = "🔍";
 			this_.state = STATE.GAME;
 		}
 	}, true);
 
 	this.dom.menuButton.addEventListener("click", function() {
-		//TODO
+		this_.state = this_.state == STATE.MENU ? STATE.GAME : STATE.MENU;
 	}, true);
 };
 
@@ -87,3 +87,16 @@ function resetDisplay() {
 	display.getContainer().addEventListener("click", onClick, true);
 }
 window.addEventListener('resize', function() { resetDisplay(); render(); });
+
+
+function renderCharacterScreen(display) {
+	display.drawText(0, 0, "Player");
+}
+
+function renderInventoryScreen(display) {
+	display.drawText(0, 0, "Inventory");
+}
+
+function renderMenuScreen(display) {
+	display.drawText(0, 0, "Menu");
+}

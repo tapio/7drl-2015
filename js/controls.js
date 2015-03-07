@@ -4,10 +4,12 @@ function onClick(e) {
 	var x = coords[0] + camera.pos[0]
 	var y = coords[1] + camera.pos[1];
 
-	if (ui.state == STATE.LOOK) {
+	if (ui.state == STATE.GAME) {
+		pl.moveTo(x, y);
+	} else if (ui.state == STATE.LOOK) {
 		var tile = dungeon.getTile(x, y);
 		ui.msg(tile.desc ? tile.desc : "Nothing interesting...");
-	} else pl.moveTo(x, y);
+	}
 }
 
 var pressed = [];
