@@ -61,9 +61,9 @@ for (var i in RESOURCES)
 
 
 var ITEMS = {
-	gluetube: { name: "Tube of Glue", resource: "glue", amount: 100 },
-	oxygentank: { name: "O₂ tank", resource: "oxygen", amount: 100 },
-	battery: { name: "Battery", resource: "energy", amount: 100 }
+	gluetube: { name: "Tube of Glue", ch: "g", color: "#88c", resource: "glue", amount: 100 },
+	oxygentank: { name: "O₂ tank", ch: "o", color: "#fff", resource: "oxygen", amount: 100 },
+	battery: { name: "Battery", ch: "b", color: "#06f", resource: "energy", amount: 100 }
 };
 
 for (var i in ITEMS)
