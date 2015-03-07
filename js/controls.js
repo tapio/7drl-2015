@@ -18,6 +18,10 @@ function onKeyDown(e) {
 		return;
 	if (e.keyCode >= keys.F1 && e.keyCode <= keys.F12) // F1-F12
 		return;
+
+	if (e.keyCode == keys.ESCAPE && ui.lookMode)
+		ui.dom.lookButton.click();
+
 	e.preventDefault();
 }
 
