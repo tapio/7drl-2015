@@ -1,4 +1,5 @@
 Dungeon.prototype.generateBase = function() {
+	"use strict";
 	var this_ = this;
 	this.width = randInt(40, 50);
 	this.height = randInt(20, 30);

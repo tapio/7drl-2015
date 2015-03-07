@@ -9,6 +9,7 @@ var STATE = {
 var camera, display;
 
 function UI() {
+	"use strict";
 	var this_ = this;
 	this.state = STATE.GAME;
 	this.dom = {
@@ -43,7 +44,7 @@ function UI() {
 	this.dom.menuButton.addEventListener("click", function() {
 		this_.state = this_.state == STATE.MENU ? STATE.GAME : STATE.MENU;
 	}, true);
-};
+}
 
 UI.prototype.msg = function(msg) {
 	this.messages.push(msg);

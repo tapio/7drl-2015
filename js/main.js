@@ -9,6 +9,7 @@ ui.msg("Welcome!");
 ui.msg("You are likely to be eaten by a grue.");
 
 function render() {
+	"use strict";
 	display.clear();
 	if (ui.state == STATE.GAME || ui.state == STATE.LOOK) {
 		camera.pos[0] = pl.pos[0] - camera.center[0];

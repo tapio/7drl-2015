@@ -1,5 +1,6 @@
 
 function Actor(x, y) {
+	"use strict";
 	this.name = "Player";
 	this.pos = [ x || 0, y || 0 ];
 	this.ch = "@";
@@ -12,7 +13,7 @@ function Actor(x, y) {
 
 Actor.prototype.visibility = function(x, y) {
 	return this.fov[x + y * dungeon.width];
-}
+};
 
 Actor.prototype.act = function() {
 	if (this.path.length) {
