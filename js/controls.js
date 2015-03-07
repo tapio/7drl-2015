@@ -4,7 +4,7 @@ function onClick(e) {
 	var x = coords[0] + camera.pos[0]
 	var y = coords[1] + camera.pos[1];
 
-	if (ui.lookMode) {
+	if (ui.state == STATE.LOOK) {
 		var tile = dungeon.getTile(x, y);
 		ui.msg(tile.desc ? tile.desc : "Nothing interesting...");
 	} else pl.moveTo(x, y);
@@ -19,7 +19,7 @@ function onKeyDown(e) {
 	if (e.keyCode >= keys.F1 && e.keyCode <= keys.F12) // F1-F12
 		return;
 
-	if (e.keyCode == keys.ESCAPE && ui.lookMode)
+	if (e.keyCode == keys.ESCAPE && ui.state == STATE.LOOK)
 		ui.dom.lookButton.click();
 
 	e.preventDefault();
