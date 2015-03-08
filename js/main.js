@@ -1,7 +1,7 @@
 
 var world = new World();
-var pl = new Actor(dungeon.start[0], dungeon.start[1]);
-dungeon.actors.push(pl);
+var pl = new Actor(world.dungeon.start[0], world.dungeon.start[1]);
+world.dungeon.actors.push(pl);
 var ui = new UI(pl);
 
 ui.msg("Welcome!");
@@ -10,9 +10,10 @@ ui.msg("You are likely to be eaten by a grue.");
 function render() {
 	"use strict";
 	ui.display.clear();
+	var camera = world.camera;
 	camera.pos[0] = pl.pos[0] - camera.center[0];
 	camera.pos[1] = pl.pos[1] - camera.center[1];
-	dungeon.draw(camera, ui.display, pl);
+	world.dungeon.draw(camera, ui.display, pl);
 	ui.update();
 }
 
@@ -23,7 +24,7 @@ function start() {
 		ui.resetDisplay();
 		window.setInterval(function () {
 			updateKeys(pl);
-			dungeon.update();
+			world.dungeon.update();
 			render();
 		}, 75);
 	}, 100);

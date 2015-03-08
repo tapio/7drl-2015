@@ -1,14 +1,14 @@
 
 function onClick(e) {
 	var coords = ui.display.eventToPosition(e);
-	var x = coords[0] + camera.pos[0];
-	var y = coords[1] + camera.pos[1];
+	var x = coords[0] + world.camera.pos[0];
+	var y = coords[1] + world.camera.pos[1];
 
 	if (ui.state == STATE.GAME) {
 		pl.moveTo(x, y);
 	} else if (ui.state == STATE.LOOK) {
 		if (pl.visibility(x, y) > 0.1) {
-			var thing = dungeon.collide([x, y]);
+			var thing = world.dungeon.collide([x, y]);
 			ui.msg(thing.desc ? thing.desc : (thing.name ? thing.name : "Nothing interesting..."));
 		}
 	}

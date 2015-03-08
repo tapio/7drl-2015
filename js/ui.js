@@ -4,8 +4,6 @@ var STATE = {
 	MENU: 3
 };
 
-var camera;
-
 function UI(actor) {
 	"use strict";
 	var this_ = this;
@@ -96,7 +94,7 @@ UI.prototype.closeMenus = function() {
 UI.prototype.resetDisplay = function() {
 	var w = Math.floor(window.innerWidth / 30 / CONFIG.spacing);
 	var h = Math.floor(window.innerHeight / 50 / CONFIG.spacing);
-	camera = { pos: [0, 0], center: [(w/2)|0, (h/2)|0] };
+	world.camera.center = [(w/2)|0, (h/2)|0];
 
 	if (this.display)
 		document.body.removeChild(this.display.getContainer());
