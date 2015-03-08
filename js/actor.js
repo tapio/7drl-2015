@@ -68,7 +68,11 @@ Actor.prototype.equip = function(item) {
 };
 
 Actor.prototype.use = function(item) {
-	// TODO
+	if (item.resource) {
+		this[item.resource] += item.amount;
+		item.amount = 0;
+		removeElem(this.inv, item);
+	}
 };
 
 Actor.prototype.drop = function(item) {

@@ -56,7 +56,7 @@ function UI(actor) {
 	}, true);
 	$("#inventory-use").addEventListener("click", function() {
 		this_.actor.use(this_.selectedInvItem);
-		//this_.updateInventoryScreen(this_.actor);
+		this_.updateInventoryScreen(this_.actor);
 	}, true);
 	$("#inventory-drop").addEventListener("click", function() {
 		this_.actor.drop(this_.selectedInvItem);
@@ -129,12 +129,12 @@ UI.prototype.onClickInventoryItem = function(e) {
 	this.addClass("btn-selected");
 	var item = ui.selectedInvItem = ui.actor.inv[this.dataset.index];
 	if (!item) return;
-	var desc = item.name;
+	var desc = item.getDescription();
 	$("#inventory-details").innerHTML = desc;
 	$("#inventory-actions").style.display = "block";
 	if (item.canEquip) $("#inventory-equip").removeClass("btn-disabled");
 	else $("#inventory-equip").addClass("btn-disabled");
-	if (item.canConsume) $("#inventory-use").removeClass("btn-disabled");
+	if (item.canUse) $("#inventory-use").removeClass("btn-disabled");
 	else $("#inventory-use").addClass("btn-disabled");
 };
 
@@ -149,7 +149,7 @@ UI.prototype.updateInventoryScreen = function() {
 		return;
 	}
 	itemsElem.innerHTML = "";
-	$("#inventory-details").innerHTML = "Click an item to see details...";
+	$("#inventory-details").innerHTML = "Click an item to see details and actions...";
 
 	ui.inventoryElems = [];
 	for (var i = 0; i < inv.length; ++i) {

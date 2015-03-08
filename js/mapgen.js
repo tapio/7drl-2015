@@ -40,7 +40,7 @@ Dungeon.prototype.generateBase = function() {
 	shuffle(freeTiles);
 
 	// Items
-	var itemChoices = [ ITEMS.oxygentank, ITEMS.gluetube, ITEMS.battery ];
+	var itemChoices = [ ITEMS.oxygentank, ITEMS.medikit, ITEMS.gluetube, ITEMS.battery ];
 	this.generateItems(randInt(4,8), itemChoices, freeTiles);
 };
 

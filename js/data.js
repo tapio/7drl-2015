@@ -116,10 +116,11 @@ var RESOURCES = {
 
 
 var ITEMS = {
-	gluetube: { name: "Tube of glue", ch: "✒", color: "#88c", resource: "glue", amount: 100 },
-	oxygentank: { name: "O₂ tank", ch: "⌾", color: "#fff", resource: "oxygen", amount: 100 },
-	battery: { name: "Battery", ch: "⌁", color: "#06f", resource: "energy", amount: 100 },
-	metal: { name: "Scrap metal", ch: "⍽", color: "#999", resource: "metal", amount: 100 }
+	gluetube: { name: "Tube of glue", ch: "✒", color: "#88c", resource: "glue", amount: 5 },
+	oxygentank: { name: "O₂ tank", ch: "⌾", color: "#fff", resource: "oxygen", amount: 60, canUse: true },
+	battery: { name: "Battery", ch: "⌁", color: "#06f", resource: "energy", amount: 30 },
+	medikit: { name: "Medikit", ch: "⚕", color: "#833", resource: "health", amount: 40, canUse: true, desc: "Can heal wounds." },
+	metal: { name: "Scrap metal", ch: "⍽", color: "#999", resource: "metal", amount: 1 }
 };
 
 
