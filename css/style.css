@@ -46,7 +46,7 @@ canvas {
 	-ms-transform: rotate(180deg);
 	-o-transform: rotate(180deg);
 	transform: rotate(180deg);
-};
+}
 
 /*#cond_button { color: #fd2e2e; }
 #inv_button { color: #702e05; }
