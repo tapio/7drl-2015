@@ -72,6 +72,11 @@ UI.prototype.update = function() {
 	display.getContainer().style.cursor = cursor;
 };
 
+UI.prototype.closeMenus = function() {
+	$("#stats-close").click();
+	$("#inventory-close").click();
+	$("#mainmenu-close").click();
+};
 
 function resetDisplay() {
 	var w = Math.floor(window.innerWidth / 30 / CONFIG.spacing);
@@ -119,9 +124,11 @@ function updateInventoryScreen(pl) {
 	var itemsElem = $("#inventory-items");
 	if (!pl.inv.length) {
 		itemsElem.innerHTML = "Inventory empty!";
+		$("#inventory-details").innerHTML = "";
 		return;
 	}
 	itemsElem.innerHTML = "";
+	$("#inventory-details").innerHTML = "Click an item to see details...";
 
 	for (var i = 0; i < pl.inv.length; ++i) {
 		var item = pl.inv[i];

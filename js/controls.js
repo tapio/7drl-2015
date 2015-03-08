@@ -25,6 +25,19 @@ function onKeyDown(e) {
 
 	if (e.keyCode == keys.ESCAPE && ui.state == STATE.LOOK)
 		$("#look-button").click();
+	else if (e.keyCode == keys.ESCAPE && ui.state != STATE.GAME)
+		ui.closeMenus();
+	else if (e.keyCode == keys.ESCAPE)
+		$("#mainmenu-open").click();
+
+	if (e.keyCode == keys.S) {
+		ui.closeMenus();
+		$("#stats-open").click();
+	}
+	if (e.keyCode == keys.I) {
+		ui.closeMenus();
+		$("#inventory-open").click();
+	}
 
 	e.preventDefault();
 }
@@ -37,6 +50,8 @@ document.addEventListener('keydown', onKeyDown, false);
 document.addEventListener('keyup', onKeyUp, false);
 
 function updateKeys(pl) {
+	if (ui.state != STATE.GAME && ui.state != STATE.LOOK)
+		return;
 	var dx = 0, dy = 0;
 	if (keys.pressed[keys.LEFT] || keys.pressed[keys.NUMPAD4] || keys.pressed[keys.H])
 		dx -= 1;
