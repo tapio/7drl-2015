@@ -80,6 +80,14 @@ canvas {
 	transform: rotate(180deg);
 }
 
+#hud {
+	position: absolute;
+}
+
+#hud > div {
+	white-space: pre;
+}
+
 .modal {
 	display: none;
 	position: fixed;
