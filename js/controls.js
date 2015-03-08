@@ -30,7 +30,7 @@ function onKeyDown(e) {
 	else if (e.keyCode == keys.ESCAPE)
 		$("#mainmenu-open").click();
 
-	if (e.keyCode == keys.S) {
+	if (e.keyCode == keys.SPACE) {
 		ui.closeMenus();
 		$("#stats-open").click();
 	}

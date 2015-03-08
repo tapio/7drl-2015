@@ -1,9 +1,7 @@
 var STATE = {
 	GAME: 1,
 	LOOK: 2,
-	INV: 3,
-	CHAR: 4,
-	MENU: 5
+	MENU: 3
 };
 
 var camera, display;
