@@ -1,53 +1,49 @@
+var INPUT_HANDLERS = {
+	onClick: function(e) {
+		var coords = ui.display.eventToPosition(e);
+		var x = coords[0] + world.camera.pos[0];
+		var y = coords[1] + world.camera.pos[1];
 
-function onClick(e) {
-	var coords = ui.display.eventToPosition(e);
-	var x = coords[0] + world.camera.pos[0];
-	var y = coords[1] + world.camera.pos[1];
-
-	if (ui.state == STATE.GAME) {
-		pl.moveTo(x, y);
-	} else if (ui.state == STATE.LOOK) {
-		if (pl.visibility(x, y) > 0.1) {
-			var thing = world.dungeon.collide([x, y]);
-			ui.msg(thing.desc ? thing.desc : (thing.name ? thing.name : "Nothing interesting..."));
+		if (ui.state == STATE.GAME) {
+			pl.moveTo(x, y);
+		} else if (ui.state == STATE.LOOK) {
+			if (pl.visibility(x, y) > 0.1) {
+				var thing = world.dungeon.collide([x, y]);
+				ui.msg(thing.desc ? thing.desc : (thing.name ? thing.name : "Nothing interesting..."));
+			}
 		}
+	},
+	onKeyDown: function(e) {
+		keys.pressed[e.keyCode] = true;
+		if (keys.pressed[keys.CTRL] || keys.pressed[keys.ALT]) // CTRL/ALT for browser hotkeys
+			return;
+		if (e.keyCode >= keys.F1 && e.keyCode <= keys.F12) // F1-F12
+			return;
+
+		if (e.keyCode == keys.ESCAPE && ui.state == STATE.LOOK)
+			$("#look-button").click();
+		else if (e.keyCode == keys.ESCAPE && ui.state != STATE.GAME)
+			ui.closeMenus();
+		else if (e.keyCode == keys.ESCAPE)
+			$("#mainmenu-open").click();
+
+		if (e.keyCode == keys.SPACE) {
+			ui.closeMenus();
+			$("#stats-open").click();
+		}
+		if (e.keyCode == keys.I) {
+			ui.closeMenus();
+			$("#inventory-open").click();
+		}
+
+		e.preventDefault();
+	},
+	onKeyUp: function(e) {
+		keys.pressed[e.keyCode] = false;
 	}
-}
-
-var pressed = [];
-
-function onKeyDown(e) {
-	keys.pressed[e.keyCode] = true;
-	if (keys.pressed[keys.CTRL] || keys.pressed[keys.ALT]) // CTRL/ALT for browser hotkeys
-		return;
-	if (e.keyCode >= keys.F1 && e.keyCode <= keys.F12) // F1-F12
-		return;
-
-	if (e.keyCode == keys.ESCAPE && ui.state == STATE.LOOK)
-		$("#look-button").click();
-	else if (e.keyCode == keys.ESCAPE && ui.state != STATE.GAME)
-		ui.closeMenus();
-	else if (e.keyCode == keys.ESCAPE)
-		$("#mainmenu-open").click();
-
-	if (e.keyCode == keys.SPACE) {
-		ui.closeMenus();
-		$("#stats-open").click();
-	}
-	if (e.keyCode == keys.I) {
-		ui.closeMenus();
-		$("#inventory-open").click();
-	}
-
-	e.preventDefault();
-}
-
-function onKeyUp(e) {
-	keys.pressed[e.keyCode] = false;
-}
-
-document.addEventListener('keydown', onKeyDown, false);
-document.addEventListener('keyup', onKeyUp, false);
+};
+document.addEventListener('keydown', INPUT_HANDLERS.onKeyDown, false);
+document.addEventListener('keyup', INPUT_HANDLERS.onKeyUp, false);
 
 function updateKeys(pl) {
 	if (ui.state != STATE.GAME && ui.state != STATE.LOOK)
