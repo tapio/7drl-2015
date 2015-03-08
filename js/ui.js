@@ -85,6 +85,14 @@ UI.prototype.update = function() {
 	this.display.getContainer().style.cursor = cursor;
 };
 
+UI.prototype.render = function() {
+	this.display.clear();
+	var camera = world.camera;
+	camera.pos[0] = this.actor.pos[0] - camera.center[0];
+	camera.pos[1] = this.actor.pos[1] - camera.center[1];
+	world.dungeon.draw(camera, this.display, this.actor);
+};
+
 UI.prototype.closeMenus = function() {
 	$("#stats-close").click();
 	$("#inventory-close").click();
@@ -111,7 +119,7 @@ UI.prototype.resetDisplay = function() {
 	document.body.appendChild(this.display.getContainer());
 	this.display.getContainer().addEventListener("click", INPUT_HANDLERS.onClick, true);
 };
-window.addEventListener('resize', function() { ui.resetDisplay(); render(); });
+window.addEventListener('resize', function() { ui.resetDisplay(); ui.render(); });
 
 UI.prototype.onClickInventoryItem = function(e) {
 	// this = clicked element
