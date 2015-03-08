@@ -36,7 +36,7 @@ function UI() {
 			//this_.dom.lookButton.innerHTML = "✖";
 			this_.state = STATE.LOOK;
 		} else {
-			//this_.dom.lookButton.innerHTML = "🔍";
+			//this_.dom.lookButton.innerHTML = "?";
 			this_.state = STATE.GAME;
 		}
 	}, true);
