@@ -9,6 +9,7 @@ function Actor(x, y) {
 	this.fov = [];
 	this.vision = 10;
 	this.inv = [];
+	this.maxItems = 12;
 }
 
 Actor.prototype.visibility = function(x, y) {
@@ -21,9 +22,13 @@ Actor.prototype.act = function() {
 		// Check items
 		var item = dungeon.collide(waypoint);
 		if (item instanceof Item) {
-			this.inv.push(item);
-			removeElem(dungeon.items, item);
-			ui.msg("Picked up " + item.name);
+			if (this.inv.length < this.maxItems) {
+				this.inv.push(item);
+				removeElem(dungeon.items, item);
+				ui.msg("Picked up " + item.name + ".");
+			} else {
+				ui.msg("Can't pick up " + item.name + ". Inventory full! ");
+			}
 		}
 		// Move
 		this.pos[0] = waypoint[0];
