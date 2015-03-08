@@ -43,6 +43,7 @@ canvas {
 	border-radius: 3px;
 	cursor: pointer;
 	border: 1px solid black;
+	-webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
 
 .btn-selected {
