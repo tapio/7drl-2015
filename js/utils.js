@@ -13,21 +13,27 @@ if (!Math.sign)
 	};
 
 HTMLElement.prototype.addClass = function(add) {
-	var classes = this.className.split(" ");
-	for (var i = 0; i < classes.length; i++)
-		if (classes[i] === add) return;
-	this.className += " " + add;
+	if (this.classList) this.classList.add(add);
+	else {
+		var classes = this.className.split(" ");
+		for (var i = 0; i < classes.length; i++)
+			if (classes[i] === add) return;
+		this.className += " " + add;
+	}
 };
 
 HTMLElement.prototype.removeClass = function(remove) {
-	var newClassName = "";
-	var classes = this.className.split(" ");
-	for (var i = 0; i < classes.length; i++) {
-		if (classes[i] !== remove) {
-			newClassName += classes[i] + " ";
+	if (this.classList) this.classList.remove(remove);
+	else {
+		var newClassName = "";
+		var classes = this.className.split(" ");
+		for (var i = 0; i < classes.length; i++) {
+			if (classes[i] !== remove) {
+				newClassName += classes[i] + " ";
+			}
 		}
+		this.className = newClassName;
 	}
-	this.className = newClassName;
 };
 
 function $(selector) { return document.querySelector(selector); }
