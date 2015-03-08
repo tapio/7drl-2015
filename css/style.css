@@ -67,18 +67,13 @@ canvas {
 	font-size: 24px;
 }
 
-#look_button {
+#look-button {
 	-webkit-transform: rotate(180deg);
 	-moz-transform: rotate(180deg);
 	-ms-transform: rotate(180deg);
 	-o-transform: rotate(180deg);
 	transform: rotate(180deg);
 }
-
-/*#cond_button { color: #fd2e2e; }
-#inv_button { color: #702e05; }
-#look_button { color: #53e6ff; }
-#menu_button { color: #bbbbbb; }*/
 
 .modal {
 	display: none;

@@ -24,7 +24,7 @@ function onKeyDown(e) {
 		return;
 
 	if (e.keyCode == keys.ESCAPE && ui.state == STATE.LOOK)
-		ui.dom.lookButton.click();
+		$("#look-button").click();
 
 	e.preventDefault();
 }

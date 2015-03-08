@@ -12,38 +12,31 @@ function UI() {
 	"use strict";
 	var this_ = this;
 	this.state = STATE.GAME;
-	this.dom = {
-		messages: $("#messages"),
-		condButton: $("#cond_button"),
-		invButton: $("#inv_button"),
-		lookButton: $("#look_button"),
-		menuButton: $("#menu_button"),
-	};
 	this.messages = [];
 	this.messagesDirty = false;
 
-	this.dom.condButton.addEventListener("click", function() {
+	$("#stats-button").addEventListener("click", function() {
 		this_.state = this_.state == STATE.CHAR ? STATE.GAME : STATE.CHAR;
 	}, true);
 
-	this.dom.invButton.addEventListener("click", function() {
+	$("#inv-button").addEventListener("click", function() {
 		this_.state = this_.state == STATE.INV ? STATE.GAME : STATE.INV;
 		$("#inventory").style.display = this_.state == STATE.INV ? "block" : "";
 		updateInventoryScreen(pl);
 	}, true);
 
-	this.dom.lookButton.addEventListener("click", function() {
+	$("#look-button").addEventListener("click", function() {
 		if (this_.state != STATE.LOOK) {
 			this_.msg((CONFIG.touch ? "Touch" : "Click") + " a tile to examine it.");
-			//this_.dom.lookButton.innerHTML = "✖";
+			//$("#look-button").innerHTML = "✖";
 			this_.state = STATE.LOOK;
 		} else {
-			//this_.dom.lookButton.innerHTML = "☌";
+			//$("#look-button").innerHTML = "☌";
 			this_.state = STATE.GAME;
 		}
 	}, true);
 
-	this.dom.menuButton.addEventListener("click", function() {
+	$("#menu-button").addEventListener("click", function() {
 		this_.state = this_.state == STATE.MENU ? STATE.GAME : STATE.MENU;
 	}, true);
 }
@@ -59,7 +52,7 @@ UI.prototype.update = function() {
 		var firstMsg = Math.max(this.messages.length-3, 0);
 		for (var i = firstMsg; i < this.messages.length; ++i)
 			msgBuf += this.messages[i] + "<br/>";
-		this.dom.messages.innerHTML = msgBuf;
+		$("#messages").innerHTML = msgBuf;
 		this.messagesDirty = false;
 	}
 
