@@ -44,7 +44,7 @@ var TILES = {
 		ch: "A",
 		color: "#00f",
 		walkable: true,
-		transparent: false,
+		transparent: true,
 		desc: "Airlock."
 	},
 	ground: {
@@ -81,6 +81,13 @@ var TILES = {
 		walkable: false,
 		transparent: false,
 		desc: "Big rock"
+	},
+	cave: {
+		ch: "☖",
+		color: "#555",
+		walkable: true,
+		transparent: true,
+		desc: "Cave entrance"
 	},
 	hill: {
 		ch: "▴",

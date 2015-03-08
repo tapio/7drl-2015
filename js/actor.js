@@ -33,13 +33,10 @@ Actor.prototype.act = function() {
 		// Move
 		this.pos[0] = waypoint[0];
 		this.pos[1] = waypoint[1];
-		if (dungeon.getTile(waypoint[0], waypoint[1]).id == "airlock" && this.path.length == 0) {
-			removeElem(dungeon.actors, this);
-			dungeon = world.maps.overworld;
-			dungeon.actors.push(this);
-			this.pos[0] = dungeon.start[0];
-			this.pos[1] = dungeon.start[1];
-			this.fov = [];
+		// Check for map change
+		var tile = dungeon.getTile(waypoint[0], waypoint[1])
+		if (tile.entrance && this.path.length == 0) {
+			world.changeMap(this, tile.entrance);
 		}
 	}
 };

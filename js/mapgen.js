@@ -1,6 +1,5 @@
 Dungeon.prototype.generateBase = function() {
 	"use strict";
-	var this_ = this;
 	this.width = randInt(40, 50);
 	this.height = randInt(20, 30);
 	this.map = new Array(this.width * this.height);
@@ -12,21 +11,24 @@ Dungeon.prototype.generateBase = function() {
 		timeLimit: 3000
 	});
 	// General layout
-	gen.create(function(x, y, wall) {
-		this_.setTile(x, y, wall ? TILES.wall : TILES.floor);
-	});
+	gen.create((function(x, y, wall) {
+		this.setTile(x, y, wall ? TILES.wall : TILES.floor);
+	}).bind(this));
 
 	// Doors
 	this.doors = [];
 	var rooms = gen.getRooms();
 	for (var i = 0; i < rooms.length; i++) {
-		rooms[i].getDoors(function(x, y) {
-			this_.setTile(x, y, TILES.door_closed);
-			this_.doors.push({ pos: [x, y], open: false });
-		});
+		rooms[i].getDoors((function(x, y) {
+			this.setTile(x, y, TILES.door_closed);
+			this.doors.push({ pos: [x, y], open: false });
+		}).bind(this));
 	}
 	this.start = rooms[0].getCenter();
-	this.setTile(this.start[0]+1, this.start[1]+1, TILES.airlock);
+	// Air lock
+	var airlock = clone(TILES.airlock);
+	airlock.entrance = { mapId: "overworld", mapType: "overworld" };
+	this.setTile(this.start[0]+1, this.start[1]+1, airlock);
 
 	var freeTiles = [];
 	for (var y = 0; y < this.height; ++y) {
@@ -43,7 +45,6 @@ Dungeon.prototype.generateBase = function() {
 };
 
 Dungeon.prototype.generateOverworld = function() {
-	var this_ = this;
 	this.width = randInt(80, 100);
 	this.height = randInt(60, 80);
 	this.map = new Array(this.width * this.height);
@@ -54,22 +55,62 @@ Dungeon.prototype.generateOverworld = function() {
 	var rocks = [ TILES.rock, TILES.rock2, TILES.rock3 ];
 	var noise = new ROT.Noise.Simplex();
 	var freeTiles = [];
-	gen.create(function(x, y, wall) {
+	var caveCount = 0;
+	gen.create((function(x, y, wall) {
 		var mountainNoise = noise.get(x/20, y/20);
 		if (wall || mountainNoise > 0.6) {
-			this_.setTile(x, y, TILES.mountain);
+			this.setTile(x, y, TILES.mountain);
 		} else if (mountainNoise > 0.2) {
-			this_.setTile(x, y, TILES.hill);
+			if (rnd() > 0.9) {
+				var cave = clone(TILES.cave);
+				var id = this.id + "_cave_" + (++caveCount);
+				cave.entrance = { mapId: id, mapType: "cave" };
+				this.setTile(x, y, cave);
+			} else this.setTile(x, y, TILES.hill);
 		} else if (rnd() > 0.95) {
-			this_.setTile(x, y, rocks.random());
+			this.setTile(x, y, rocks.random());
 		} else {
-			this_.setTile(x, y, grounds.random());
+			this.setTile(x, y, grounds.random());
 			freeTiles.push([x, y]);
 		}
-	});
+	}).bind(this));
 	shuffle(freeTiles);
 	this.start = freeTiles.splice(0, 1)[0];
+	// Air lock
+	var airlock = clone(TILES.airlock);
+	airlock.entrance = { mapId: "base", mapType: "base" };
+	this.setTile(this.start[0], this.start[1], airlock);
+	// Items
+	this.generateItems(randInt(40,60), [ ITEMS.metal ], freeTiles);
+};
 
+Dungeon.prototype.generateCave = function() {
+	var this_ = this;
+	this.width = randInt(30, 80);
+	this.height = randInt(30, 80);
+	this.map = new Array(this.width * this.height);
+
+	var gen = new ROT.Map.Cellular(this.width, this.height);
+	gen.randomize(0.5);
+	for (var i = 0; i < 3; ++i)
+		gen.create(null);
+	var grounds = [ TILES.ground, TILES.ground2 ];
+	var rocks = [ TILES.rock, TILES.rock2, TILES.rock3 ];
+	var freeTiles = [];
+	gen.create((function(x, y, wall) {
+		if (wall) {
+			this.setTile(x, y, TILES.wall);
+		} else {
+			this.setTile(x, y, grounds.random());
+			freeTiles.push([x, y]);
+		}
+	}).bind(this));
+	shuffle(freeTiles);
+	this.start = freeTiles.splice(0, 1)[0];
+	// Exit
+	var caveExit = clone(TILES.cave);
+	caveExit.entrance = { mapId: "overworld", mapType: "overworld" };
+	this.setTile(this.start[0], this.start[1], caveExit);
 	// Items
 	this.generateItems(randInt(40,60), [ ITEMS.metal ], freeTiles);
 };
