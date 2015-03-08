@@ -78,6 +78,8 @@ UI.prototype.update = function() {
 		$("#messages").innerHTML = msgBuf;
 		this.messagesDirty = false;
 	}
+	$("#hud-health").innerHTML = Math.ceil(this.actor.health);
+	$("#hud-oxygen").innerHTML = Math.ceil(this.actor.oxygen);
 
 	var cursor = "crosshair";
 	if (this.state == STATE.LOOK) cursor = "help";
@@ -162,6 +164,10 @@ UI.prototype.updateInventoryScreen = function() {
 		itemsElem.appendChild(elem);
 		ui.inventoryElems.push(elem);
 	}
+}
+
+UI.prototype.die = function() {
+	$("#death-screen").style.display = "block";
 }
 
 // rot.js extension

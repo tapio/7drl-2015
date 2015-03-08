@@ -132,3 +132,12 @@ h1 {
 #inventory-details {
 	margin: 10px 0;
 }
+
+#death-screen {
+	background-color: rgba(64, 0, 0, 0.7);
+	text-align: center;
+}
+
+#death-screen > div {
+	top: 35%;
+}

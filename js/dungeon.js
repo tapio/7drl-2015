@@ -1,7 +1,6 @@
 
 function Dungeon(id, mapType) {
 	"use strict";
-	var this_ = this;
 	this.id = id;
 	this.width = 0;
 	this.height = 0;
@@ -10,12 +9,15 @@ function Dungeon(id, mapType) {
 	this.doors = [];
 	this.start = [0,0];
 	this.items = [];
-	this.generators = {
+	this.env = {
+		oxygenCost: 0
+	};
+	var generators = {
 		base: this.generateBase.bind(this),
 		overworld: this.generateOverworld.bind(this),
 		cave: this.generateCave.bind(this)
 	}
-	this.generators[mapType]();
+	generators[mapType]();
 }
 
 Dungeon.prototype.getTile = function(x, y) {

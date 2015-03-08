@@ -45,6 +45,7 @@ Dungeon.prototype.generateBase = function() {
 };
 
 Dungeon.prototype.generateOverworld = function() {
+	this.env.oxygenCost = 1;
 	this.width = randInt(80, 100);
 	this.height = randInt(60, 80);
 	this.map = new Array(this.width * this.height);
@@ -85,7 +86,7 @@ Dungeon.prototype.generateOverworld = function() {
 };
 
 Dungeon.prototype.generateCave = function() {
-	var this_ = this;
+	this.env.oxygenCost = 1;
 	this.width = randInt(30, 80);
 	this.height = randInt(30, 80);
 	this.map = new Array(this.width * this.height);

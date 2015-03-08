@@ -11,6 +11,8 @@ function Actor(x, y) {
 	this.inv = [];
 	this.maxItems = 12;
 	this.equipped = null;
+	this.oxygen = 100;
+	this.health = 100;
 }
 
 Actor.prototype.visibility = function(x, y) {
@@ -18,6 +20,8 @@ Actor.prototype.visibility = function(x, y) {
 };
 
 Actor.prototype.act = function() {
+	if (this.health <= 0)
+		return;
 	if (this.path.length) {
 		var waypoint = this.path.shift();
 		// Check items
@@ -34,6 +38,13 @@ Actor.prototype.act = function() {
 		// Move
 		this.pos[0] = waypoint[0];
 		this.pos[1] = waypoint[1];
+		// Handle environment stuff
+		var env = world.dungeon.env;
+		this.oxygen -= env.oxygenCost;
+		if (this.oxygen <= 0) {
+			this.oxygen = 0;
+			this.health -= 5;
+		}
 		// Check for map change
 		var tile = world.dungeon.getTile(waypoint[0], waypoint[1])
 		if (tile.entrance && this.path.length == 0) {

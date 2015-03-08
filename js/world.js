@@ -8,6 +8,10 @@ function World() {
 	this.dungeon = this.maps.base;
 }
 
+World.prototype.update = function() {
+	this.dungeon.update();
+};
+
 World.prototype.changeMap = function(actor, entrance) {
 	removeElem(this.dungeon.actors, actor);
 	this.dungeon.start = clone(actor.pos);
@@ -19,4 +23,4 @@ World.prototype.changeMap = function(actor, entrance) {
 	actor.pos[0] = this.dungeon.start[0];
 	actor.pos[1] = this.dungeon.start[1];
 	actor.fov = [];
-}
+};

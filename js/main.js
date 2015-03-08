@@ -15,9 +15,11 @@ function start() {
 		ui.msg("You are likely to be eaten by a grue.");
 		window.setInterval(function () {
 			updateKeys(ui.actor);
-			world.dungeon.update();
+			world.update();
 			ui.update();
 			ui.render();
+			if (ui.actor.health <= 0)
+				ui.die();
 		}, 75);
 	}, 100);
 }
