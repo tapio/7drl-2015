@@ -55,8 +55,11 @@ Dungeon.prototype.generateOverworld = function() {
 	var noise = new ROT.Noise.Simplex();
 	var freeTiles = [];
 	gen.create(function(x, y, wall) {
-		if (wall || noise.get(x/20, y/20) > 0.2) {
+		var mountainNoise = noise.get(x/20, y/20);
+		if (wall || mountainNoise > 0.6) {
 			this_.setTile(x, y, TILES.mountain);
+		} else if (mountainNoise > 0.2) {
+			this_.setTile(x, y, TILES.hill);
 		} else if (rnd() > 0.95) {
 			this_.setTile(x, y, rocks.random());
 		} else {

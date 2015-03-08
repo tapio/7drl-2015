@@ -62,25 +62,32 @@ var TILES = {
 		desc: "Sandy ground."
 	},
 	rock: {
-		ch: "o",
+		ch: "▁",
 		color: "#f40",
 		walkable: false,
 		transparent: true,
 		desc: "Rock."
 	},
 	rock2: {
-		ch: "☁",
+		ch: "▂",
 		color: "#c50",
 		walkable: false,
 		transparent: true,
 		desc: "Rock."
 	},
 	rock3: {
-		ch: "O",
+		ch: "▃",
 		color: "#d00",
 		walkable: false,
 		transparent: false,
 		desc: "Big rock"
+	},
+	hill: {
+		ch: "▴",
+		color: "#f40",
+		walkable: false,
+		transparent: true,
+		desc: "Steep hills."
 	},
 	mountain: {
 		ch: "▲",
@@ -110,10 +117,10 @@ for (var i in RESOURCES)
 
 
 var ITEMS = {
-	gluetube: { name: "Tube of glue", ch: "g", color: "#88c", resource: "glue", amount: 100 },
-	oxygentank: { name: "O₂ tank", ch: "o", color: "#fff", resource: "oxygen", amount: 100 },
-	battery: { name: "Battery", ch: "b", color: "#06f", resource: "energy", amount: 100 },
-	metal: { name: "Scrap metal", ch: "m", color: "#999", resource: "metal", amount: 100 }
+	gluetube: { name: "Tube of glue", ch: "✒", color: "#88c", resource: "glue", amount: 100 },
+	oxygentank: { name: "O₂ tank", ch: "⌾", color: "#fff", resource: "oxygen", amount: 100 },
+	battery: { name: "Battery", ch: "⌁", color: "#06f", resource: "energy", amount: 100 },
+	metal: { name: "Scrap metal", ch: "⍽", color: "#999", resource: "metal", amount: 100 }
 };
 
 for (var i in ITEMS)
@@ -122,9 +129,9 @@ for (var i in ITEMS)
 
 
 var DEVICES = {
-	oxygenator: { name: "Oxygenator" },
-	rtg: { name: "RTG", desc: "Radioisotope thermoelectric generator produces electricity from radioactive decay." },
-	solarpanel: { name: "Solar Panel" }
+	oxygenator: { name: "Oxygenator", ch: "♼", color: "#ff0" },
+	rtg: { name: "RTG", ch: "☢", color: "#ff0", desc: "Radioisotope thermoelectric generator produces electricity from radioactive decay." },
+	solarpanel: { name: "Solar panel", ch: "☀", color: "#0f0" }
 };
 
 for (var i in DEVICES)
