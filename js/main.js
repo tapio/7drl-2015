@@ -25,12 +25,16 @@ function render() {
 }
 
 function start() {
-	resetDisplay();
-	window.setInterval(function () {
-		updateKeys(pl);
-		dungeon.update();
-		render();
-	}, 75);
+	// Still add a small delay as otherwise Firefox,
+	// possibly WP8.1, seems fail on first try.
+	window.setTimeout(function() {
+		resetDisplay();
+		window.setInterval(function () {
+			updateKeys(pl);
+			dungeon.update();
+			render();
+		}, 75);
+	}, 100);
 }
 
 FontDetect.onFontLoaded(CONFIG.fontFamily, start, start, { msTimeout: 4000 });
