@@ -6,12 +6,15 @@ var STATE = {
 
 var camera, display;
 
-function UI() {
+function UI(actor) {
 	"use strict";
 	var this_ = this;
+	this.actor = pl;
 	this.state = STATE.GAME;
 	this.messages = [];
 	this.messagesDirty = false;
+	this.selectedInvItem = null;
+	this.inventoryElems = [];
 
 	$("#look-button").addEventListener("click", function() {
 		if (this_.state != STATE.LOOK) {
@@ -47,6 +50,19 @@ function UI() {
 	$("#stats-close").addEventListener("click", exitMenu, true);
 	$("#inventory-close").addEventListener("click", exitMenu, true);
 	$("#mainmenu-close").addEventListener("click", exitMenu, true);
+
+	$("#inventory-equip").addEventListener("click", function() {
+		this_.actor.equip(this_.selectedInvItem);
+		//updateInventoryScreen(this_.actor);
+	}, true);
+	$("#inventory-use").addEventListener("click", function() {
+		this_.actor.use(this_.selectedInvItem);
+		//updateInventoryScreen(this_.actor);
+	}, true);
+	$("#inventory-drop").addEventListener("click", function() {
+		this_.actor.drop(this_.selectedInvItem);
+		updateInventoryScreen(this_.actor);
+	}, true);
 }
 
 UI.prototype.msg = function(msg) {
@@ -107,18 +123,23 @@ ROT.Display.prototype.drawTextCentered = function(y, str) {
 	this.drawText(x, y, str);
 };
 
-function renderCharacterScreen(display, pl) {
-	display.drawTextCentered(2, pl.name);
-}
-
 function onClickInventoryItem(e) {
-	var item = pl.inv[this.dataset.index];
+	ui.inventoryElems.forEach(function(elem) { elem.removeClass("btn-selected"); });
+	this.addClass("btn-selected");
+	var item = ui.selectedInvItem = pl.inv[this.dataset.index];
 	if (!item) return;
 	var desc = item.name;
 	$("#inventory-details").innerHTML = desc;
+	$("#inventory-actions").style.display = "block";
+	if (item.canEquip) $("#inventory-equip").removeClass("btn-disabled");
+	else $("#inventory-equip").addClass("btn-disabled");
+	if (item.canConsume) $("#inventory-use").removeClass("btn-disabled");
+	else $("#inventory-use").addClass("btn-disabled");
 };
 
 function updateInventoryScreen(pl) {
+	$("#inventory-actions").style.display = "none";
+	ui.selectedInvItem = null;
 	var itemsElem = $("#inventory-items");
 	if (!pl.inv.length) {
 		itemsElem.innerHTML = "Inventory empty!";
@@ -128,6 +149,7 @@ function updateInventoryScreen(pl) {
 	itemsElem.innerHTML = "";
 	$("#inventory-details").innerHTML = "Click an item to see details...";
 
+	ui.inventoryElems = [];
 	for (var i = 0; i < pl.inv.length; ++i) {
 		var item = pl.inv[i];
 		var elem = document.createElement("div");
@@ -138,9 +160,6 @@ function updateInventoryScreen(pl) {
 		elem.dataset.index = i;
 		elem.addEventListener("click", onClickInventoryItem);
 		itemsElem.appendChild(elem);
+		ui.inventoryElems.push(elem);
 	}
-}
-
-function renderMenuScreen(display) {
-	display.drawTextCentered(2, "Menu");
 }

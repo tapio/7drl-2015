@@ -10,6 +10,7 @@ function Actor(x, y) {
 	this.vision = 10;
 	this.inv = [];
 	this.maxItems = 12;
+	this.equipped = null;
 }
 
 Actor.prototype.visibility = function(x, y) {
@@ -49,4 +50,20 @@ Actor.prototype.moveTo = function(x, y) {
 
 Actor.prototype.move = function(dx, dy) {
 	this.moveTo(this.pos[0] + dx, this.pos[1] + dy);
+};
+
+Actor.prototype.equip = function(item) {
+	this.equipped = item;
+};
+
+Actor.prototype.use = function(item) {
+	// TODO
+};
+
+Actor.prototype.drop = function(item) {
+	removeElem(this.inv, item);
+	item.pos = clone(this.pos);
+	dungeon.items.push(item);
+	if (this == ui.actor)
+		ui.msg("Dropped " + item.name + ".");
 };

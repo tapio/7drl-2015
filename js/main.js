@@ -2,7 +2,7 @@
 var world = new World();
 var pl = new Actor(dungeon.start[0], dungeon.start[1]);
 dungeon.actors.push(pl);
-var ui = new UI();
+var ui = new UI(pl);
 
 ui.msg("Welcome!");
 ui.msg("You are likely to be eaten by a grue.");

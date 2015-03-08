@@ -62,13 +62,19 @@ canvas {
 	transform: rotate(0.85);
 }
 
+.btn-disabled {
+	pointer-events: none;
+	color: #444 !important;
+}
+
 .btn-square {
 	width: 48px;
 	font-size: 48px;
 }
 
 .btn-text {
-	width: 140px;
+	padding-left: 20px;
+	padding-right: 20px;
 	font-size: 24px;
 }
 
@@ -119,18 +125,10 @@ h1 {
 
 /* Inventory */
 
-#inventory {
-
-}
-
-#inventory-main {
-
-}
-
 #inventory-items {
-	max-height: 60%;
+	max-height: 40%;
 }
 
 #inventory-details {
-	min-height: 40%;
+	margin: 10px 0;
 }
