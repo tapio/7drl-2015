@@ -12,7 +12,7 @@ function start() {
 		ui = new UI(pl);
 		ui.resetDisplay();
 		ui.msg("Welcome!");
-		ui.msg("You are likely to be eaten by a grue.");
+		//ui.msg("Instructions available from the top right corner.");
 		window.setInterval(function () {
 			updateKeys(ui.actor);
 			world.update();
