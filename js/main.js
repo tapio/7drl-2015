@@ -2,7 +2,6 @@
 var world = new World();
 var pl = new Actor(dungeon.start[0], dungeon.start[1]);
 dungeon.actors.push(pl);
-resetDisplay();
 var ui = new UI();
 
 ui.msg("Welcome!");
@@ -25,8 +24,13 @@ function render() {
 	ui.update();
 }
 
-window.setInterval(function () {
-	updateKeys(pl);
-	dungeon.update();
-	render();
-}, 75);
+function start() {
+	resetDisplay();
+	window.setInterval(function () {
+		updateKeys(pl);
+		dungeon.update();
+		render();
+	}, 75);
+}
+
+FontDetect.onFontLoaded(CONFIG.fontFamily, start, start, { msTimeout: 4000 });

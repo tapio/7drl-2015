@@ -82,7 +82,8 @@ function resetDisplay() {
 		//bg: "transparent",
 		fontSize: 48,
 		layout: "rect",
-		spacing: CONFIG.spacing
+		spacing: CONFIG.spacing,
+		fontFamily: CONFIG.fontFamily
 	});
 	document.body.appendChild(display.getContainer());
 	display.getContainer().addEventListener("click", onClick, true);
