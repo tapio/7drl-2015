@@ -21,13 +21,22 @@ canvas {
 	z-index: -1;
 }
 
-.button {
-	float: right;
-	width: 48px;
+#messages {
+	position: absolute;
+	bottom: 0;
+	padding: 10px;
+	text-shadow: black 0 0 2px;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+.right { float: right; }
+.left { float: left; }
+
+.btn {
+	display: inline-block;
 	height: 48px;
 	line-height: 48px;
-	font-size: 48px;
-	margin: 6px 6px 6px 0px;
+	margin: 6px 4px 6px 0px;
 	text-align: center;
 	vertical-align: middle;
 	background-color: #222;
@@ -36,8 +45,26 @@ canvas {
 	border: 1px solid black;
 }
 
-.button:hover {
+.btn:hover {
 	border: 1px solid white;
+}
+
+.btn:active {
+	-webkit-transform: scale(0.85);
+	-moz-transform: rotate(0.85);
+	-ms-transform: rotate(0.85);
+	-o-transform: rotate(0.85);
+	transform: rotate(0.85);
+}
+
+.btn-square {
+	width: 48px;
+	font-size: 48px;
+}
+
+.btn-text {
+	width: 140px;
+	font-size: 24px;
 }
 
 #look_button {
@@ -53,10 +80,49 @@ canvas {
 #look_button { color: #53e6ff; }
 #menu_button { color: #bbbbbb; }*/
 
-#messages {
-	position: absolute;
+.modal {
+	display: none;
+	position: fixed;
+	top: 0;
 	bottom: 0;
-	padding: 10px;
-	text-shadow: black 0 0 2px;
-	background-color: rgba(0, 0, 0, 0.5);
+	left: 0;
+	right: 0;
+	background-color: rgba(0,0,0, 0.6);
+	z-index: 1000;
+	/*opacity: 0;
+	-webkit-transition: opacity 200ms ease-in;
+	-moz-transition: opacity 200ms ease-in;
+	transition: opacity 200ms ease-in;
+	pointer-events: none;*/
+}
+
+.menu {
+	position: absolute;
+	top: 5%;
+	left: 5%;
+	width: 90%;
+	height: 90%;
+}
+
+h1 {
+	font-size: 2em;
+	margin: 4px 0 4px 0;
+}
+
+/* Inventory */
+
+#inventory {
+
+}
+
+#inventory-main {
+
+}
+
+#inventory-items {
+	max-height: 60%;
+}
+
+#inventory-details {
+	min-height: 40%;
 }

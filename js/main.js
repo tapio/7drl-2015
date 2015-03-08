@@ -17,7 +17,7 @@ function render() {
 	} else if (ui.state == STATE.CHAR) {
 		renderCharacterScreen(display, pl);
 	} else if (ui.state == STATE.INV) {
-		renderInventoryScreen(display, pl);
+		//renderInventoryScreen(display, pl);
 	} else if (ui.state == STATE.MENU) {
 		renderMenuScreen(display);
 	}

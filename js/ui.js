@@ -28,6 +28,8 @@ function UI() {
 
 	this.dom.invButton.addEventListener("click", function() {
 		this_.state = this_.state == STATE.INV ? STATE.GAME : STATE.INV;
+		$("#inventory").style.display = this_.state == STATE.INV ? "block" : "";
+		updateInventoryScreen(pl);
 	}, true);
 
 	this.dom.lookButton.addEventListener("click", function() {
@@ -103,11 +105,31 @@ function renderCharacterScreen(display, pl) {
 	display.drawTextCentered(2, pl.name);
 }
 
-function renderInventoryScreen(display, pl) {
-	display.drawTextCentered(2, "Inventory");
+function onClickInventoryItem(e) {
+	var item = pl.inv[this.dataset.index];
+	if (!item) return;
+	var desc = item.name;
+	$("#inventory-details").innerHTML = desc;
+};
+
+function updateInventoryScreen(pl) {
+	var itemsElem = $("#inventory-items");
+	if (!pl.inv.length) {
+		itemsElem.innerHTML = "Inventory empty!";
+		return;
+	}
+	itemsElem.innerHTML = "";
 
 	for (var i = 0; i < pl.inv.length; ++i) {
-		display.drawTextCentered(4+i, pl.inv[i].name);
+		var item = pl.inv[i];
+		var elem = document.createElement("div");
+		elem.className = "btn btn-square";
+		elem.innerHTML = item.ch;
+		elem.title = item.name;
+		elem.style.color = item.color;
+		elem.dataset.index = i;
+		elem.addEventListener("click", onClickInventoryItem);
+		itemsElem.appendChild(elem);
 	}
 }
 
