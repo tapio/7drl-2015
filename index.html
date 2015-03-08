@@ -9,10 +9,10 @@
 </head>
 <body>
 
-	<div id="menu-button" class="btn btn-square right" title="Menu">≡</div>
+	<div id="mainmenu-open" class="btn btn-square right" title="Menu" data-open="#mainmenu">≡</div>
 	<div id="look-button" class="btn btn-square right" title="Look At">☌</div>
-	<div id="inv-button"  class="btn btn-square right" title="Inventory">I</div>
-	<div id="stats-button" class="btn btn-square right" title="Character">♥</div>
+	<div id="inventory-open" class="btn btn-square right" title="Inventory" data-open="#inventory">I</div>
+	<div id="stats-open" class="btn btn-square right" title="Character" data-open="#stats">♥</div>
 
 	<div id="messages"></div>
 
@@ -23,11 +23,15 @@
 	</div>-->
 
 	<div id="stats" class="modal">
-		<h1>Stats</h1>
+		<div id="stats-main" class="menu">
+			<div id="stats-close" class="btn btn-square" data-close="#stats">✕</div>
+			<h1>Stats</h1>
+		</div>
 	</div>
 
 	<div id="inventory" class="modal">
 		<div id="inventory-main" class="menu">
+			<div id="inventory-close" class="btn btn-square" data-close="#inventory">✕</div>
 			<h1>Inventory</h1>
 			<div id="inventory-items"></div>
 			<div id="inventory-details"></div>
@@ -35,7 +39,10 @@
 	</div>
 
 	<div id="mainmenu" class="modal">
-		<h1>Menu</h1>
+		<div id="mainmenu-main" class="menu">
+			<div id="mainmenu-close" class="btn btn-square" data-close="#mainmenu">✕</div>
+			<h1>Menu</h1>
+		</div>
 	</div>
 
 	<script>

@@ -15,16 +15,6 @@ function UI() {
 	this.messages = [];
 	this.messagesDirty = false;
 
-	$("#stats-button").addEventListener("click", function() {
-		this_.state = this_.state == STATE.CHAR ? STATE.GAME : STATE.CHAR;
-	}, true);
-
-	$("#inv-button").addEventListener("click", function() {
-		this_.state = this_.state == STATE.INV ? STATE.GAME : STATE.INV;
-		$("#inventory").style.display = this_.state == STATE.INV ? "block" : "";
-		updateInventoryScreen(pl);
-	}, true);
-
 	$("#look-button").addEventListener("click", function() {
 		if (this_.state != STATE.LOOK) {
 			this_.msg((CONFIG.touch ? "Touch" : "Click") + " a tile to examine it.");
@@ -36,9 +26,23 @@ function UI() {
 		}
 	}, true);
 
-	$("#menu-button").addEventListener("click", function() {
-		this_.state = this_.state == STATE.MENU ? STATE.GAME : STATE.MENU;
-	}, true);
+	function enterMenu() {
+		this_.state = STATE.MENU;
+		$(this.dataset.open).style.display = "block";
+		updateInventoryScreen(pl); // TODO: Move
+	}
+	function exitMenu() {
+		this_.state = STATE.GAME;
+		$(this.dataset.close).style.display = "";
+	}
+
+	$("#stats-open").addEventListener("click", enterMenu, true);
+	$("#inventory-open").addEventListener("click", enterMenu, true);
+	$("#mainmenu-open").addEventListener("click", enterMenu, true);
+
+	$("#stats-close").addEventListener("click", exitMenu, true);
+	$("#inventory-close").addEventListener("click", exitMenu, true);
+	$("#mainmenu-close").addEventListener("click", exitMenu, true);
 }
 
 UI.prototype.msg = function(msg) {
