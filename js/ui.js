@@ -31,7 +31,7 @@ function UI(actor) {
 		this.addClass("btn-selected");
 		$("#look-button").removeClass("btn-selected");
 		$(this.dataset.open).style.display = "block";
-		updateInventoryScreen(pl); // TODO: Move
+		this_.updateInventoryScreen(pl); // TODO: Move
 	}
 	function exitMenu() {
 		this_.state = STATE.GAME;
@@ -52,15 +52,15 @@ function UI(actor) {
 
 	$("#inventory-equip").addEventListener("click", function() {
 		this_.actor.equip(this_.selectedInvItem);
-		//updateInventoryScreen(this_.actor);
+		//this_.updateInventoryScreen(this_.actor);
 	}, true);
 	$("#inventory-use").addEventListener("click", function() {
 		this_.actor.use(this_.selectedInvItem);
-		//updateInventoryScreen(this_.actor);
+		//this_.updateInventoryScreen(this_.actor);
 	}, true);
 	$("#inventory-drop").addEventListener("click", function() {
 		this_.actor.drop(this_.selectedInvItem);
-		updateInventoryScreen(this_.actor);
+		this_.updateInventoryScreen(this_.actor);
 	}, true);
 }
 
@@ -113,7 +113,8 @@ UI.prototype.resetDisplay = function() {
 };
 window.addEventListener('resize', function() { ui.resetDisplay(); render(); });
 
-function onClickInventoryItem(e) {
+UI.prototype.onClickInventoryItem = function(e) {
+	// this = clicked element
 	ui.inventoryElems.forEach(function(elem) { elem.removeClass("btn-selected"); });
 	this.addClass("btn-selected");
 	var item = ui.selectedInvItem = pl.inv[this.dataset.index];
@@ -127,11 +128,12 @@ function onClickInventoryItem(e) {
 	else $("#inventory-use").addClass("btn-disabled");
 };
 
-function updateInventoryScreen(pl) {
+UI.prototype.updateInventoryScreen = function() {
 	$("#inventory-actions").style.display = "none";
 	ui.selectedInvItem = null;
 	var itemsElem = $("#inventory-items");
-	if (!pl.inv.length) {
+	var inv = this.actor.inv;
+	if (!inv.length) {
 		itemsElem.innerHTML = "Inventory empty!";
 		$("#inventory-details").innerHTML = "";
 		return;
@@ -140,15 +142,15 @@ function updateInventoryScreen(pl) {
 	$("#inventory-details").innerHTML = "Click an item to see details...";
 
 	ui.inventoryElems = [];
-	for (var i = 0; i < pl.inv.length; ++i) {
-		var item = pl.inv[i];
+	for (var i = 0; i < inv.length; ++i) {
+		var item = inv[i];
 		var elem = document.createElement("div");
 		elem.className = "btn btn-square";
 		elem.innerHTML = item.ch;
 		elem.title = item.name;
 		elem.style.color = item.color;
 		elem.dataset.index = i;
-		elem.addEventListener("click", onClickInventoryItem);
+		elem.addEventListener("click", this.onClickInventoryItem);
 		itemsElem.appendChild(elem);
 		ui.inventoryElems.push(elem);
 	}
