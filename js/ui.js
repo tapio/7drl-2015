@@ -4,7 +4,7 @@ var STATE = {
 	MENU: 3
 };
 
-var camera, display;
+var camera;
 
 function UI(actor) {
 	"use strict";
@@ -15,6 +15,7 @@ function UI(actor) {
 	this.messagesDirty = false;
 	this.selectedInvItem = null;
 	this.inventoryElems = [];
+	this.display = null;
 
 	$("#look-button").addEventListener("click", function() {
 		if (this_.state != STATE.LOOK) {
@@ -83,7 +84,7 @@ UI.prototype.update = function() {
 	var cursor = "crosshair";
 	if (ui.state == STATE.LOOK) cursor = "help";
 	else if (pl.path.length) cursor = "wait";
-	display.getContainer().style.cursor = cursor;
+	this.display.getContainer().style.cursor = cursor;
 };
 
 UI.prototype.closeMenus = function() {
@@ -92,15 +93,15 @@ UI.prototype.closeMenus = function() {
 	$("#mainmenu-close").click();
 };
 
-function resetDisplay() {
+UI.prototype.resetDisplay = function() {
 	var w = Math.floor(window.innerWidth / 30 / CONFIG.spacing);
 	var h = Math.floor(window.innerHeight / 50 / CONFIG.spacing);
 	camera = { pos: [0, 0], center: [(w/2)|0, (h/2)|0] };
 
-	if (display)
-		document.body.removeChild(display.getContainer());
+	if (this.display)
+		document.body.removeChild(this.display.getContainer());
 
-	display = new ROT.Display({
+	this.display = new ROT.Display({
 		width: w,
 		height: h,
 		//bg: "transparent",
@@ -109,19 +110,10 @@ function resetDisplay() {
 		spacing: CONFIG.spacing,
 		fontFamily: CONFIG.fontFamily
 	});
-	document.body.appendChild(display.getContainer());
-	display.getContainer().addEventListener("click", onClick, true);
-	display.width = w;
-	display.height = h;
-	display. cx = (w/2)|0;
-	display. cy = (h/2)|0;
-}
-window.addEventListener('resize', function() { resetDisplay(); render(); });
-
-ROT.Display.prototype.drawTextCentered = function(y, str) {
-	var x = (this.getOptions().width * 0.5 - str.length * 0.5)|0;
-	this.drawText(x, y, str);
+	document.body.appendChild(this.display.getContainer());
+	this.display.getContainer().addEventListener("click", onClick, true);
 };
+window.addEventListener('resize', function() { ui.resetDisplay(); render(); });
 
 function onClickInventoryItem(e) {
 	ui.inventoryElems.forEach(function(elem) { elem.removeClass("btn-selected"); });
@@ -163,3 +155,9 @@ function updateInventoryScreen(pl) {
 		ui.inventoryElems.push(elem);
 	}
 }
+
+// rot.js extension
+ROT.Display.prototype.drawTextCentered = function(y, str) {
+	var x = (this.getOptions().width * 0.5 - str.length * 0.5)|0;
+	this.drawText(x, y, str);
+};

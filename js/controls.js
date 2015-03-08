@@ -1,6 +1,6 @@
 
 function onClick(e) {
-	var coords = display.eventToPosition(e);
+	var coords = ui.display.eventToPosition(e);
 	var x = coords[0] + camera.pos[0];
 	var y = coords[1] + camera.pos[1];
 
