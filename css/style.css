@@ -45,6 +45,10 @@ canvas {
 	border: 1px solid black;
 }
 
+.btn-selected {
+	border: 1px solid white;
+}
+
 .btn:hover {
 	border: 1px solid white;
 }

@@ -12,6 +12,24 @@ if (!Math.sign)
 		else return x > 0 ? 1 : -1;
 	};
 
+HTMLElement.prototype.addClass = function(add) {
+	var classes = this.className.split(" ");
+	for (var i = 0; i < classes.length; i++)
+		if (classes[i] === add) return;
+	this.className += " " + add;
+};
+
+HTMLElement.prototype.removeClass = function(remove) {
+	var newClassName = "";
+	var classes = this.className.split(" ");
+	for (var i = 0; i < classes.length; i++) {
+		if (classes[i] !== remove) {
+			newClassName += classes[i] + " ";
+		}
+	}
+	this.className = newClassName;
+};
+
 function $(selector) { return document.querySelector(selector); }
 
 function lerp(a, b, f) { return a + (b - a) * f; }

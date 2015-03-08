@@ -18,21 +18,27 @@ function UI() {
 	$("#look-button").addEventListener("click", function() {
 		if (this_.state != STATE.LOOK) {
 			this_.msg((CONFIG.touch ? "Touch" : "Click") + " a tile to examine it.");
-			//$("#look-button").innerHTML = "✖";
+			$("#look-button").addClass("btn-selected");
 			this_.state = STATE.LOOK;
 		} else {
-			//$("#look-button").innerHTML = "☌";
+			$("#look-button").removeClass("btn-selected");
 			this_.state = STATE.GAME;
 		}
 	}, true);
 
 	function enterMenu() {
 		this_.state = STATE.MENU;
+		this.addClass("btn-selected");
+		$("#look-button").removeClass("btn-selected");
 		$(this.dataset.open).style.display = "block";
 		updateInventoryScreen(pl); // TODO: Move
 	}
 	function exitMenu() {
 		this_.state = STATE.GAME;
+		$("#stats-open").removeClass("btn-selected");
+		$("#inventory-open").removeClass("btn-selected");
+		$("#mainmenu-open").removeClass("btn-selected");
+		$("#look-button").removeClass("btn-selected");
 		$(this.dataset.close).style.display = "";
 	}
 
