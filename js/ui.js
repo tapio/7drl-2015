@@ -7,7 +7,7 @@ var STATE = {
 function UI(actor) {
 	"use strict";
 	var this_ = this;
-	this.actor = pl;
+	this.actor = actor;
 	this.state = STATE.GAME;
 	this.messages = [];
 	this.messagesDirty = false;
@@ -31,7 +31,7 @@ function UI(actor) {
 		this.addClass("btn-selected");
 		$("#look-button").removeClass("btn-selected");
 		$(this.dataset.open).style.display = "block";
-		this_.updateInventoryScreen(pl); // TODO: Move
+		this_.updateInventoryScreen(this_.actor); // TODO: Move
 	}
 	function exitMenu() {
 		this_.state = STATE.GAME;
@@ -80,8 +80,8 @@ UI.prototype.update = function() {
 	}
 
 	var cursor = "crosshair";
-	if (ui.state == STATE.LOOK) cursor = "help";
-	else if (pl.path.length) cursor = "wait";
+	if (this.state == STATE.LOOK) cursor = "help";
+	else if (this.actor.path.length) cursor = "wait";
 	this.display.getContainer().style.cursor = cursor;
 };
 
@@ -117,7 +117,7 @@ UI.prototype.onClickInventoryItem = function(e) {
 	// this = clicked element
 	ui.inventoryElems.forEach(function(elem) { elem.removeClass("btn-selected"); });
 	this.addClass("btn-selected");
-	var item = ui.selectedInvItem = pl.inv[this.dataset.index];
+	var item = ui.selectedInvItem = ui.actor.inv[this.dataset.index];
 	if (!item) return;
 	var desc = item.name;
 	$("#inventory-details").innerHTML = desc;

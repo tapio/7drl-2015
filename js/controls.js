@@ -5,9 +5,9 @@ var INPUT_HANDLERS = {
 		var y = coords[1] + world.camera.pos[1];
 
 		if (ui.state == STATE.GAME) {
-			pl.moveTo(x, y);
+			ui.actor.moveTo(x, y);
 		} else if (ui.state == STATE.LOOK) {
-			if (pl.visibility(x, y) > 0.1) {
+			if (ui.actor.visibility(x, y) > 0.1) {
 				var thing = world.dungeon.collide([x, y]);
 				ui.msg(thing.desc ? thing.desc : (thing.name ? thing.name : "Nothing interesting..."));
 			}
@@ -45,7 +45,7 @@ var INPUT_HANDLERS = {
 document.addEventListener('keydown', INPUT_HANDLERS.onKeyDown, false);
 document.addEventListener('keyup', INPUT_HANDLERS.onKeyUp, false);
 
-function updateKeys(pl) {
+function updateKeys(actor) {
 	if (ui.state != STATE.GAME && ui.state != STATE.LOOK)
 		return;
 	var dx = 0, dy = 0;
@@ -58,7 +58,7 @@ function updateKeys(pl) {
 	if (keys.pressed[keys.DOWN] || keys.pressed[keys.NUMPAD2] || keys.pressed[keys.J])
 		dy += 1;
 	if (dx || dy)
-		pl.move(dx, dy);
+		actor.move(dx, dy);
 }
 
 var keys = {

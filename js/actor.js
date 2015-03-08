@@ -45,7 +45,7 @@ Actor.prototype.act = function() {
 Actor.prototype.moveTo = function(x, y) {
 	var target = world.dungeon.getTile(x, y);
 	if (!target.walkable) return;
-	world.dungeon.findPath(x, y, pl);
+	world.dungeon.findPath(x, y, this);
 };
 
 Actor.prototype.move = function(dx, dy) {
