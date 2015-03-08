@@ -105,10 +105,6 @@ var TILES = {
 	}
 };
 
-for (var i in TILES)
-	TILES[i].id = i;
-
-
 
 var RESOURCES = {
 	oxygen: { name: "O₂" },
@@ -118,10 +114,6 @@ var RESOURCES = {
 	glue: { name: "Glue" }
 };
 
-for (var i in RESOURCES)
-	RESOURCES[i].id = i;
-
-
 
 var ITEMS = {
 	gluetube: { name: "Tube of glue", ch: "✒", color: "#88c", resource: "glue", amount: 100 },
@@ -130,10 +122,6 @@ var ITEMS = {
 	metal: { name: "Scrap metal", ch: "⍽", color: "#999", resource: "metal", amount: 100 }
 };
 
-for (var i in ITEMS)
-	ITEMS[i].id = i;
-
-
 
 var DEVICES = {
 	oxygenator: { name: "Oxygenator", ch: "♼", color: "#ff0" },
@@ -141,5 +129,14 @@ var DEVICES = {
 	solarpanel: { name: "Solar panel", ch: "☀", color: "#0f0" }
 };
 
-for (var i in DEVICES)
-	DEVICES[i].id = i;
+// Add ids
+(function() {
+	for (var i in TILES)
+		TILES[i].id = i;
+	for (var i in RESOURCES)
+		RESOURCES[i].id = i;
+	for (var i in ITEMS)
+		ITEMS[i].id = i;
+	for (var i in DEVICES)
+		DEVICES[i].id = i;
+})();
