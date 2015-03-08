@@ -41,7 +41,7 @@ var TILES = {
 		desc: "Locked door."
 	},
 	airlock: {
-		ch: "A",
+		ch: "☖",
 		color: "#00f",
 		walkable: true,
 		transparent: true,

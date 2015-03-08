@@ -27,6 +27,7 @@ canvas {
 	padding: 10px;
 	text-shadow: black 0 0 2px;
 	background-color: rgba(0, 0, 0, 0.5);
+	pointer-events: none;
 }
 
 .right { float: right; }
