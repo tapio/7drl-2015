@@ -74,6 +74,8 @@ Actor.prototype.use = function(item) {
 		this[item.resource] += item.amount;
 		item.amount = 0;
 		removeElem(this.inv, item);
+		if (this.equipped == item)
+			this.equipped = null;
 	}
 };
 

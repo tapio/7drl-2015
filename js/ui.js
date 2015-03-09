@@ -50,6 +50,11 @@ function UI(actor) {
 	$("#inventory-close").addEventListener("click", exitMenu, true);
 	$("#mainmenu-close").addEventListener("click", exitMenu, true);
 
+	$("#equipped").addEventListener("click", function() {
+		if (this_.actor.equipped) this_.actor.use(this_.actor.equipped);
+		else (enterMenu.bind($("#inventory-open")))();
+	}, true);
+
 	$("#inventory-equip").addEventListener("click", function() {
 		this_.actor.equip(this_.selectedInvItem);
 		//this_.updateInventoryScreen(this_.actor);
@@ -80,6 +85,10 @@ UI.prototype.update = function() {
 	}
 	$("#hud-health").innerHTML = Math.ceil(this.actor.health);
 	$("#hud-oxygen").innerHTML = Math.ceil(this.actor.oxygen);
+
+	var equipped = this.actor.equipped;
+	$("#equipped").innerHTML = equipped ? equipped.ch : "⬚";
+	$("#equipped").style.color = equipped ? equipped.color : "";
 
 	var cursor = "crosshair";
 	if (this.state == STATE.LOOK) cursor = "help";
