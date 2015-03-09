@@ -116,15 +116,15 @@ canvas {
 
 .menu {
 	position: absolute;
-	top: 5%;
+	top: 3%;
 	left: 5%;
 	width: 90%;
-	height: 90%;
+	height: 94%;
 }
 
 h1 {
 	font-size: 2em;
-	margin: 4px 0 4px 0;
+	margin: 16px 0 20px 0;
 }
 
 /* Inventory */
