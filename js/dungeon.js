@@ -110,15 +110,19 @@ Dungeon.prototype.drawCollection = function(stuff, camera, display, player, thre
 };
 
 Dungeon.prototype.draw = function(camera, display, player) {
-	for (var i = 0, l = this.map.length; i < l; ++i) {
-		var x = (i % this.width) - camera.pos[0];
-		var y = ((i / this.width)|0) - camera.pos[1];
-		var visibility = player.fov[i];
-		var tile = visibility > 0 ? this.map[i] : TILES.empty;
-		var color = ROT.Color.fromString(tile.color);
+	var w = display.getOptions().width;
+	var h = display.getOptions().height;
+	for (var j = 0; j < h; ++j) {
+		for (var i = 0; i < w; ++i) {
+			var x = i + camera.pos[0];
+			var y = j + camera.pos[1];
+			var visibility = player.visibility(x, y);
+			var tile = visibility > 0 ? this.getTile(x, y) : TILES.empty;
+			var color = ROT.Color.fromString(tile.color);
 
-		if (visibility < 1) ROT.Color.multiply_(color, [64, 64, 64]);
-		display.draw(x, y, tile.ch, ROT.Color.toHex(color));
+			if (visibility < 1) ROT.Color.multiply_(color, [64, 64, 64]);
+			display.draw(i, j, tile.ch, ROT.Color.toHex(color));
+		}
 	}
 	this.drawCollection(this.items, camera, display, player, 1);
 	this.drawCollection(this.actors, camera, display, player, 1);
