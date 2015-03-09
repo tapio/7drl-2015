@@ -6,6 +6,7 @@ function start() {
 	// Still add a small delay as otherwise Firefox,
 	// possibly WP8.1, seems fail on first try.
 	window.setTimeout(function() {
+		$("#loading-text").innerHTML = "Initializing...";
 		world = new World();
 		var pl = new Actor(world.dungeon.start[0], world.dungeon.start[1]);
 		world.dungeon.actors.push(pl);
@@ -14,14 +15,14 @@ function start() {
 		ui.msg("Welcome!");
 		//ui.msg("Instructions available from the top right corner.");
 		window.setInterval(function () {
-			var t0 = performance.now();
+			var t0 = window.performance.now();
 			updateKeys(ui.actor);
 			world.update();
 			ui.update();
 			ui.render();
 			if (ui.actor.health <= 0)
 				ui.die();
-			var t1 = performance.now();
+			var t1 = window.performance.now();
 			//console.log("dt", t1 - t0);
 		}, 75);
 
@@ -33,8 +34,12 @@ function start() {
 				window.setTimeout(checkDimension, 500);
 			}
 		})();
+		$("#loading").style.display = "none";
+		$("#game").style.display = "block";
 	}, 100);
 }
+
+$("#loading-text").innerHTML = "Waiting for a font...";
 
 FontDetect.onFontLoaded(CONFIG.fontFamily, start, start, { msTimeout: 4000 });
 })();

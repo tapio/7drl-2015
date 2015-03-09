@@ -118,7 +118,7 @@ UI.prototype.resetDisplay = function() {
 		spacing: CONFIG.spacing,
 		fontFamily: CONFIG.fontFamily
 	});
-	document.body.appendChild(this.display.getContainer());
+	$("#game").appendChild(this.display.getContainer());
 	this.display.getContainer().addEventListener("click", INPUT_HANDLERS.onClick, true);
 };
 window.addEventListener('resize', function() { ui.resetDisplay(); ui.render(); });

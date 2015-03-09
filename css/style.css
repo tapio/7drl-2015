@@ -21,6 +21,8 @@ canvas {
 	z-index: -1;
 }
 
+#game { display: none; }
+
 #messages {
 	position: absolute;
 	bottom: 0;
