@@ -31,7 +31,8 @@ function UI(actor) {
 		this.addClass("btn-selected");
 		$("#look-button").removeClass("btn-selected");
 		$(this.dataset.open).style.display = "block";
-		this_.updateInventoryScreen(this_.actor); // TODO: Move
+		this_.updateInventoryScreen(); // TODO: Move
+		this_.updateStatsScreen(); // TODO: Move
 	}
 	function exitMenu() {
 		this_.state = STATE.GAME;
@@ -173,11 +174,19 @@ UI.prototype.updateInventoryScreen = function() {
 		itemsElem.appendChild(elem);
 		ui.inventoryElems.push(elem);
 	}
+};
+
+UI.prototype.updateStatsScreen = function() {
+	$("#stats-health").innerHTML = Math.ceil(this.actor.health);
+	$("#stats-oxygen").innerHTML = Math.ceil(this.actor.oxygen);
+	var o2cost = world.dungeon.env.oxygenCost;
+	$("#stats-oxygen-usage").innerHTML = o2cost;
+	$("#stats-oxygen-time").innerHTML = Math.ceil(this.actor.oxygen / o2cost);
 }
 
 UI.prototype.die = function() {
 	$("#death-screen").style.display = "block";
-}
+};
 
 // rot.js extension
 ROT.Display.prototype.drawTextCentered = function(y, str) {
