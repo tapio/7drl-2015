@@ -12,6 +12,14 @@ if (!Math.sign)
 		else return x > 0 ? 1 : -1;
 	};
 
+if (!window.performance)
+	window.performance = {
+		now: (function() {
+			return performance.now || performance.mozNow || performance.msNow || performance.oNow || performance.webkitNow ||
+				function() { return new Date().getTime(); };
+			})()
+	};
+
 HTMLElement.prototype.addClass = function(add) {
 	if (this.classList) this.classList.add(add);
 	else {

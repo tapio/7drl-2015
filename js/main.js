@@ -14,12 +14,15 @@ function start() {
 		ui.msg("Welcome!");
 		//ui.msg("Instructions available from the top right corner.");
 		window.setInterval(function () {
+			var t0 = performance.now();
 			updateKeys(ui.actor);
 			world.update();
 			ui.update();
 			ui.render();
 			if (ui.actor.health <= 0)
 				ui.die();
+			var t1 = performance.now();
+			//console.log("dt", t1 - t0);
 		}, 75);
 	}, 100);
 }
