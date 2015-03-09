@@ -19,19 +19,19 @@ World.prototype.update = function() {
 		return;
 	this.dungeon.update();
 	this.currentActor = this.scheduler.next();
-	if (this.currentActor == ui.actor) {
-		this.roundTimer = Date.now() + 100;
-		return;
-	}
 	while (this.currentActor.act()) {
 		this.dungeon.update();
-		if (this.currentActor == ui.actor && this.currentActor.health <= 0) {
-			this.running = false;
-			ui.die();
+		if (this.currentActor == ui.actor) {
+			if (this.currentActor.health <= 0) {
+				this.running = false;
+				ui.die();
+				return;
+			}
 			break;
 		}
 		this.currentActor = this.scheduler.next();
 	}
+	this.roundTimer = Date.now() + 100;
 };
 
 World.prototype.changeMap = function(actor, entrance) {

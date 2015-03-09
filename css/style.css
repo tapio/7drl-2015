@@ -97,6 +97,7 @@ canvas {
 
 #hud {
 	position: absolute;
+	margin: 6px;
 }
 
 #hud > div {
