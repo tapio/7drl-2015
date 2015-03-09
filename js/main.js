@@ -24,6 +24,15 @@ function start() {
 			var t1 = performance.now();
 			//console.log("dt", t1 - t0);
 		}, 75);
+
+		// Another hack to make sure display is reset if other methods of
+		// detecting web font load fail
+		(function checkDimension() {
+			if (window.innerWidth < ui.display.getContainer().clientWidth) {
+				ui.resetDisplay();
+				window.setTimeout(checkDimension, 500);
+			}
+		})();
 	}, 100);
 }
 
