@@ -112,7 +112,7 @@ UI.prototype.resetDisplay = function() {
 	this.display = new ROT.Display({
 		width: w,
 		height: h,
-		//bg: "transparent",
+		bg: "#111",
 		fontSize: 48,
 		layout: "rect",
 		spacing: CONFIG.spacing,
