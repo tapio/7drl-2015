@@ -107,7 +107,7 @@ UI.prototype.resetDisplay = function() {
 	world.camera.center = [(w/2)|0, (h/2)|0];
 
 	if (this.display)
-		document.body.removeChild(this.display.getContainer());
+		$("#game").removeChild(this.display.getContainer());
 
 	this.display = new ROT.Display({
 		width: w,
