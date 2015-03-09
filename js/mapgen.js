@@ -40,8 +40,8 @@ Dungeon.prototype.generateBase = function() {
 	shuffle(freeTiles);
 
 	// Items
-	var itemChoices = [ ITEMS.oxygentank, ITEMS.medikit, ITEMS.gluetube, ITEMS.battery ];
-	this.generateItems(randInt(4,8), itemChoices, freeTiles);
+	var itemChoices = [ ITEMS.oxygentank, ITEMS.medikit, ITEMS.gluetube, ITEMS.battery, ITEMS.oxygenator, ITEMS.rtg, ITEMS.solarpanel ];
+	this.generateItems(randInt(5,8), itemChoices, freeTiles);
 };
 
 Dungeon.prototype.generateOverworld = function() {

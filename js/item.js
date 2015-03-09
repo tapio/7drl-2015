@@ -6,6 +6,7 @@ function Item(def) {
 	this.ch = def.ch || "*";
 	this.color = def.color || "#ccc";
 	this.pos = [0, 0];
+	this.canCarry = def.canCarry === undefined ? true : def.canCarry;
 	this.canEquip = def.canEquip || false;
 	this.canUse = def.canUse || false;
 	this.resource = def.resource || null;

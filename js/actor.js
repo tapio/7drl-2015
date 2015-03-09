@@ -53,7 +53,7 @@ Actor.prototype.act = function() {
 		var waypoint = this.path.shift();
 		// Check items
 		var item = world.dungeon.collide(waypoint);
-		if (item instanceof Item) {
+		if (item instanceof Item && item.canCarry) {
 			if (this.inv.length < this.maxItems) {
 				this.inv.push(item);
 				removeElem(world.dungeon.items, item);

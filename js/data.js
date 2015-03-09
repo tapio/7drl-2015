@@ -123,14 +123,10 @@ var ITEMS = {
 	oxygentank: { name: "O₂ tank", ch: "⌾", color: "#fff", resource: "oxygen", amount: 60, canUse: true, canEquip: true },
 	battery: { name: "Battery", ch: "⌁", color: "#06f", resource: "energy", amount: 30 },
 	medikit: { name: "Medikit", ch: "⚕", color: "#833", resource: "health", amount: 40, canUse: true, canEquip: true, desc: "Can heal wounds." },
-	metal: { name: "Scrap metal", ch: "⍽", color: "#999", resource: "metal", amount: 1 }
-};
-
-
-var DEVICES = {
-	oxygenator: { name: "Oxygenator", ch: "♼", color: "#ff0" },
-	rtg: { name: "RTG", ch: "☢", color: "#ff0", desc: "Radioisotope thermoelectric generator produces electricity from radioactive decay." },
-	solarpanel: { name: "Solar panel", ch: "☀", color: "#0f0" }
+	metal: { name: "Scrap metal", ch: "-", color: "#999", resource: "metal", amount: 1 },
+	oxygenator: { name: "Oxygenator", ch: "♼", color: "#0f0", canCarry: false },
+	rtg: { name: "RTG", ch: "☢", color: "#ff0", desc: "Radioisotope thermoelectric generator produces electricity from radioactive decay.", canCarry: false },
+	solarpanel: { name: "Solar panel", ch: "☀", color: "#f0f", canCarry: false }
 };
 
 // Add ids
@@ -143,6 +139,4 @@ var DEVICES = {
 		RESOURCES[i].id = i;
 	for (var i in ITEMS)
 		ITEMS[i].id = i;
-	for (var i in DEVICES)
-		DEVICES[i].id = i;
 })();
