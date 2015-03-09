@@ -126,7 +126,7 @@ var ITEMS = {
 	metal: { name: "Scrap metal", ch: "-", color: "#999", resource: "metal", amount: 1 },
 	oxygenator: { name: "Oxygenator", ch: "♼", color: "#0f0", canCarry: false },
 	rtg: { name: "RTG", ch: "☢", color: "#ff0", desc: "Radioisotope thermoelectric generator produces electricity from radioactive decay.", canCarry: false },
-	solarpanel: { name: "Solar panel", ch: "☀", color: "#f0f", canCarry: false }
+	solarpanel: { name: "Solar panel", ch: "☀", color: "#40f", canCarry: false }
 };
 
 // Add ids

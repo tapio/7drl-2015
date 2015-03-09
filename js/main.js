@@ -19,7 +19,7 @@ function start() {
 		(function tick() {
 			requestAnimationFrame(tick);
 			var t0 = window.performance.now();
-			updateKeys(ui.actor);
+			input.updateKeys(ui.actor);
 			world.update();
 			ui.update();
 			ui.render();
