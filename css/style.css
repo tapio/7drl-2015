@@ -57,10 +57,10 @@ canvas {
 
 .btn:active {
 	-webkit-transform: scale(0.85);
-	-moz-transform: rotate(0.85);
-	-ms-transform: rotate(0.85);
-	-o-transform: rotate(0.85);
-	transform: rotate(0.85);
+	-moz-transform: scale(0.85);
+	-ms-transform: scale(0.85);
+	-o-transform: scale(0.85);
+	transform: scale(0.85);
 }
 
 .btn-disabled {
