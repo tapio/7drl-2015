@@ -57,7 +57,6 @@ Dungeon.prototype.update = function() {
 	for (var i = 0, l = this.actors.length; i < l; ++i) {
 		var actor = this.actors[i];
 		this.autoOpenDoors(actor);
-		this.updateVisibility(actor);
 	}
 	// Update doors
 	for (var i = 0, l = this.doors.length; i < l; ++i) {
@@ -77,21 +76,6 @@ Dungeon.prototype.autoOpenDoors = function(actor) {
 		if (Math.max(dx, dy) <= 1)
 			door.open = true;
 	}
-};
-
-Dungeon.prototype.updateVisibility = function(actor) {
-	if (actor.fov.length != this.map.length)
-		actor.fov = new Array(this.width * this.height);
-	actor.fov.forEach(function(element, index, array) {
-		if (element == 1) array[index] = 0.5;
-		else if (element === undefined) array[index] = 0;
-	});
-	function callback(x, y, r, visibility) {
-		if (visibility > 0)
-			actor.fov[x + y * this.width] = 1;
-	}
-	var fov = new ROT.FOV.PreciseShadowcasting(this.getTransparent.bind(this));
-	fov.compute(actor.pos[0], actor.pos[1], actor.vision, callback.bind(this));
 };
 
 Dungeon.prototype.drawCollection = function(stuff, camera, display, player, threshold) {

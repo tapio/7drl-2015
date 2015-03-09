@@ -1,10 +1,11 @@
 
-function Actor(x, y) {
+function Actor(x, y, def) {
 	"use strict";
+	def = def || {};
 	this.name = "Player";
 	this.pos = [ x || 0, y || 0 ];
-	this.ch = "@";
-	this.color = "#ddd";
+	this.ch = def.ch || "@";
+	this.color = def.color || "#ddd";
 	this.path = [];
 	this.fov = [];
 	this.vision = 10;
@@ -13,15 +14,41 @@ function Actor(x, y) {
 	this.equipped = null;
 	this.oxygen = 100;
 	this.health = 100;
+	this.ai = def.ai;
 }
 
 Actor.prototype.visibility = function(x, y) {
 	return this.fov[x + y * world.dungeon.width];
 };
 
+Actor.prototype.updateVisibility = function() {
+	var dungeon = world.dungeon;
+	if (this.fov.length != dungeon.map.length)
+		this.fov = new Array(dungeon.width * dungeon.height);
+	this.fov.forEach(function(element, index, array) {
+		if (element == 1) array[index] = 0.5;
+		else if (element === undefined) array[index] = 0;
+	});
+	function callback(x, y, r, visibility) {
+		if (visibility > 0)
+			this.fov[x + y * dungeon.width] = 1;
+	}
+	var fov = new ROT.FOV.PreciseShadowcasting(dungeon.getTransparent.bind(dungeon));
+	fov.compute(this.pos[0], this.pos[1], this.vision, callback.bind(this));
+};
+
 Actor.prototype.act = function() {
 	if (this.health <= 0)
 		return true;
+
+	if (this.ai) {
+		if (!this.path.length) {
+			var dx = randInt(-1, 1);
+			var dy = randInt(-1, 1);
+			this.path.push([ this.pos[0] + dx, this.pos[1] + dy ]);
+		}
+	}
+
 	if (this.path.length) {
 		var waypoint = this.path.shift();
 		// Check items
@@ -30,14 +57,18 @@ Actor.prototype.act = function() {
 			if (this.inv.length < this.maxItems) {
 				this.inv.push(item);
 				removeElem(world.dungeon.items, item);
-				ui.msg("Picked up " + item.name + ".");
+				if (this == ui.actor)
+					ui.msg("Picked up " + item.name + ".");
 			} else {
-				ui.msg("Can't pick up " + item.name + ". Inventory full! ");
+				if (this == ui.actor)
+					ui.msg("Can't pick up " + item.name + ". Inventory full! ");
 			}
 		}
 		// Move
 		this.pos[0] = waypoint[0];
 		this.pos[1] = waypoint[1];
+		if (this === ui.actor)
+			this.updateVisibility();
 		// Handle environment stuff
 		var env = world.dungeon.env;
 		this.oxygen -= env.oxygenCost;
@@ -45,10 +76,12 @@ Actor.prototype.act = function() {
 			this.oxygen = 0;
 			this.health -= 5;
 		}
-		// Check for map change
-		var tile = world.dungeon.getTile(waypoint[0], waypoint[1])
-		if (tile.entrance && this.path.length == 0) {
-			world.changeMap(this, tile.entrance);
+		if (!this.ai) {
+			// Check for map change
+			var tile = world.dungeon.getTile(waypoint[0], waypoint[1])
+			if (tile.entrance && this.path.length == 0) {
+				world.changeMap(this, tile.entrance);
+			}
 		}
 		return true;
 	}

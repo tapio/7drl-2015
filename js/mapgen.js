@@ -81,8 +81,9 @@ Dungeon.prototype.generateOverworld = function() {
 	var airlock = clone(TILES.airlock);
 	airlock.entrance = { mapId: "base", mapType: "base" };
 	this.setTile(this.start[0], this.start[1], airlock);
-	// Items
+	// Items & mobs
 	this.generateItems(randInt(40,60), [ ITEMS.metal ], freeTiles);
+	this.generateMobs(randInt(10,20), [ MOBS.enemy ], freeTiles);
 };
 
 Dungeon.prototype.generateCave = function() {
@@ -112,8 +113,9 @@ Dungeon.prototype.generateCave = function() {
 	var caveExit = clone(TILES.cave);
 	caveExit.entrance = { mapId: "overworld", mapType: "overworld" };
 	this.setTile(this.start[0], this.start[1], caveExit);
-	// Items
+	// Items & mobs
 	this.generateItems(randInt(40,60), [ ITEMS.metal ], freeTiles);
+	this.generateMobs(randInt(10,20), [ MOBS.enemy ], freeTiles);
 };
 
 Dungeon.prototype.generateItems = function(amount, choices, freeTiles) {
@@ -121,5 +123,13 @@ Dungeon.prototype.generateItems = function(amount, choices, freeTiles) {
 		var item = new Item(choices.random());
 		item.pos = freeTiles.splice(0, 1)[0];
 		this.items.push(item);
+	}
+};
+
+Dungeon.prototype.generateMobs = function(amount, choices, freeTiles) {
+	for (var i = 0; i < amount; ++i) {
+		var pos = freeTiles.splice(0, 1)[0];
+		var mob = new Actor(pos[0], pos[1], choices.random());
+		this.actors.push(mob);
 	}
 };

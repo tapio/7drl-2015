@@ -9,10 +9,11 @@ function World() {
 	this.scheduler = new ROT.Scheduler.Simple();
 	this.currentActor = null;
 	this.roundTimer = 0;
+	this.running = true;
 }
 
 World.prototype.update = function() {
-	if (Date.now() < this.roundTimer)
+	if (Date.now() < this.roundTimer || !this.running)
 		return;
 	if (this.currentActor && !this.currentActor.act())
 		return;
@@ -24,6 +25,11 @@ World.prototype.update = function() {
 	}
 	while (this.currentActor.act()) {
 		this.dungeon.update();
+		if (this.currentActor == ui.actor && this.currentActor.health <= 0) {
+			this.running = false;
+			ui.die();
+			break;
+		}
 		this.currentActor = this.scheduler.next();
 	}
 };
@@ -39,4 +45,9 @@ World.prototype.changeMap = function(actor, entrance) {
 	actor.pos[0] = this.dungeon.start[0];
 	actor.pos[1] = this.dungeon.start[1];
 	actor.fov = [];
+	actor.updateVisibility();
+	this.currentActor = null;
+	this.scheduler.clear();
+	for (var i = 0; i < this.dungeon.actors.length; ++i)
+		this.scheduler.add(this.dungeon.actors[i], true);
 };

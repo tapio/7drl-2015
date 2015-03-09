@@ -9,6 +9,7 @@ function start() {
 		$("#loading-text").innerHTML = "Initializing...";
 		world = new World();
 		var pl = new Actor(world.dungeon.start[0], world.dungeon.start[1]);
+		pl.updateVisibility();
 		world.dungeon.actors.push(pl);
 		world.scheduler.add(pl, true);
 		ui = new UI(pl);
@@ -22,8 +23,6 @@ function start() {
 			world.update();
 			ui.update();
 			ui.render();
-			if (ui.actor.health <= 0)
-				ui.die();
 			var t1 = window.performance.now();
 			//console.log("dt", t1 - t0);
 		})();

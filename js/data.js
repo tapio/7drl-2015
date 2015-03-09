@@ -105,6 +105,9 @@ var TILES = {
 	}
 };
 
+var MOBS = {
+	enemy: { ch: "@", color: "#f00", ai: "drunk" }
+};
 
 var RESOURCES = {
 	oxygen: { name: "O₂" },
@@ -134,6 +137,8 @@ var DEVICES = {
 (function() {
 	for (var i in TILES)
 		TILES[i].id = i;
+	for (var i in MOBS)
+		MOBS[i].id = i;
 	for (var i in RESOURCES)
 		RESOURCES[i].id = i;
 	for (var i in ITEMS)
