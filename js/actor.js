@@ -69,17 +69,22 @@ Actor.prototype.equip = function(item) {
 	this.equipped = item;
 };
 
+Actor.prototype.unequip = function(item) {
+	if (!item || this.equipped == item)
+		this.equipped = null;
+};
+
 Actor.prototype.use = function(item) {
 	if (item.resource) {
 		this[item.resource] += item.amount;
 		item.amount = 0;
+		this.unequip(item);
 		removeElem(this.inv, item);
-		if (this.equipped == item)
-			this.equipped = null;
 	}
 };
 
 Actor.prototype.drop = function(item) {
+	this.unequip(item);
 	removeElem(this.inv, item);
 	item.pos = clone(this.pos);
 	world.dungeon.items.push(item);
