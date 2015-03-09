@@ -10,11 +10,13 @@ function start() {
 		world = new World();
 		var pl = new Actor(world.dungeon.start[0], world.dungeon.start[1]);
 		world.dungeon.actors.push(pl);
+		world.scheduler.add(pl, true);
 		ui = new UI(pl);
 		ui.resetDisplay();
 		ui.msg("Welcome!");
 		//ui.msg("Instructions available from the top right corner.");
-		window.setInterval(function () {
+		(function tick() {
+			requestAnimationFrame(tick);
 			var t0 = window.performance.now();
 			updateKeys(ui.actor);
 			world.update();
@@ -24,7 +26,7 @@ function start() {
 				ui.die();
 			var t1 = window.performance.now();
 			//console.log("dt", t1 - t0);
-		}, 75);
+		})();
 
 		// Another hack to make sure display is reset if other methods of
 		// detecting web font load fail

@@ -6,10 +6,26 @@ function World() {
 		overworld: new Dungeon("overworld", "overworld")
 	};
 	this.dungeon = this.maps.base;
+	this.scheduler = new ROT.Scheduler.Simple();
+	this.currentActor = null;
+	this.roundTimer = 0;
 }
 
 World.prototype.update = function() {
+	if (Date.now() < this.roundTimer)
+		return;
+	if (this.currentActor && !this.currentActor.act())
+		return;
 	this.dungeon.update();
+	this.currentActor = this.scheduler.next();
+	if (this.currentActor == ui.actor) {
+		this.roundTimer = Date.now() + 100;
+		return;
+	}
+	while (this.currentActor.act()) {
+		this.dungeon.update();
+		this.currentActor = this.scheduler.next();
+	}
 };
 
 World.prototype.changeMap = function(actor, entrance) {

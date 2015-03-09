@@ -21,7 +21,7 @@ Actor.prototype.visibility = function(x, y) {
 
 Actor.prototype.act = function() {
 	if (this.health <= 0)
-		return;
+		return true;
 	if (this.path.length) {
 		var waypoint = this.path.shift();
 		// Check items
@@ -50,7 +50,9 @@ Actor.prototype.act = function() {
 		if (tile.entrance && this.path.length == 0) {
 			world.changeMap(this, tile.entrance);
 		}
+		return true;
 	}
+	return false;
 };
 
 Actor.prototype.moveTo = function(x, y) {

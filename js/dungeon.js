@@ -56,7 +56,6 @@ Dungeon.prototype.update = function() {
 	// Update actors
 	for (var i = 0, l = this.actors.length; i < l; ++i) {
 		var actor = this.actors[i];
-		actor.act();
 		this.autoOpenDoors(actor);
 		this.updateVisibility(actor);
 	}
