@@ -1,7 +1,8 @@
 var STATE = {
 	GAME: 1,
 	LOOK: 2,
-	MENU: 3
+	SHOOT: 3,
+	MENU: 4
 };
 
 function UI(actor) {
@@ -17,7 +18,7 @@ function UI(actor) {
 
 	$("#look-button").addEventListener("click", function() {
 		if (this_.state != STATE.LOOK) {
-			this_.msg((CONFIG.touch ? "Touch" : "Click") + " a tile to examine it.");
+			this_.msg((CONFIG.touch ? "Touch" : "Click") + " a tile to examine it...");
 			$("#look-button").addClass("btn-selected");
 			this_.state = STATE.LOOK;
 		} else {
@@ -59,8 +60,12 @@ function UI(actor) {
 	}, true);
 
 	$("#equipped").addEventListener("click", function() {
-		if (this_.actor.equipped) this_.actor.use(this_.actor.equipped);
-		else (enterMenu.bind($("#inventory-open")))();
+		if (this_.actor.equipped) {
+			if (this_.actor.equipped.weapon) {
+				this_.state = STATE.SHOOT;
+				this_.msg("Select target...");
+			} else this_.actor.use(this_.actor.equipped);
+		} else (enterMenu.bind($("#inventory-open")))();
 	}, true);
 
 	$("#inventory-equip").addEventListener("click", function() {

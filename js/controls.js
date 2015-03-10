@@ -6,7 +6,12 @@ var input = {
 		var y = coords[1] + world.camera.pos[1];
 
 		if (ui.state == STATE.GAME) {
-			ui.actor.moveTo(x, y);
+			if (ui.actor.visibility(x, y) > 0.1)
+				ui.actor.moveTo(x, y);
+		} else if (ui.state == STATE.SHOOT) {
+			if (ui.actor.visibility(x, y) > 0.1)
+				ui.actor.shoot(x, y);
+				ui.state = STATE.GAME;
 		} else if (ui.state == STATE.LOOK) {
 			if (ui.actor.visibility(x, y) > 0.1) {
 				var thing = world.dungeon.collide([x, y]);

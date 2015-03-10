@@ -11,6 +11,7 @@ function Item(def) {
 	this.canUse = def.canUse || false;
 	this.resource = def.resource || null;
 	this.amount = def.amount || 0;
+	this.weapon = def.weapon || null;
 }
 
 Item.prototype.getDescription = function() {

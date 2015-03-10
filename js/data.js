@@ -136,15 +136,20 @@ var TILES = {
 };
 
 var MOBS = {
-	enemy: { ch: "@", color: "#f00", ai: "drunk" }
+	enemy: { name: "Bandit", ch: "@", color: "#f00", ai: "drunk" }
 };
 
 var ITEMS = {
+	gaussrifle: {
+		name: "Gauss rifle", ch: "☤", color: "#999", canEquip: true,
+		weapon: { accuracy: 0.8, damage: 1 } },
+
 	gluetube: { name: "Tube of glue", ch: "⊘", color: "#88c", resource: "glue", amount: 5 },
 	oxygentank: { name: "O₂ tank", ch: "⊚", color: "#fff", resource: "oxygen", amount: 60, canUse: true, canEquip: true },
 	battery: { name: "Battery", ch: "⊛", color: "#06f", resource: "energy", amount: 30 },
 	medikit: { name: "Medikit", ch: "⊕", color: "#833", resource: "health", amount: 40, canUse: true, canEquip: true, desc: "Can heal wounds." },
 	metal: { name: "Scrap metal", ch: "-", color: "#999", resource: "metal", amount: 1 },
+
 	oxygenator: { name: "Oxygenator", ch: "♼", color: "#0f0", canCarry: false },
 	rtg: { name: "RTG", ch: "☢", color: "#ff0", desc: "Radioisotope thermoelectric generator produces electricity from radioactive decay.", canCarry: false },
 	solarpanel: { name: "Solar panel", ch: "☀", color: "#40f", canCarry: false }

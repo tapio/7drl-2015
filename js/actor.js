@@ -2,14 +2,14 @@
 function Actor(x, y, def) {
 	"use strict";
 	def = def || {};
-	this.name = "Player";
+	this.name = def.name || "Player";
 	this.pos = [ x || 0, y || 0 ];
 	this.ch = def.ch || "@";
 	this.color = def.color || "#ddd";
 	this.path = [];
 	this.fov = [];
 	this.vision = 10;
-	this.inv = [];
+	this.inv = [ new Item(ITEMS.gaussrifle) ];
 	this.maxItems = 12;
 	this.equipped = null;
 	this.oxygen = 100;
@@ -79,6 +79,21 @@ Actor.prototype.drop = function(item) {
 	if (this == ui.actor)
 		ui.msg("Dropped " + item.name + ".");
 };
+
+Actor.prototype.shoot = function(x, y) {
+	var target = world.dungeon.collide([x, y]);
+	if (target instanceof Actor) {
+		if (Math.random() <= this.equipped.weapon.accuracy) {
+			target.health -= this.equipped.weapon.damage;
+			if (this == ui.actor)
+				ui.msg("You hit " + target.name + "!");
+		} else if (this == ui.actor) {
+			ui.msg("You missed " + target.name + "!");
+		}
+	} else if (this == ui.actor) {
+		ui.msg("You didn't hit anything!");
+	}
+}
 
 Actor.prototype.act = function() {
 	if (this.health <= 0)
