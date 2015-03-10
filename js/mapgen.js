@@ -1,3 +1,6 @@
+var debugDisplay; // = new ROT.Display({width: 100, height: 100, fontSize: 6});
+//document.body.appendChild(debugDisplay.getContainer());
+
 Dungeon.prototype.generateBase = function() {
 	"use strict";
 	this.width = randInt(40, 50);
@@ -87,8 +90,8 @@ Dungeon.prototype.generateOverworld = function() {
 
 Dungeon.prototype.generateCave = function() {
 	this.env.oxygenCost = 1;
-	this.width = randInt(30, 80);
-	this.height = randInt(30, 80);
+	this.width = randInt(40, 60);
+	this.height = randInt(40, 60);
 	this.map = new Array(this.width * this.height);
 
 	var gen = new ROT.Map.Cellular(this.width, this.height);
@@ -102,12 +105,23 @@ Dungeon.prototype.generateCave = function() {
 	gen.create((function(x, y, wall) {
 		if (wall || x <= 0 || y <= 0 || x >= this.width-1 || y >= this.height-1) {
 			this.setTile(x, y, TILES.generateInstance(wallTile));
+		} else if ((x <= 1 || y <= 1 || x >= this.width-2 || y >= this.height-2) && Math.random() < 0.667) {
+			this.setTile(x, y, TILES.generateInstance(wallTile));
+		} else if ((x <= 2 || y <= 2 || x >= this.width-3 || y >= this.height-3) && Math.random() < 0.333) {
+			this.setTile(x, y, TILES.generateInstance(wallTile));
 		} else {
 			this.setTile(x, y, TILES.generateInstance(groundTile));
 			freeTiles.push([x, y]);
 		}
 	}).bind(this));
 	shuffle(freeTiles);
+
+	if (debugDisplay)
+		for (var j = 0; j < this.height; ++j)
+			for (var i = 0; i < this.width; ++i)
+				if (!this.map[i + j * this.width].walkable)
+					debugDisplay.draw(i, j, "#");
+
 	this.start = freeTiles.splice(0, 1)[0];
 	// Exit
 	var caveExit = clone(TILES.cave);
