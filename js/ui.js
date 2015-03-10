@@ -100,8 +100,11 @@ UI.prototype.update = function() {
 	if (this.messagesDirty) {
 		var msgBuf = "";
 		var firstMsg = Math.max(this.messages.length-3, 0);
+		var classes = [ "msg2", "msg1", "msg0" ];
+		if (this.messages.length <= 2) classes.shift();
+		if (this.messages.length <= 1) classes.shift();
 		for (var i = firstMsg; i < this.messages.length; ++i)
-			msgBuf += this.messages[i] + "<br/>";
+			msgBuf += '<span class="' + classes.shift() + '">' + this.messages[i] + '</span><br/>';
 		$("#messages").innerHTML = msgBuf;
 		this.messagesDirty = false;
 	}
