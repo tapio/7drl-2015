@@ -51,6 +51,13 @@ function UI(actor) {
 	$("#inventory-close").addEventListener("click", exitMenu, true);
 	$("#mainmenu-close").addEventListener("click", exitMenu, true);
 
+	$("#mainmenu-credits").addEventListener("click", function() {
+		window.open("LICENSE.md", "_blank");
+	}, true);
+	$("#mainmenu-code").addEventListener("click", function() {
+		window.open("https://github.com/tapio/7drl-2015", "_blank");
+	}, true);
+
 	$("#equipped").addEventListener("click", function() {
 		if (this_.actor.equipped) this_.actor.use(this_.actor.equipped);
 		else (enterMenu.bind($("#inventory-open")))();
