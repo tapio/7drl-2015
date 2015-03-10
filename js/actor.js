@@ -42,8 +42,9 @@ Actor.prototype.updateVisibility = function() {
 };
 
 Actor.prototype.moveTo = function(x, y) {
-	var target = world.dungeon.getTile(x, y);
-	if (!target.walkable) return;
+	//var target = world.dungeon.getTile(x, y);
+	//if (!target.walkable) return;
+	if (!world.dungeon.getPassable(x, y)) return;
 	world.dungeon.findPath(x, y, this);
 };
 
@@ -105,6 +106,37 @@ Actor.prototype.shoot = function(x, y) {
 	}
 }
 
+Actor.prototype.doPath = function(checkItems) {
+	if (this.path.length) {
+		var waypoint = this.path.shift();
+		// Check items
+		if (checkItems) {
+			var item = world.dungeon.collide(waypoint);
+			if (item instanceof Item && item.canCarry) {
+				if (this.inv.length < this.maxItems) {
+					this.inv.push(item);
+					removeElem(world.dungeon.items, item);
+					if (this == ui.actor)
+						ui.msg("Picked up " + item.name + ".");
+				} else {
+					if (this == ui.actor)
+						ui.msg("Can't pick up " + item.name + ". Inventory full! ");
+				}
+				this.path = [];
+				return true;
+			}
+		}
+		if (!world.dungeon.getPassable(waypoint[0], waypoint[1])) {
+			this.path = [];
+			return false;
+		}
+		this.pos[0] = waypoint[0];
+		this.pos[1] = waypoint[1];
+		return true;
+	}
+	return false;
+};
+
 Actor.prototype.act = function() {
 	if (this.health <= 0)
 		return true;
@@ -112,24 +144,7 @@ Actor.prototype.act = function() {
 	if (this.ai)
 		return this.hunterAI();
 
-	if (this.path.length) {
-		var waypoint = this.path.shift();
-		// Check items
-		var item = world.dungeon.collide(waypoint);
-		if (item instanceof Item && item.canCarry) {
-			if (this.inv.length < this.maxItems) {
-				this.inv.push(item);
-				removeElem(world.dungeon.items, item);
-				if (this == ui.actor)
-					ui.msg("Picked up " + item.name + ".");
-			} else {
-				if (this == ui.actor)
-					ui.msg("Can't pick up " + item.name + ". Inventory full! ");
-			}
-		}
-		// Move
-		this.pos[0] = waypoint[0];
-		this.pos[1] = waypoint[1];
+	if (this.doPath(true)) {
 		if (this === ui.actor)
 			this.updateVisibility();
 		// Handle environment stuff
@@ -139,12 +154,10 @@ Actor.prototype.act = function() {
 			this.oxygen = 0;
 			this.health -= 5;
 		}
-		if (!this.ai) {
-			// Check for map change
-			var tile = world.dungeon.getTile(waypoint[0], waypoint[1])
-			if (tile.entrance && this.path.length == 0) {
-				world.changeMap(this, tile.entrance);
-			}
+		// Check for map change
+		var tile = world.dungeon.getTile(this.pos[0], this.pos[1])
+		if (tile.entrance && this.path.length == 0) {
+			world.changeMap(this, tile.entrance);
 		}
 		return true;
 	}
@@ -176,10 +189,7 @@ Actor.prototype.hunterAI = function() {
 	if (distSq(this.pos[0], this.pos[1], tx, ty) > range * range) {
 		// Pathing
 		this.moveTo(target.pos[0], target.pos[1]);
-		if (this.path.length) {
-			this.pos[0] = this.path[0][0];
-			this.pos[1] = this.path[0][1];
-		}
+		this.doPath(false);
 	} else this.path = [];
 	return true;
 };
