@@ -9,6 +9,7 @@ function Dungeon(id, mapType) {
 	this.doors = [];
 	this.start = [0,0];
 	this.items = [];
+	this.passableCache = [];
 	this.env = {
 		oxygenCost: 0
 	};
@@ -18,6 +19,8 @@ function Dungeon(id, mapType) {
 		cave: this.generateCave.bind(this)
 	}
 	generators[mapType]();
+	this.passableCache.length = this.map.length;
+	this.update();
 }
 
 Dungeon.prototype.getTile = function(x, y) {
@@ -30,7 +33,8 @@ Dungeon.prototype.setTile = function(x, y, tile) {
 };
 
 Dungeon.prototype.getPassable = function(x, y) {
-	return this.getTile(x, y).walkable;
+	//return this.getTile(x, y).walkable;
+	return this.passableCache[x + y * this.width];
 };
 
 Dungeon.prototype.getTransparent = function(x, y) {
@@ -38,6 +42,7 @@ Dungeon.prototype.getTransparent = function(x, y) {
 };
 
 Dungeon.prototype.findPath = function(x, y, actor) {
+	this.passableCache[actor.pos[0] + actor.pos[1] * this.width] = true;
 	var finder = new ROT.Path.AStar(x, y, this.getPassable.bind(this));
 	var success = false;
 	actor.path = [];
@@ -46,35 +51,36 @@ Dungeon.prototype.findPath = function(x, y, actor) {
 			actor.path.push([x, y]);
 		success = true;
 	});
+	this.passableCache[actor.pos[0] + actor.pos[1] * this.width] = false;
 	return success;
 };
 
 Dungeon.prototype.update = function() {
+	// Clear passable cache
+	for (var i = 0, l = this.map.length; i < l; ++i)
+		this.passableCache[i] = this.map[i].walkable;
 	// Close all doors
 	for (var i = 0, l = this.doors.length; i < l; ++i)
 		this.doors[i].open = false;
-	// Update actors
+	// Actor related updates
 	for (var i = 0, l = this.actors.length; i < l; ++i) {
 		var actor = this.actors[i];
-		this.autoOpenDoors(actor);
+		var x = actor.pos[0];
+		var y = actor.pos[1];
+		this.passableCache[x + y * this.width] = false;
+		for (var i = 0, l = this.doors.length; i < l; ++i) {
+			var door = this.doors[i];
+			var dx = Math.abs(x - door.pos[0]);
+			var dy = Math.abs(y - door.pos[1]);
+			if (Math.max(dx, dy) <= 1)
+				door.open = true;
+		}
 	}
-	// Update doors
+	// Update door tiles
 	for (var i = 0, l = this.doors.length; i < l; ++i) {
 		var pos = this.doors[i].pos;
 		var tile = this.doors[i].open ? TILES.door_open : TILES.door_closed;
 		this.setTile(pos[0], pos[1], tile);
-	}
-};
-
-Dungeon.prototype.autoOpenDoors = function(actor) {
-	var x = actor.pos[0];
-	var y = actor.pos[1];
-	for (var i = 0, l = this.doors.length; i < l; ++i) {
-		var door = this.doors[i];
-		var dx = Math.abs(x - door.pos[0]);
-		var dy = Math.abs(y - door.pos[1]);
-		if (Math.max(dx, dy) <= 1)
-			door.open = true;
 	}
 };
 
