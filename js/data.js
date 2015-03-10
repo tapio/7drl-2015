@@ -161,7 +161,7 @@ var ITEMS = {
 	},
 	medikit: {
 		name: "Medikit", ch: "⊕", color: "#833",
-		resource: "health", amount: 40, canUse: true, canEquip: true,
+		resource: "health", amount: 40, canUse: true, canEquip: true, canConsume: true,
 		desc: "Can heal wounds."
 	},
 	metal: {
