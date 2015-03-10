@@ -152,13 +152,14 @@ UI.prototype.onClickInventoryItem = function(e) {
 UI.prototype.updateInventoryScreen = function() {
 	$("#inventory-actions").style.display = "none";
 	ui.selectedInvItem = null;
-	var itemsElem = $("#inventory-items");
 	var inv = this.actor.inv;
 	if (!inv.length) {
-		itemsElem.innerHTML = "Inventory empty!";
+		$("#inventory-capacity").innerHTML = "Inventory empty!";
 		$("#inventory-details").innerHTML = "";
 		return;
 	}
+	$("#inventory-capacity").innerHTML = "Capacity " + inv.length + "/" + this.actor.maxItems;
+	var itemsElem = $("#inventory-items");
 	itemsElem.innerHTML = "";
 	$("#inventory-details").innerHTML = "Click an item to see details and actions...";
 
