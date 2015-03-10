@@ -20,9 +20,11 @@ function UI(actor) {
 		if (this_.state != STATE.LOOK) {
 			this_.msg((CONFIG.touch ? "Touch" : "Click") + " a tile to examine it...");
 			$("#look-button").addClass("btn-selected");
+			$("#look-button").innerHTML = "✖";
 			this_.state = STATE.LOOK;
 		} else {
 			$("#look-button").removeClass("btn-selected");
+			$("#look-button").innerHTML = "☌";
 			this_.state = STATE.GAME;
 		}
 	}, true);
@@ -31,6 +33,7 @@ function UI(actor) {
 		this_.state = STATE.MENU;
 		this.addClass("btn-selected");
 		$("#look-button").removeClass("btn-selected");
+		$("#look-button").innerHTML = "☌";
 		$(this.dataset.open).style.display = "block";
 		this_.updateInventoryScreen(); // TODO: Move
 		this_.updateStatsScreen(); // TODO: Move
