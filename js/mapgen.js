@@ -100,7 +100,7 @@ Dungeon.prototype.generateCave = function() {
 	var wallTile = [TILES.icewall, TILES.rockwall, TILES.rockwall][theme];
 	var freeTiles = [];
 	gen.create((function(x, y, wall) {
-		if (wall) {
+		if (wall || x <= 0 || y <= 0 || x >= this.width-1 || y >= this.height-1) {
 			this.setTile(x, y, TILES.generateInstance(wallTile));
 		} else {
 			this.setTile(x, y, TILES.generateInstance(groundTile));
