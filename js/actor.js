@@ -15,7 +15,10 @@ function Actor(x, y, def) {
 	this.oxygen = 100;
 	this.health = 100;
 	this.power = 0;
-	this.ai = def.ai;
+	this.ai = !def.ai ? null : {
+		type: def.ai,
+		target: null
+	};
 }
 
 Actor.prototype.visibility = function(x, y) {
@@ -81,13 +84,8 @@ Actor.prototype.act = function() {
 	if (this.health <= 0)
 		return true;
 
-	if (this.ai) {
-		if (!this.path.length) {
-			var dx = randInt(-1, 1);
-			var dy = randInt(-1, 1);
-			this.path.push([ this.pos[0] + dx, this.pos[1] + dy ]);
-		}
-	}
+	if (this.ai)
+		return this.hunterAI();
 
 	if (this.path.length) {
 		var waypoint = this.path.shift();
@@ -126,4 +124,37 @@ Actor.prototype.act = function() {
 		return true;
 	}
 	return false;
+};
+
+Actor.prototype.drunkAI = function() {
+	var dx = randInt(-1, 1);
+	var dy = randInt(-1, 1);
+	var newPos = [ this.pos[0] + dx, this.pos[1] + dy ];
+	if (world.dungeon.getTile(newPos[0], newPos[1]).walkable);
+		this.path.push(newPos);
+	return true;
+};
+
+Actor.prototype.hunterAI = function() {
+	//if (!this.equipped)
+	//	return this.drunkAI();
+	if (!this.ai.target) {
+		var newTarget = ui.actor; // TODO: Other possibilities?
+		this.updateVisibility();
+		if (this.visibility(newTarget.pos[0], newTarget.pos[1]) < 1)
+			return this.drunkAI();
+		this.ai.target = ui.actor;
+	}
+	var target = this.ai.target;
+	var tx = target.pos[0], ty = target.pos[1];
+	var range = 3; // TODO
+	if (distSq(this.pos[0], this.pos[1], tx, ty) > range * range) {
+		// Pathing
+		this.moveTo(target.pos[0], target.pos[1]);
+		if (this.path.length) {
+			this.pos[0] = this.path[0][0];
+			this.pos[1] = this.path[0][1];
+		}
+	} else this.path = [];
+	return true;
 };
