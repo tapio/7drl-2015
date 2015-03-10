@@ -29,8 +29,8 @@ World.prototype.update = function() {
 			}
 			break; // Always wait for next round after player action
 		}
-		else if (distSq(actor.pos[0], actor.pos[1], ui.actor.pos[0], ui.actor.pos[1]) < 10)
-			break;
+		//else if (distSq(actor.pos[0], actor.pos[1], ui.actor.pos[0], ui.actor.pos[1]) < 6)
+		//	break;
 	};
 	this.roundTimer = Date.now() + 100;
 };
