@@ -38,6 +38,45 @@ Actor.prototype.updateVisibility = function() {
 	fov.compute(this.pos[0], this.pos[1], this.vision, callback.bind(this));
 };
 
+Actor.prototype.moveTo = function(x, y) {
+	var target = world.dungeon.getTile(x, y);
+	if (!target.walkable) return;
+	world.dungeon.findPath(x, y, this);
+};
+
+Actor.prototype.move = function(dx, dy) {
+	this.moveTo(this.pos[0] + dx, this.pos[1] + dy);
+};
+
+Actor.prototype.equip = function(item) {
+	this.equipped = item;
+	if (this == ui.actor)
+		ui.msg("Equipped " + item.name + ".");
+};
+
+Actor.prototype.unequip = function(item) {
+	if (!item || this.equipped == item)
+		this.equipped = null;
+};
+
+Actor.prototype.use = function(item) {
+	if (item.resource) {
+		this[item.resource] += item.amount;
+		item.amount = 0;
+		this.unequip(item);
+		removeElem(this.inv, item);
+	}
+};
+
+Actor.prototype.drop = function(item) {
+	this.unequip(item);
+	removeElem(this.inv, item);
+	item.pos = clone(this.pos);
+	world.dungeon.items.push(item);
+	if (this == ui.actor)
+		ui.msg("Dropped " + item.name + ".");
+};
+
 Actor.prototype.act = function() {
 	if (this.health <= 0)
 		return true;
@@ -87,43 +126,4 @@ Actor.prototype.act = function() {
 		return true;
 	}
 	return false;
-};
-
-Actor.prototype.moveTo = function(x, y) {
-	var target = world.dungeon.getTile(x, y);
-	if (!target.walkable) return;
-	world.dungeon.findPath(x, y, this);
-};
-
-Actor.prototype.move = function(dx, dy) {
-	this.moveTo(this.pos[0] + dx, this.pos[1] + dy);
-};
-
-Actor.prototype.equip = function(item) {
-	this.equipped = item;
-	if (this == ui.actor)
-		ui.msg("Equipped " + item.name + ".");
-};
-
-Actor.prototype.unequip = function(item) {
-	if (!item || this.equipped == item)
-		this.equipped = null;
-};
-
-Actor.prototype.use = function(item) {
-	if (item.resource) {
-		this[item.resource] += item.amount;
-		item.amount = 0;
-		this.unequip(item);
-		removeElem(this.inv, item);
-	}
-};
-
-Actor.prototype.drop = function(item) {
-	this.unequip(item);
-	removeElem(this.inv, item);
-	item.pos = clone(this.pos);
-	world.dungeon.items.push(item);
-	if (this == ui.actor)
-		ui.msg("Dropped " + item.name + ".");
 };
