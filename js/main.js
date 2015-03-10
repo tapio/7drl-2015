@@ -11,7 +11,6 @@ function start() {
 		var pl = new Actor(world.dungeon.start[0], world.dungeon.start[1]);
 		pl.updateVisibility();
 		world.dungeon.actors.push(pl);
-		world.scheduler.add(pl, true);
 		ui = new UI(pl);
 		ui.resetDisplay();
 		ui.msg("Welcome!");
