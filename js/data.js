@@ -48,15 +48,8 @@ var TILES = {
 		desc: "Airlock."
 	},
 	ground: {
-		ch: ";",
-		color: "#c60",
-		walkable: true,
-		transparent: true,
-		desc: "Sandy ground."
-	},
-	ground2: {
-		ch: ":",
-		color: "#c90",
+		ch: [":",";"],
+		color: [[204, 102, 0], 30],
 		walkable: true,
 		transparent: true,
 		desc: "Sandy ground."
@@ -91,17 +84,26 @@ var TILES = {
 	},
 	hill: {
 		ch: "▴",
-		color: "#f40",
+		color: [[255, 100, 0], 20],
 		walkable: false,
 		transparent: true,
 		desc: "Steep hills."
 	},
 	mountain: {
 		ch: "▲",
-		color: "#f20",
+		color: [[255, 50, 0], 10],
 		walkable: false,
 		transparent: false,
 		desc: "Impassable mountains."
+	},
+
+	generateInstance: function(proto) {
+		var tile = clone(proto);
+		if (tile.ch instanceof Array)
+			tile.ch = tile.ch.random();
+		if (tile.color instanceof Array)
+			tile.color = ROT.Color.toHex(ROT.Color.randomize(tile.color[0], tile.color[1]));
+		return tile;
 	}
 };
 
@@ -109,20 +111,11 @@ var MOBS = {
 	enemy: { ch: "@", color: "#f00", ai: "drunk" }
 };
 
-var RESOURCES = {
-	oxygen: { name: "O₂" },
-	co2: { name: "CO₂" },
-	energy: { name: "Energy" },
-	metal: { name: "Metal" },
-	glue: { name: "Glue" }
-};
-
-
 var ITEMS = {
-	gluetube: { name: "Tube of glue", ch: "✒", color: "#88c", resource: "glue", amount: 5 },
-	oxygentank: { name: "O₂ tank", ch: "⌾", color: "#fff", resource: "oxygen", amount: 60, canUse: true, canEquip: true },
-	battery: { name: "Battery", ch: "⌁", color: "#06f", resource: "energy", amount: 30 },
-	medikit: { name: "Medikit", ch: "⚕", color: "#833", resource: "health", amount: 40, canUse: true, canEquip: true, desc: "Can heal wounds." },
+	gluetube: { name: "Tube of glue", ch: "⊘", color: "#88c", resource: "glue", amount: 5 },
+	oxygentank: { name: "O₂ tank", ch: "⊚", color: "#fff", resource: "oxygen", amount: 60, canUse: true, canEquip: true },
+	battery: { name: "Battery", ch: "⊛", color: "#06f", resource: "energy", amount: 30 },
+	medikit: { name: "Medikit", ch: "⊕", color: "#833", resource: "health", amount: 40, canUse: true, canEquip: true, desc: "Can heal wounds." },
 	metal: { name: "Scrap metal", ch: "-", color: "#999", resource: "metal", amount: 1 },
 	oxygenator: { name: "Oxygenator", ch: "♼", color: "#0f0", canCarry: false },
 	rtg: { name: "RTG", ch: "☢", color: "#ff0", desc: "Radioisotope thermoelectric generator produces electricity from radioactive decay.", canCarry: false },
@@ -135,8 +128,6 @@ var ITEMS = {
 		TILES[i].id = i;
 	for (var i in MOBS)
 		MOBS[i].id = i;
-	for (var i in RESOURCES)
-		RESOURCES[i].id = i;
 	for (var i in ITEMS)
 		ITEMS[i].id = i;
 })();

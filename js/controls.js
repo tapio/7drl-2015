@@ -10,7 +10,8 @@ var input = {
 		} else if (ui.state == STATE.LOOK) {
 			if (ui.actor.visibility(x, y) > 0.1) {
 				var thing = world.dungeon.collide([x, y]);
-				ui.msg(thing.desc ? thing.desc : (thing.name ? thing.name : "Nothing interesting..."));
+				var desc = thing.getDescription ? thing.getDescription() : thing.desc;
+				ui.msg(desc ? desc : (thing.name ? thing.name : "Nothing interesting..."));
 			}
 		}
 	},

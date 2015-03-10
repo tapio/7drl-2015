@@ -52,7 +52,6 @@ Dungeon.prototype.generateOverworld = function() {
 
 	var gen = new ROT.Map.Arena(this.width, this.height);
 	// General layout
-	var grounds = [ TILES.ground, TILES.ground2 ];
 	var rocks = [ TILES.rock, TILES.rock2, TILES.rock3 ];
 	var noise = new ROT.Noise.Simplex();
 	var freeTiles = [];
@@ -60,18 +59,18 @@ Dungeon.prototype.generateOverworld = function() {
 	gen.create((function(x, y, wall) {
 		var mountainNoise = noise.get(x/20, y/20);
 		if (wall || mountainNoise > 0.6) {
-			this.setTile(x, y, TILES.mountain);
+			this.setTile(x, y, TILES.generateInstance(TILES.mountain));
 		} else if (mountainNoise > 0.2) {
 			if (rnd() > 0.9) {
-				var cave = clone(TILES.cave);
+				var cave = TILES.generateInstance(TILES.cave);
 				var id = this.id + "_cave_" + (++caveCount);
 				cave.entrance = { mapId: id, mapType: "cave" };
 				this.setTile(x, y, cave);
-			} else this.setTile(x, y, TILES.hill);
+			} else this.setTile(x, y, TILES.generateInstance(TILES.hill));
 		} else if (rnd() > 0.95) {
 			this.setTile(x, y, rocks.random());
 		} else {
-			this.setTile(x, y, grounds.random());
+			this.setTile(x, y, TILES.generateInstance(TILES.ground));
 			freeTiles.push([x, y]);
 		}
 	}).bind(this));
@@ -96,14 +95,14 @@ Dungeon.prototype.generateCave = function() {
 	gen.randomize(0.5);
 	for (var i = 0; i < 3; ++i)
 		gen.create(null);
-	var grounds = [ TILES.ground, TILES.ground2 ];
+	var ground = TILES.ground; // TODO: more options here
 	var rocks = [ TILES.rock, TILES.rock2, TILES.rock3 ];
 	var freeTiles = [];
 	gen.create((function(x, y, wall) {
 		if (wall) {
 			this.setTile(x, y, TILES.wall);
 		} else {
-			this.setTile(x, y, grounds.random());
+			this.setTile(x, y, TILES.generateInstance(ground));
 			freeTiles.push([x, y]);
 		}
 	}).bind(this));
