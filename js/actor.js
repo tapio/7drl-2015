@@ -81,8 +81,18 @@ Actor.prototype.drop = function(item) {
 };
 
 Actor.prototype.shoot = function(x, y) {
+	if (!this.equipped || !this.equipped.weapon)
+		return;
+	var wp = this.equipped.weapon;
+	// Power?
+	if (this.power < wp.power) {
+		if (this == ui.actor)
+			ui.msg("Not enough power to shoot " + this.equipped.name + ", needs at least ⚡" + wp.power + ".");
+		return;
+	}
 	var target = world.dungeon.collide([x, y]);
 	if (target instanceof Actor) {
+		// Accuracy?
 		if (Math.random() <= this.equipped.weapon.accuracy) {
 			target.health -= this.equipped.weapon.damage;
 			if (this == ui.actor)
