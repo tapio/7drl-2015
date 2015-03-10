@@ -70,7 +70,7 @@ Dungeon.prototype.generateOverworld = function() {
 		} else if (rnd() > 0.95) {
 			this.setTile(x, y, rocks.random());
 		} else {
-			this.setTile(x, y, TILES.generateInstance(TILES.ground));
+			this.setTile(x, y, TILES.generateInstance(TILES.sand));
 			freeTiles.push([x, y]);
 		}
 	}).bind(this));
@@ -95,14 +95,15 @@ Dungeon.prototype.generateCave = function() {
 	gen.randomize(0.5);
 	for (var i = 0; i < 3; ++i)
 		gen.create(null);
-	var ground = TILES.ground; // TODO: more options here
-	var rocks = [ TILES.rock, TILES.rock2, TILES.rock3 ];
+	var theme = randInt(0, 2);
+	var groundTile = [TILES.iceground, TILES.rockground, TILES.sand][theme];
+	var wallTile = [TILES.icewall, TILES.rockwall, TILES.rockwall][theme];
 	var freeTiles = [];
 	gen.create((function(x, y, wall) {
 		if (wall) {
-			this.setTile(x, y, TILES.wall);
+			this.setTile(x, y, TILES.generateInstance(wallTile));
 		} else {
-			this.setTile(x, y, TILES.generateInstance(ground));
+			this.setTile(x, y, TILES.generateInstance(groundTile));
 			freeTiles.push([x, y]);
 		}
 	}).bind(this));

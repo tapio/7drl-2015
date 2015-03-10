@@ -47,12 +47,40 @@ var TILES = {
 		transparent: true,
 		desc: "Airlock."
 	},
-	ground: {
+	sand: {
 		ch: [":",";"],
-		color: [[204, 102, 0], 30],
+		color: [[204, 102, 0], 20],
 		walkable: true,
 		transparent: true,
 		desc: "Sandy ground."
+	},
+	rockground: {
+		ch: [":",";"],
+		color: [[128, 128, 128], 20],
+		walkable: true,
+		transparent: true,
+		desc: "Rock ground."
+	},
+	rockwall: {
+		ch: "#",
+		color: [[100, 100, 100], 10],
+		walkable: false,
+		transparent: false,
+		desc: "Rocky wall."
+	},
+	iceground: {
+		ch: "░",
+		color: [[200, 255, 255], 20],
+		walkable: true,
+		transparent: true,
+		desc: "Icy ground."
+	},
+	icewall: {
+		ch: "#",
+		color: [[44, 163, 163], 20],
+		walkable: false,
+		transparent: false,
+		desc: "Icy wall."
 	},
 	rock: {
 		ch: "▁",
