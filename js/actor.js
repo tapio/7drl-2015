@@ -14,6 +14,7 @@ function Actor(x, y, def) {
 	this.equipped = null;
 	this.oxygen = 100;
 	this.health = 100;
+	this.power = 0;
 	this.ai = def.ai;
 }
 

@@ -142,6 +142,20 @@ h1 {
 	margin: 16px 0 20px 0;
 }
 
+table {
+	display: inline-block;
+	margin-bottom: 6px;
+	margin-right: 10px;
+}
+
+th {
+	text-align: left;
+}
+
+td {
+	min-width: 100px;
+}
+
 /* Inventory */
 
 #inventory-items {

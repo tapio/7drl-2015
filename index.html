@@ -23,6 +23,7 @@
 	<div id="hud">
 		<div>♥  <span id="hud-health">100</span></div>
 		<div>O₂ <span id="hud-oxygen">100</span></div>
+		<div>⚡  <span id="hud-power">100</span></div>
 	</div>
 
 	<div id="quickslots">
@@ -41,11 +42,24 @@
 		<div id="stats-main" class="menu">
 			<div id="stats-close" class="btn btn-square right" data-close="#stats">✕</div>
 			<h1>Status</h1>
-			<div>Health:     <span id="stats-health"></span> (stable)</div>
-			<br/>
-			<div>O₂ Usage:   <span id="stats-oxygen-usage"></span> per turn</div>
-			<div>O₂ Reserve: <span id="stats-oxygen"></span></div>
-			<div>O₂ Lasts:   <span id="stats-oxygen-time"></span> turns</div>
+			<table>
+				<tr><th>Suit</th><th></th></tr>
+				<tr><td>&nbsp;</td><td></td></tr>
+				<tr><td>♥ Health:    </td><td><span id="stats-health"></span> (stable)</td></tr>
+				<tr><td>O₂ Usage:   </td><td><span id="stats-oxygen-usage"></span> per turn</td></tr>
+				<tr><td>O₂ Reserve: </td><td><span id="stats-oxygen"></span></td></tr>
+				<tr><td>O₂ Lasts:   </td><td><span id="stats-oxygen-time"></span> turns</td></tr>
+				<tr><td>⚡ Power:    </td><td><span id="stats-power"></span></td></tr>
+			</table>
+			<table>
+				<tr><th>Environment</th><th></th></tr>
+				<tr><td>&nbsp;</td><td></td></tr>
+				<tr><td>Weather:    </td><td><span id="stats-weather"></span></td></tr>
+				<tr><td>Atmosphere: </td><td><span id="stats-atmosphere"></span></td></tr>
+				<tr><td>&nbsp;</td><td></td></tr>
+				<tr><td>&nbsp;</td><td></td></tr>
+				<tr><td>&nbsp;</td><td></td></tr>
+			</table>
 		</div>
 	</div>
 

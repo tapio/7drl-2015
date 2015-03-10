@@ -86,6 +86,7 @@ UI.prototype.update = function() {
 	}
 	$("#hud-health").innerHTML = Math.ceil(this.actor.health);
 	$("#hud-oxygen").innerHTML = Math.ceil(this.actor.oxygen);
+	$("#hud-power").innerHTML = Math.ceil(this.actor.power);
 
 	var equipped = this.actor.equipped;
 	$("#equipped").innerHTML = equipped ? equipped.ch : "⬚";
@@ -182,6 +183,10 @@ UI.prototype.updateStatsScreen = function() {
 	var o2cost = world.dungeon.env.oxygenCost;
 	$("#stats-oxygen-usage").innerHTML = o2cost;
 	$("#stats-oxygen-time").innerHTML = Math.ceil(this.actor.oxygen / o2cost);
+	$("#stats-power").innerHTML = Math.ceil(this.actor.power);
+	// Environment
+	$("#stats-weather").innerHTML = world.dungeon == world.maps.base ? "(Indoors)" : "Good";
+	$("#stats-atmosphere").innerHTML = o2cost ? (-o2cost + " O₂") : "Breathable";
 }
 
 UI.prototype.die = function() {
