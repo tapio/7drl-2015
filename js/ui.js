@@ -16,6 +16,12 @@ function UI(actor) {
 	this.inventoryElems = [];
 	this.display = null;
 
+	if (!CONFIG.touch) {
+		[].forEach.call(document.querySelectorAll(".btn"), function(elem) {
+			elem.addClass("btn-no-touch");
+		});
+	}
+
 	$("#look-button").addEventListener("click", function() {
 		if (this_.state != STATE.LOOK) {
 			this_.msg((CONFIG.touch ? "Touch" : "Click") + " a tile to examine it...");
