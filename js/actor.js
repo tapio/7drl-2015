@@ -100,6 +100,8 @@ Actor.prototype.move = function(dx, dy) {
 
 Actor.prototype.equip = function(item) {
 	this.equipped = item;
+	if (this == ui.actor)
+		ui.msg("Equipped " + item.name + ".");
 };
 
 Actor.prototype.unequip = function(item) {
