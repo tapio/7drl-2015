@@ -97,7 +97,10 @@ canvas {
 
 #hud {
 	position: absolute;
-	margin: 6px;
+	padding: 6px;
+	text-shadow: black 0 0 2px;
+	background-color: rgba(0, 0, 0, 0.5);
+	border-radius: 3px;
 }
 
 #hud > div {
