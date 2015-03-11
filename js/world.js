@@ -37,8 +37,10 @@ World.prototype.update = function() {
 			}
 		} else this.currentActorIndex++;
 		this.dungeon.update();
-		if (actor == ui.actor)
+		if (actor == ui.actor) {
+			actor.updateVisibility();
 			break; // Always wait for next round after player action
+		}
 		//else if (distSq(actor.pos[0], actor.pos[1], ui.actor.pos[0], ui.actor.pos[1]) < 6)
 		//	break;
 	};
