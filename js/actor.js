@@ -51,7 +51,7 @@ Actor.prototype.moveTo = function(x, y) {
 		this.done = true; // Skip turn
 		return;
 	}
-	if (!world.dungeon.getPassable(x, y)) return;
+	if (!world.dungeon.getTile(x, y).walkable) return;
 	world.dungeon.findPath(x, y, this);
 };
 

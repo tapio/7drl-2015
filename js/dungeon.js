@@ -42,7 +42,13 @@ Dungeon.prototype.getTransparent = function(x, y) {
 };
 
 Dungeon.prototype.findPath = function(x, y, actor) {
-	this.passableCache[actor.pos[0] + actor.pos[1] * this.width] = true;
+	// Init passable cache
+	for (var i = 0, l = this.map.length; i < l; ++i)
+		this.passableCache[i] = this.map[i].walkable;
+	for (var i = 0, l = this.actors.length; i < l; ++i)
+		if (this.actors[i] != actor)
+			this.passableCache[this.actors[i].pos[0] + this.actors[i].pos[1] * this.width] = false;
+
 	var finder = new ROT.Path.AStar(x, y, this.getPassable.bind(this));
 	var success = false;
 	actor.path = [];
