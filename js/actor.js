@@ -130,7 +130,7 @@ Actor.prototype.shoot = function(x, y) {
 	}
 }
 
-Actor.prototype.doPath = function(checkItems) {
+Actor.prototype.doPath = function(checkItems, checkWorldChange) {
 	if (this.path.length) {
 		var waypoint = this.path.shift();
 		var thing = world.dungeon.collide(waypoint);
@@ -163,6 +163,13 @@ Actor.prototype.doPath = function(checkItems) {
 		}
 		this.pos[0] = waypoint[0];
 		this.pos[1] = waypoint[1];
+		// Check for map change
+		if (checkWorldChange) {
+			var tile = world.dungeon.getTile(this.pos[0], this.pos[1])
+			if (tile.entrance && this.path.length == 0) {
+				world.changeMap(this, tile.entrance);
+			}
+		}
 		return true;
 	}
 	return false;
@@ -192,14 +199,9 @@ Actor.prototype.act = function() {
 	if (this.ai)
 		return this.hunterAI();
 
-	if (this.doPath(true)) {
+	if (this.doPath(true, true)) {
 		this.updateVisibility();
 		this.envTick();
-		// Check for map change
-		var tile = world.dungeon.getTile(this.pos[0], this.pos[1])
-		if (tile.entrance && this.path.length == 0) {
-			world.changeMap(this, tile.entrance);
-		}
 		return true;
 	}
 	return false;
@@ -231,7 +233,7 @@ Actor.prototype.hunterAI = function() {
 	if (distSq(this.pos[0], this.pos[1], tx, ty) > range * range) {
 		// Pathing
 		this.moveTo(target.pos[0], target.pos[1]);
-		this.doPath(false);
+		this.doPath(false, false);
 	} else this.path = [];
 	// TODO: Shoot if anyone has a ranged weapon
 	return true;
