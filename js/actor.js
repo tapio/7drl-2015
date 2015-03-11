@@ -168,12 +168,24 @@ Actor.prototype.doPath = function(checkItems) {
 	return false;
 };
 
+Actor.prototype.envTick = function() {
+	// Handle environment stuff
+	var env = world.dungeon.env;
+	this.oxygen -= env.oxygenCost;
+	if (this.oxygen <= 0) {
+		this.oxygen = 0;
+		this.health -= 5;
+	}
+};
+
 Actor.prototype.act = function() {
 	if (this.health <= 0)
 		return true;
 
 	if (this.done) {
 		this.done = false;
+		if (this == ui.actor)
+			this.envTick();
 		return true;
 	}
 
@@ -181,15 +193,8 @@ Actor.prototype.act = function() {
 		return this.hunterAI();
 
 	if (this.doPath(true)) {
-		if (this === ui.actor)
-			this.updateVisibility();
-		// Handle environment stuff
-		var env = world.dungeon.env;
-		this.oxygen -= env.oxygenCost;
-		if (this.oxygen <= 0) {
-			this.oxygen = 0;
-			this.health -= 5;
-		}
+		this.updateVisibility();
+		this.envTick();
 		// Check for map change
 		var tile = world.dungeon.getTile(this.pos[0], this.pos[1])
 		if (tile.entrance && this.path.length == 0) {
