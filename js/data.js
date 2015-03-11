@@ -135,10 +135,6 @@ var TILES = {
 	}
 };
 
-var MOBS = {
-	enemy: { name: "Bandit", ch: "@", color: "#f00", ai: "hunter" }
-};
-
 var ITEMS = {
 	// Weapons
 	gaussrifle: {
@@ -173,6 +169,14 @@ var ITEMS = {
 	rtg: { name: "RTG", ch: "☢", color: "#ff0", desc: "Radioisotope thermoelectric generator produces electricity from radioactive decay.", canCarry: false },
 	solarpanel: { name: "Solar panel", ch: "☀", color: "#40f", canCarry: false }
 };
+
+
+var MOBS = {
+	rat: { name: "Space rat", ch: "r", color: "#d40", health: 40, ai: "hunter" },
+	wolf: { name: "Space wolf", ch: "w", color: "#f44", health: 80, ai: "hunter" },
+	bear: { name: "Space bear", ch: "B", color: "#d40", health: 200, ai: "hunter" }
+};
+
 
 // Add ids
 (function() {

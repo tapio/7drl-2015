@@ -82,7 +82,7 @@ Dungeon.prototype.generateOverworld = function() {
 	this.setTile(this.start[0], this.start[1], airlock);
 	// Items & mobs
 	this.generateItems(randInt(40,60), [ ITEMS.metal ], freeTiles);
-	this.generateMobs(randInt(10,20), [ MOBS.enemy ], freeTiles);
+	this.generateMobs(randInt(10,20), [ MOBS.rat, MOBS.wolf, MOBS.wolf ], freeTiles);
 };
 
 Dungeon.prototype.generateCave = function() {
@@ -133,7 +133,7 @@ Dungeon.prototype.generateCave = function() {
 	this.setTile(this.start[0], this.start[1], caveExit);
 	// Items & mobs
 	this.generateItems(randInt(40,60), [ ITEMS.metal ], freeTiles);
-	this.generateMobs(randInt(10,20), [ MOBS.enemy ], freeTiles);
+	this.generateMobs(randInt(10,20), [ MOBS.rat, MOBS.rat, MOBS.bear ], freeTiles);
 };
 
 Dungeon.prototype.generateItems = function(amount, choices, freeTiles) {
