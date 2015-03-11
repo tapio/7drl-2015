@@ -109,17 +109,17 @@ Actor.prototype.shoot = function(x, y) {
 				if (this == ui.actor)
 					ui.msg("You killed " + target.name + "!");
 				else if (target == ui.actor)
-					ui.msg(target.name + " kills you!");
+					ui.msg(this.name + " kills you!");
 			} else {
 				if (this == ui.actor)
 					ui.msg("You hit " + target.name + " for " + damage + "!");
 				else if (target == ui.actor)
-					ui.msg(target.name + " hit you for " + damage + "!");
+					ui.msg(this.name + " hit you for " + damage + "!");
 			}
 		} else if (this == ui.actor) {
 			ui.msg("You missed " + target.name + "!");
 		} else if (target == ui.actor) {
-			ui.msg(target.name + " missed you!");
+			ui.msg(this.name + " missed you!");
 		}
 	} else if (this == ui.actor) {
 		ui.msg("You didn't hit anything!");
