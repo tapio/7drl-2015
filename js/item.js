@@ -1,6 +1,7 @@
 
 function Item(def) {
 	"use strict";
+	this.id = def.id || null;
 	this.name = def.name || "Unknown item";
 	this.desc = def.desc || "";
 	this.ch = def.ch || "?";

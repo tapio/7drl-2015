@@ -2,6 +2,7 @@
 function Actor(x, y, def) {
 	"use strict";
 	def = def || {};
+	this.id = def.id || null;
 	this.name = def.name || "Player";
 	this.pos = [ x || 0, y || 0 ];
 	this.ch = def.ch || "@";
@@ -145,9 +146,9 @@ Actor.prototype.doPath = function(checkItems, checkWorldChange) {
 			return false;
 		}
 		// Check items
-		if (checkItems) {
+		if (checkItems && thing instanceof Item) {
 			var item = thing;
-			if (item instanceof Item && item.canCarry) {
+			if (item.canCarry) {
 				if (this.inv.length < this.maxItems) {
 					this.inv.push(item);
 					removeElem(world.dungeon.items, item);
@@ -156,6 +157,21 @@ Actor.prototype.doPath = function(checkItems, checkWorldChange) {
 				} else {
 					if (this == ui.actor)
 						ui.msg("Can't pick up " + item.name + ". Inventory full! ");
+				}
+				this.path = [];
+				return true;
+			} else if (item.resource) {
+				var filled = false;
+				for (var i = 0; i < this.inv.length; ++i) {
+					var invItem = this.inv[i];
+					if (invItem.resource == item.resource) {
+						invItem.amount = ITEMS[invItem.id].amount; // Refill
+						filled = true;
+					}
+				}
+				if (this == ui.actor) {
+					if (filled) ui.msg("Filled all " + item.resource + " containers.");
+					else ui.msg("You don't have any " + item.resource + " containers to fill.");
 				}
 				this.path = [];
 				return true;
