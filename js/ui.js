@@ -2,7 +2,8 @@ var STATE = {
 	GAME: 1,
 	LOOK: 2,
 	SHOOT: 3,
-	MENU: 4
+	SHOP: 4,
+	MENU: 5
 };
 
 function UI(actor) {
@@ -10,11 +11,15 @@ function UI(actor) {
 	var this_ = this;
 	this.actor = actor;
 	this.state = STATE.GAME;
+	this.display = null;
 	this.messages = [];
 	this.messagesDirty = false;
 	this.selectedInvItem = null;
 	this.inventoryElems = [];
-	this.display = null;
+	this.shopInv = [
+		new Item(ITEMS.oxygentank), new Item(ITEMS.battery),
+		new Item(ITEMS.medikit), new Item(ITEMS.gluetube)
+	];
 
 	if (!CONFIG.touch) {
 		[].forEach.call(document.querySelectorAll(".btn"), function(elem) {
@@ -76,6 +81,7 @@ function UI(actor) {
 	$("#stats-close").addEventListener("click", exitMenu, true);
 	$("#inventory-close").addEventListener("click", exitMenu, true);
 	$("#mainmenu-close").addEventListener("click", exitMenu, true);
+	$("#shop-close").addEventListener("click", exitMenu, true);
 
 	$("#mainmenu-credits").addEventListener("click", function() {
 		window.open("LICENSE.md", "_blank");
@@ -86,15 +92,22 @@ function UI(actor) {
 
 	$("#inventory-equip").addEventListener("click", function() {
 		this_.actor.equip(this_.selectedInvItem);
-		//this_.updateInventoryScreen(this_.actor);
+		//this_.updateInventoryScreen();
 	}, true);
 	$("#inventory-use").addEventListener("click", function() {
 		this_.actor.use(this_.selectedInvItem);
-		this_.updateInventoryScreen(this_.actor);
+		this_.updateInventoryScreen();
 	}, true);
 	$("#inventory-drop").addEventListener("click", function() {
 		this_.actor.drop(this_.selectedInvItem);
-		this_.updateInventoryScreen(this_.actor);
+		this_.updateInventoryScreen();
+	}, true);
+	$("#shop-ok").addEventListener("click", function() {
+		// TODO: Cost etc.
+		if (this_.actor.inv.length < this_.actor.maxItems) {
+			this_.actor.inv.push(new Item(ITEMS[this_.selectedInvItem.id]));
+		}
+		this_.updateShopScreen(this_.actor);
 	}, true);
 }
 
@@ -132,6 +145,7 @@ UI.prototype.update = function() {
 	if (this.state == STATE.LOOK) cursor = "help";
 	else if (this.actor.path.length) cursor = "wait";
 	this.display.getContainer().style.cursor = cursor;
+	window.addEventListener('resize', function() { ui.resetDisplay(); ui.render(); });
 };
 
 UI.prototype.render = function() {
@@ -168,7 +182,6 @@ UI.prototype.resetDisplay = function() {
 	$("#game").appendChild(this.display.getContainer());
 	this.display.getContainer().addEventListener("click", input.onClick, true);
 };
-window.addEventListener('resize', function() { ui.resetDisplay(); ui.render(); });
 
 UI.prototype.onClickInventoryItem = function(e) {
 	// this = clicked element
@@ -216,6 +229,49 @@ UI.prototype.updateInventoryScreen = function() {
 		itemsElem.appendChild(elem);
 		ui.inventoryElems.push(elem);
 	}
+};
+
+UI.prototype.onClickShopItem = function(e) {
+	// this = clicked element
+	ui.inventoryElems.forEach(function(elem) { elem.removeClass("btn-selected"); });
+	this.addClass("btn-selected");
+	var item = ui.selectedInvItem = ui.shopInv[this.dataset.index];
+	if (!item) return;
+	var desc = item.getDescription();
+	$("#shop-details").innerHTML = desc;
+	$("#shop-actions").style.display = "block";
+	// TODO: Cost etc
+	var canCreate = ui.actor.inv.length < ui.actor.maxItems;
+	if (canCreate) $("#shop-ok").removeClass("btn-disabled");
+	else $("#shop-ok").addClass("btn-disabled");
+};
+
+UI.prototype.updateShopScreen = function() {
+	$("#shop-actions").style.display = "none";
+	ui.selectedInvItem = null;
+	var itemsElem = $("#shop-items");
+	itemsElem.innerHTML = "";
+	$("#shop-details").innerHTML = "Select an item to produce...";
+
+	ui.inventoryElems = [];
+	for (var i = 0; i < this.shopInv.length; ++i) {
+		var item = this.shopInv[i];
+		var elem = document.createElement("div");
+		elem.className = "btn btn-square";
+		elem.innerHTML = item.ch;
+		elem.title = item.name;
+		elem.style.color = item.color;
+		elem.dataset.index = i;
+		elem.addEventListener("click", this.onClickShopItem);
+		itemsElem.appendChild(elem);
+		ui.inventoryElems.push(elem);
+	}
+};
+
+UI.prototype.openShop = function() {
+	$("#shop").style.display = "block";
+	this.state = STATE.SHOP;
+	this.updateShopScreen();
 };
 
 UI.prototype.updateStatsScreen = function() {

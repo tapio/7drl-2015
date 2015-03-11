@@ -188,6 +188,7 @@ var ITEMS = {
 		desc: "Radioisotope thermoelectric generator produces electricity from radioactive decay." },
 	printer: {
 		name: "3d printer", ch: "⚙", color: "#40c", canCarry: false,
+		shop: true,
 		desc: "Creates things." }
 };
 

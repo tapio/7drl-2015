@@ -175,6 +175,10 @@ Actor.prototype.doPath = function(checkItems, checkWorldChange) {
 				}
 				this.path = [];
 				return true;
+			} else if (this == ui.actor && item.shop) {
+				ui.openShop();
+				this.path = [];
+				return false;
 			}
 		}
 		this.pos[0] = waypoint[0];
