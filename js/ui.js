@@ -22,9 +22,25 @@ function UI(actor) {
 		});
 	}
 
+	$("#equipped").addEventListener("click", function() {
+		if (this_.state == STATE.SHOOT) {
+			$("#equipped").removeClass("btn-selected");
+			this_.state = STATE.GAME;
+		} else if (this_.actor.equipped) {
+			if (this_.actor.equipped.weapon) {
+				this_.state = STATE.SHOOT;
+				$("#equipped").addClass("btn-selected");
+				$("#look-button").removeClass("btn-selected");
+				$("#look-button").innerHTML = "☌";
+				this_.msg("Select target...");
+			} else this_.actor.use(this_.actor.equipped);
+		} else (enterMenu.bind($("#inventory-open")))();
+	}, true);
+
 	$("#look-button").addEventListener("click", function() {
 		if (this_.state != STATE.LOOK) {
 			this_.msg((CONFIG.touch ? "Touch" : "Click") + " a tile to examine it...");
+			$("#equipped").removeClass("btn-selected");
 			$("#look-button").addClass("btn-selected");
 			$("#look-button").innerHTML = "✖";
 			this_.state = STATE.LOOK;
@@ -68,15 +84,6 @@ function UI(actor) {
 		window.open("https://github.com/tapio/7drl-2015", "_blank");
 	}, true);
 
-	$("#equipped").addEventListener("click", function() {
-		if (this_.actor.equipped) {
-			if (this_.actor.equipped.weapon) {
-				this_.state = STATE.SHOOT;
-				this_.msg("Select target...");
-			} else this_.actor.use(this_.actor.equipped);
-		} else (enterMenu.bind($("#inventory-open")))();
-	}, true);
-
 	$("#inventory-equip").addEventListener("click", function() {
 		this_.actor.equip(this_.selectedInvItem);
 		//this_.updateInventoryScreen(this_.actor);
@@ -112,10 +119,14 @@ UI.prototype.update = function() {
 	$("#hud-oxygen").innerHTML = Math.ceil(this.actor.oxygen);
 	$("#hud-power").innerHTML = Math.ceil(this.actor.power);
 
-	var equipped = this.actor.equipped;
-	$("#equipped").innerHTML = equipped ? equipped.ch : "⬚";
-	$("#equipped").style.color = equipped ? equipped.color : "";
-
+	if (this.state == STATE.SHOOT) {
+		$("#equipped").innerHTML = "✖";
+		$("#equipped").style.color = "";
+	} else {
+		var equipped = this.actor.equipped;
+		$("#equipped").innerHTML = equipped ? equipped.ch : "⬚";
+		$("#equipped").style.color = equipped ? equipped.color : "";
+	}
 	var cursor = "crosshair";
 	if (this.state == STATE.LOOK) cursor = "help";
 	else if (this.actor.path.length) cursor = "wait";
