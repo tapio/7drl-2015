@@ -45,7 +45,7 @@ var TILES = {
 		color: "#00f",
 		walkable: true,
 		transparent: true,
-		desc: "Airlock."
+		desc: "Airlock. Passage between the base and outside world."
 	},
 	sand: {
 		ch: [":",";"],
@@ -178,9 +178,17 @@ var ITEMS = {
 		weapon: { accuracy: 0.7, damage: 50 }
 	},
 	// Devices
-	oxygenator: { name: "Oxygenator", ch: "♼", color: "#0f0", canCarry: false },
-	rtg: { name: "RTG", ch: "☢", color: "#ff0", desc: "Radioisotope thermoelectric generator produces electricity from radioactive decay.", canCarry: false },
-	solarpanel: { name: "Solar panel", ch: "☀", color: "#40f", canCarry: false }
+	oxygenator: {
+		name: "Oxygenator", ch: "♼", color: "#0c5", canCarry: false,
+		resource: "oxygen", amount: Infinity,
+		desc: "Produces oxygen by separating it from CO₂." },
+	rtg: {
+		name: "RTG", ch: "☢", color: "#fc0", canCarry: false,
+		resource: "power", amount: Infinity ,
+		desc: "Radioisotope thermoelectric generator produces electricity from radioactive decay." },
+	printer: {
+		name: "3d printer", ch: "⚙", color: "#40c", canCarry: false,
+		desc: "Creates things." }
 };
 
 

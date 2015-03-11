@@ -15,19 +15,23 @@ Dungeon.prototype.generateBase = function() {
 	gen.create((function(x, y, wall) {
 		this.setTile(x, y, wall ? TILES.wall : TILES.floor);
 	}).bind(this));
-
-	// Doors
-	this.doors = [];
 	var rooms = gen.getRooms();
 	if (rooms.length < 5 || rooms.length > 6)
 		return this.generateBase();
+	// Doors & devices
+	this.doors = [];
+	var devices = [ null, new Item(ITEMS.oxygenator), new Item(ITEMS.rtg), new Item(ITEMS.printer) ];
 	for (var i = 0; i < rooms.length; i++) {
 		rooms[i].getDoors((function(x, y) {
 			this.setTile(x, y, TILES.door_closed);
 			this.doors.push({ pos: [x, y], open: false });
 		}).bind(this));
+		if (devices[i]) {
+			devices[i].pos = clone(rooms[i].getCenter());
+			this.items.push(devices[i]);
+		}
 	}
-	this.start = rooms[0].getCenter();
+	this.start = [ rooms[0].getCenter()[0]-1, rooms[0].getCenter()[1]-1 ];
 	// Air lock
 	var airlock = clone(TILES.airlock);
 	airlock.entrance = { mapId: "overworld", mapType: "overworld" };
@@ -43,8 +47,8 @@ Dungeon.prototype.generateBase = function() {
 	shuffle(freeTiles);
 
 	// Items
-	var itemChoices = [ ITEMS.oxygentank, ITEMS.medikit, ITEMS.gluetube, ITEMS.battery, ITEMS.oxygenator, ITEMS.rtg, ITEMS.solarpanel ];
-	this.generateItems(randInt(5,8), itemChoices, freeTiles);
+	var itemChoices = [ ITEMS.oxygentank, ITEMS.medikit, ITEMS.gluetube, ITEMS.battery ];
+	this.generateItems(randInt(5,6), itemChoices, freeTiles);
 };
 
 Dungeon.prototype.generateOverworld = function() {
@@ -78,7 +82,7 @@ Dungeon.prototype.generateOverworld = function() {
 		}
 	}).bind(this));
 	shuffle(freeTiles);
-	this.start = freeTiles.splice(0, 1)[0];
+	this.start = freeTiles.pop();
 	// Air lock
 	var airlock = clone(TILES.airlock);
 	airlock.entrance = { mapId: "base", mapType: "base" };
@@ -129,7 +133,7 @@ Dungeon.prototype.generateCave = function() {
 		}
 	}).bind(this));
 	shuffle(freeTiles);
-	this.start = freeTiles.splice(0, 1)[0];
+	this.start = freeTiles.pop();
 	// Exit
 	var caveExit = clone(TILES.cave);
 	caveExit.entrance = { mapId: "overworld", mapType: "overworld" };
@@ -142,14 +146,14 @@ Dungeon.prototype.generateCave = function() {
 Dungeon.prototype.generateItems = function(amount, choices, freeTiles) {
 	for (var i = 0; i < amount; ++i) {
 		var item = new Item(choices.random());
-		item.pos = freeTiles.splice(0, 1)[0];
+		item.pos = freeTiles.pop();
 		this.items.push(item);
 	}
 };
 
 Dungeon.prototype.generateMobs = function(amount, choices, freeTiles) {
 	for (var i = 0; i < amount; ++i) {
-		var pos = freeTiles.splice(0, 1)[0];
+		var pos = freeTiles.pop();
 		var mob = new Actor(pos[0], pos[1], choices.random());
 		this.actors.push(mob);
 	}
