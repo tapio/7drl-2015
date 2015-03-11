@@ -105,10 +105,17 @@ Actor.prototype.shoot = function(x, y) {
 		if (Math.random() <= this.equipped.weapon.accuracy) {
 			var damage = wp.damage;
 			target.health -= damage;
-			if (this == ui.actor)
-				ui.msg("You hit " + target.name + " for " + damage + "!");
-			else if (target == ui.actor)
-				ui.msg(target.name + " hit you for " + damage + "!");
+			if (target.health <= 0) {
+				if (this == ui.actor)
+					ui.msg("You killed " + target.name + "!");
+				else if (target == ui.actor)
+					ui.msg(target.name + " kills you!");
+			} else {
+				if (this == ui.actor)
+					ui.msg("You hit " + target.name + " for " + damage + "!");
+				else if (target == ui.actor)
+					ui.msg(target.name + " hit you for " + damage + "!");
+			}
 		} else if (this == ui.actor) {
 			ui.msg("You missed " + target.name + "!");
 		} else if (target == ui.actor) {
