@@ -1,13 +1,14 @@
 Dungeon.prototype.generateBase = function() {
 	"use strict";
-	this.width = randInt(40, 50);
-	this.height = randInt(20, 30);
+	this.width = randInt(25, 30);
+	this.height = randInt(15, 20);
 	this.map = new Array(this.width * this.height);
-	var gen = new ROT.Map.Digger(this.width, this.height, {
-		roomWidth: [5, 8],
-		roomHeight: [5, 6],
-		corridorLength: [2, 4],
-		dugPercentage: 0.2,
+	var gen = new ROT.Map.Uniform(this.width, this.height, {
+		roomWidth: [5, 6],
+		roomHeight: [4, 5],
+		//corridorLength: [2, 4],
+		//dugPercentage: 0.2,
+		roomDugPercentage: 0.5,
 		timeLimit: 3000
 	});
 	// General layout
@@ -18,6 +19,8 @@ Dungeon.prototype.generateBase = function() {
 	// Doors
 	this.doors = [];
 	var rooms = gen.getRooms();
+	if (rooms.length < 5 || rooms.length > 6)
+		return this.generateBase();
 	for (var i = 0; i < rooms.length; i++) {
 		rooms[i].getDoors((function(x, y) {
 			this.setTile(x, y, TILES.door_closed);
