@@ -182,6 +182,8 @@ UI.prototype.onClickInventoryItem = function(e) {
 	else $("#inventory-equip").addClass("btn-disabled");
 	if (item.canUse) $("#inventory-use").removeClass("btn-disabled");
 	else $("#inventory-use").addClass("btn-disabled");
+	if (item.canDrop) $("#inventory-drop").removeClass("btn-disabled");
+	else $("#inventory-drop").addClass("btn-disabled");
 };
 
 UI.prototype.updateInventoryScreen = function() {

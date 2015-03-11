@@ -139,7 +139,7 @@ var ITEMS = {
 	// Weapons
 	gaussrifle: {
 		name: "Gauss rifle", ch: "☤", color: "#999", canEquip: true,
-		weapon: { accuracy: 0.8, damage: 60, power: 5 }
+		weapon: { accuracy: 0.8, damage: 60, power: 5, range: 8 }
 	},
 	// Items
 	gluetube: {
@@ -164,6 +164,19 @@ var ITEMS = {
 		name: "Scrap metal", ch: "-", color: "#999",
 		resource: "metal", amount: 1
 	},
+	// Mob weapons
+	ratmelee: {
+		name: "Rat bite", canEquip: true, canDrop: false,
+		weapon: { accuracy: 0.5, damage: 10 }
+	},
+	wolfmelee: {
+		name: "Wolf bite", canEquip: true, canDrop: false,
+		weapon: { accuracy: 0.6, damage: 10 }
+	},
+	bearmelee: {
+		name: "Bear claw", canEquip: true, canDrop: false,
+		weapon: { accuracy: 0.7, damage: 50 }
+	},
 	// Devices
 	oxygenator: { name: "Oxygenator", ch: "♼", color: "#0f0", canCarry: false },
 	rtg: { name: "RTG", ch: "☢", color: "#ff0", desc: "Radioisotope thermoelectric generator produces electricity from radioactive decay.", canCarry: false },
@@ -172,9 +185,15 @@ var ITEMS = {
 
 
 var MOBS = {
-	rat: { name: "Space rat", ch: "r", color: "#d40", health: 40, ai: "hunter" },
-	wolf: { name: "Space wolf", ch: "w", color: "#f44", health: 80, ai: "hunter" },
-	bear: { name: "Space bear", ch: "B", color: "#d40", health: 200, ai: "hunter" }
+	rat: {
+		name: "Space rat", ch: "r", color: "#d40", ai: "hunter",
+		health: 40, weapon: ITEMS.ratmelee, vision: 6 },
+	wolf: {
+		name: "Space wolf", ch: "w", color: "#f44", ai: "hunter",
+		health: 80, weapon: ITEMS.wolfmelee, vision: 8 },
+	bear: {
+		name: "Space bear", ch: "B", color: "#d40", ai: "hunter",
+		health: 200, weapon: ITEMS.bearmelee, vision: 8 }
 };
 
 

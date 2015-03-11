@@ -8,8 +8,9 @@ function Actor(x, y, def) {
 	this.color = def.color || "#ddd";
 	this.path = [];
 	this.fov = [];
-	this.vision = 10;
-	this.inv = [ new Item(ITEMS.gaussrifle) ];
+	this.vision = def.vision || 8;
+	this.inv = [];
+	if (def.weapon) this.inv.push(new Item(def.weapon));
 	this.maxItems = 12;
 	this.equipped = null;
 	this.oxygen = 100;
@@ -19,6 +20,7 @@ function Actor(x, y, def) {
 		type: def.ai,
 		target: null
 	};
+	this.faction = def.ai ? 0 : 1;
 	this.done = false;
 }
 
@@ -75,6 +77,8 @@ Actor.prototype.use = function(item) {
 };
 
 Actor.prototype.drop = function(item) {
+	if (!item.canDrop)
+		return;
 	this.unequip(item);
 	removeElem(this.inv, item);
 	item.pos = clone(this.pos);
