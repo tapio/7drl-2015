@@ -94,6 +94,7 @@ Actor.prototype.shoot = function(x, y) {
 			ui.msg("Not enough power to shoot " + this.equipped.name + ", needs at least ⚡" + wp.power + ".");
 		return;
 	}
+	this.power -= wp.power;
 	var target = world.dungeon.collide([x, y]);
 	if (target instanceof Actor) {
 		// Accuracy?
