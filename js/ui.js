@@ -176,6 +176,8 @@ UI.prototype.onClickInventoryItem = function(e) {
 	var item = ui.selectedInvItem = ui.actor.inv[this.dataset.index];
 	if (!item) return;
 	var desc = item.getDescription();
+	if (item == ui.actor.equipped)
+		desc += " Currently equipped.";
 	$("#inventory-details").innerHTML = desc;
 	$("#inventory-actions").style.display = "block";
 	if (item.canEquip) $("#inventory-equip").removeClass("btn-disabled");

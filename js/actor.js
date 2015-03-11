@@ -12,7 +12,7 @@ function Actor(x, y, def) {
 	this.inv = [];
 	if (def.weapon) this.inv.push(new Item(def.weapon));
 	this.maxItems = 12;
-	this.equipped = null;
+	this.equipped = this.inv.length ? this.inv[0] : null;
 	this.oxygen = 100;
 	this.health = def.health || 100;
 	this.power = 100;
