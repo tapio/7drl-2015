@@ -13,12 +13,13 @@ function Actor(x, y, def) {
 	this.maxItems = 12;
 	this.equipped = null;
 	this.oxygen = 100;
-	this.health = 100;
-	this.power = 0;
+	this.health = def.health || 100;
+	this.power = 100;
 	this.ai = !def.ai ? null : {
 		type: def.ai,
 		target: null
 	};
+	this.done = false;
 }
 
 Actor.prototype.visibility = function(x, y) {
@@ -86,6 +87,7 @@ Actor.prototype.shoot = function(x, y) {
 	if (!this.equipped || !this.equipped.weapon)
 		return;
 	var wp = this.equipped.weapon;
+	this.done = true;
 	// Power?
 	if (this.power < wp.power) {
 		if (this == ui.actor)
@@ -141,6 +143,11 @@ Actor.prototype.doPath = function(checkItems) {
 Actor.prototype.act = function() {
 	if (this.health <= 0)
 		return true;
+
+	if (this.done) {
+		this.done = false;
+		return true;
+	}
 
 	if (this.ai)
 		return this.hunterAI();
