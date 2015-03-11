@@ -1,3 +1,6 @@
+var debugDisplay; // = new ROT.Display({width: 100, height: 100, fontSize: 6});
+//document.body.appendChild(debugDisplay.getContainer());
+
 function World() {
 	"use strict";
 	this.camera = { pos: [0, 0], center: [0, 0] };
@@ -9,6 +12,12 @@ function World() {
 	this.currentActorIndex = 0;
 	this.roundTimer = 0;
 	this.running = true;
+
+	if (debugDisplay)
+		for (var j = 0; j < this.dungeon.height; ++j)
+			for (var i = 0; i < this.dungeon.width; ++i)
+				if (!this.dungeon.map[i + j * this.dungeon.width].walkable)
+					debugDisplay.draw(i, j, "#");
 }
 
 World.prototype.update = function() {

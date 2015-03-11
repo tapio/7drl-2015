@@ -1,6 +1,3 @@
-var debugDisplay; // = new ROT.Display({width: 100, height: 100, fontSize: 6});
-//document.body.appendChild(debugDisplay.getContainer());
-
 Dungeon.prototype.generateBase = function() {
 	"use strict";
 	this.width = randInt(40, 50);
@@ -91,19 +88,18 @@ Dungeon.prototype.generateOverworld = function() {
 Dungeon.prototype.generateCave = function() {
 	this.env.oxygenCost = 1;
 	this.width = randInt(40, 60);
-	this.height = randInt(40, 60);
+	// Seems there is a chance of large empty space at the bottom if height > width
+	this.height = this.width - randInt(5, 15);
 	this.map = new Array(this.width * this.height);
 
-	var gen = new ROT.Map.Cellular(this.width, this.height);
-	gen.randomize(0.5);
-	for (var i = 0; i < 3; ++i)
-		gen.create(null);
 	var theme = randInt(0, 2);
 	var groundTile = [TILES.iceground, TILES.rockground, TILES.sand][theme];
 	var wallTile = [TILES.icewall, TILES.rockwall, TILES.rockwall][theme];
 	var freeTiles = [];
-	gen.create((function(x, y, wall) {
-		if (wall || x <= 0 || y <= 0 || x >= this.width-1 || y >= this.height-1) {
+	// Basic borders
+	var gen0 = new ROT.Map.Arena(this.width, this.height);
+	gen0.create((function(x, y, wall) {
+		if (wall) {
 			this.setTile(x, y, TILES.generateInstance(wallTile));
 		} else if ((x <= 1 || y <= 1 || x >= this.width-2 || y >= this.height-2) && Math.random() < 0.667) {
 			this.setTile(x, y, TILES.generateInstance(wallTile));
@@ -111,17 +107,25 @@ Dungeon.prototype.generateCave = function() {
 			this.setTile(x, y, TILES.generateInstance(wallTile));
 		} else {
 			this.setTile(x, y, TILES.generateInstance(groundTile));
+		}
+	}).bind(this));
+	// Cellular middle part
+	var offset = 4;
+	var numGen = 1;
+	var gen = new ROT.Map.Cellular(this.width - offset*2, this.height - offset*2, { connected: true });
+	gen.randomize(0.5);
+	for (var i = 0; i < numGen; ++i)
+		gen.create(null);
+	gen.create((function(x, y, wall) {
+		x += offset; y += offset;
+		if (wall) {
+			this.setTile(x, y, TILES.generateInstance(wallTile));
+		} else {
+			this.setTile(x, y, TILES.generateInstance(groundTile));
 			freeTiles.push([x, y]);
 		}
 	}).bind(this));
 	shuffle(freeTiles);
-
-	if (debugDisplay)
-		for (var j = 0; j < this.height; ++j)
-			for (var i = 0; i < this.width; ++i)
-				if (!this.map[i + j * this.width].walkable)
-					debugDisplay.draw(i, j, "#");
-
 	this.start = freeTiles.splice(0, 1)[0];
 	// Exit
 	var caveExit = clone(TILES.cave);
