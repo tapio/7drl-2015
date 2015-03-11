@@ -3,12 +3,12 @@ Dungeon.prototype.generateBase = function() {
 	this.width = randInt(25, 30);
 	this.height = randInt(15, 20);
 	this.map = new Array(this.width * this.height);
-	var gen = new ROT.Map.Uniform(this.width, this.height, {
+	var gen = new ROT.Map.Digger(this.width, this.height, {
 		roomWidth: [5, 6],
 		roomHeight: [4, 5],
-		//corridorLength: [2, 4],
-		//dugPercentage: 0.2,
-		roomDugPercentage: 0.5,
+		corridorLength: [2, 4],
+		dugPercentage: 0.3,
+		//roomDugPercentage: 0.5,
 		timeLimit: 3000
 	});
 	// General layout
