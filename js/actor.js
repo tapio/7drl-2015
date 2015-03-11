@@ -47,6 +47,10 @@ Actor.prototype.updateVisibility = function() {
 Actor.prototype.moveTo = function(x, y) {
 	//var target = world.dungeon.getTile(x, y);
 	//if (!target.walkable) return;
+	if (x == this.pos[0] && y == this.pos[1]) {
+		this.done = true; // Skip turn
+		return;
+	}
 	if (!world.dungeon.getPassable(x, y)) return;
 	world.dungeon.findPath(x, y, this);
 };
