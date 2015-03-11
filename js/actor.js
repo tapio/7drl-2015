@@ -130,7 +130,10 @@ Actor.prototype.doPath = function(checkItems) {
 				return true;
 			}
 		}
-		if (!world.dungeon.getPassable(waypoint[0], waypoint[1])) {
+		// TODO: Why doesn't getPassable work for mobs?
+		var thing = world.dungeon.collide(waypoint);
+		if (thing instanceof Actor) {
+		//if (!world.dungeon.getPassable(waypoint[0], waypoint[1])) {
 			this.path = [];
 			return false;
 		}
