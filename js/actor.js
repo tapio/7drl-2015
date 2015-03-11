@@ -87,27 +87,32 @@ Actor.prototype.drop = function(item) {
 		ui.msg("Dropped " + item.name + ".");
 };
 
+// Also accepts actor directly in x
 Actor.prototype.shoot = function(x, y) {
 	if (!this.equipped || !this.equipped.weapon)
 		return;
 	var wp = this.equipped.weapon;
-	this.done = true;
 	// Power?
-	if (this.power < wp.power) {
+	if (wp.power && this.power < wp.power) {
 		if (this == ui.actor)
 			ui.msg("Not enough power to shoot " + this.equipped.name + ", needs at least ⚡" + wp.power + ".");
 		return;
 	}
 	this.power -= wp.power;
-	var target = world.dungeon.collide([x, y]);
+	var target = x instanceof Actor ? x : world.dungeon.collide([x, y]);
 	if (target instanceof Actor) {
 		// Accuracy?
 		if (Math.random() <= this.equipped.weapon.accuracy) {
-			target.health -= this.equipped.weapon.damage;
+			var damage = wp.damage;
+			target.health -= damage;
 			if (this == ui.actor)
-				ui.msg("You hit " + target.name + "!");
+				ui.msg("You hit " + target.name + " for " + damage + "!");
+			else if (target == ui.actor)
+				ui.msg(target.name + " hit you for " + damage + "!");
 		} else if (this == ui.actor) {
 			ui.msg("You missed " + target.name + "!");
+		} else if (target == ui.actor) {
+			ui.msg(target.name + " missed you!");
 		}
 	} else if (this == ui.actor) {
 		ui.msg("You didn't hit anything!");
@@ -117,9 +122,20 @@ Actor.prototype.shoot = function(x, y) {
 Actor.prototype.doPath = function(checkItems) {
 	if (this.path.length) {
 		var waypoint = this.path.shift();
+		var thing = world.dungeon.collide(waypoint);
+		// Check enemy
+		if (thing instanceof Actor) {
+			this.path = [];
+			var enemy = thing;
+			if (this.faction != enemy.faction) {
+				this.shoot(thing);
+				return true;
+			}
+			return false;
+		}
 		// Check items
 		if (checkItems) {
-			var item = world.dungeon.collide(waypoint);
+			var item = thing;
 			if (item instanceof Item && item.canCarry) {
 				if (this.inv.length < this.maxItems) {
 					this.inv.push(item);
@@ -133,13 +149,6 @@ Actor.prototype.doPath = function(checkItems) {
 				this.path = [];
 				return true;
 			}
-		}
-		// TODO: Why doesn't getPassable work for mobs?
-		var thing = world.dungeon.collide(waypoint);
-		if (thing instanceof Actor) {
-		//if (!world.dungeon.getPassable(waypoint[0], waypoint[1])) {
-			this.path = [];
-			return false;
 		}
 		this.pos[0] = waypoint[0];
 		this.pos[1] = waypoint[1];
@@ -190,8 +199,8 @@ Actor.prototype.drunkAI = function() {
 };
 
 Actor.prototype.hunterAI = function() {
-	//if (!this.equipped)
-	//	return this.drunkAI();
+	if (!this.equipped || !this.equipped.weapon)
+		return this.drunkAI();
 	if (!this.ai.target) {
 		var newTarget = ui.actor; // TODO: Other possibilities?
 		this.updateVisibility();
@@ -201,11 +210,13 @@ Actor.prototype.hunterAI = function() {
 	}
 	var target = this.ai.target;
 	var tx = target.pos[0], ty = target.pos[1];
-	var range = 3; // TODO
+	var wp = this.equipped.weapon;
+	var range = wp.range ? wp.range : 0;
 	if (distSq(this.pos[0], this.pos[1], tx, ty) > range * range) {
 		// Pathing
 		this.moveTo(target.pos[0], target.pos[1]);
 		this.doPath(false);
 	} else this.path = [];
+	// TODO: Shoot if anyone has a ranged weapon
 	return true;
 };

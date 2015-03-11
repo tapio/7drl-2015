@@ -11,6 +11,7 @@ var input = {
 		} else if (ui.state == STATE.SHOOT) {
 			if (ui.actor.visibility(x, y) > 0.1)
 				ui.actor.shoot(x, y);
+				ui.actor.done = true;
 				//ui.state = STATE.GAME;
 		} else if (ui.state == STATE.LOOK) {
 			if (ui.actor.visibility(x, y) > 0.1) {

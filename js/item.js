@@ -13,7 +13,13 @@ function Item(def) {
 	this.canDrop = def.canDrop === undefined ? true : def.canDrop;
 	this.resource = def.resource || null;
 	this.amount = def.amount || 0;
-	this.weapon = def.weapon || null;
+	this.weapon = !def.weapon ? null : {
+		accuracy: 0.5,
+		range: 0,
+		damage: 1,
+		power: 0
+	};
+	for (var i in def.weapon) { this.weapon[i] = def.weapon[i]; }
 }
 
 Item.prototype.getDescription = function() {
