@@ -9,10 +9,11 @@ var input = {
 			if (ui.actor.visibility(x, y) > 0.1)
 				ui.actor.moveTo(x, y);
 		} else if (ui.state == STATE.SHOOT) {
-			if (ui.actor.visibility(x, y) > 0.1)
+			if (ui.actor.visibility(x, y) > 0.9) {
 				ui.actor.shoot(x, y);
 				ui.actor.done = true;
 				//ui.state = STATE.GAME;
+			}
 		} else if (ui.state == STATE.LOOK) {
 			if (ui.actor.visibility(x, y) > 0.1) {
 				var thing = world.dungeon.collide([x, y]);
