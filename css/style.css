@@ -35,8 +35,9 @@ canvas {
 }
 
 .msg0 { color: #fff; }
-.msg1 { color: #888; }
-.msg2 { color: #555; }
+.msg1 { color: #999; }
+.msg2 { color: #777; }
+.msg3 { color: #555; }
 
 .right { float: right; }
 .left { float: left; }
