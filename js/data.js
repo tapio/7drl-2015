@@ -136,14 +136,14 @@ var TILES = {
 };
 
 var MOBS = {
-	enemy: { name: "Bandit", ch: "@", color: "#f00", ai: "drunk" }
+	enemy: { name: "Bandit", ch: "@", color: "#f00", ai: "hunter" }
 };
 
 var ITEMS = {
 	// Weapons
 	gaussrifle: {
 		name: "Gauss rifle", ch: "☤", color: "#999", canEquip: true,
-		weapon: { accuracy: 0.8, damage: 1, power: 5 }
+		weapon: { accuracy: 0.8, damage: 60, power: 5 }
 	},
 	// Items
 	gluetube: {

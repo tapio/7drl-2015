@@ -28,16 +28,17 @@ World.prototype.update = function() {
 			this.currentActorIndex = 0;
 		var actor = this.dungeon.actors[this.currentActorIndex];
 		if (!actor.act()) break;
-		this.dungeon.update();
-		this.currentActorIndex++;
-		if (actor == ui.actor) {
-			if (actor.health <= 0) {
+		if (actor.health <= 0) {
+			this.dungeon.actors.splice(this.currentActorIndex, 1);
+			if (actor == ui.actor) {
 				this.running = false;
 				ui.die();
 				return;
 			}
+		} else this.currentActorIndex++;
+		this.dungeon.update();
+		if (actor == ui.actor)
 			break; // Always wait for next round after player action
-		}
 		//else if (distSq(actor.pos[0], actor.pos[1], ui.actor.pos[0], ui.actor.pos[1]) < 6)
 		//	break;
 	};
