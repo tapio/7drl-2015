@@ -319,10 +319,10 @@ UI.prototype.updateStatsScreen = function() {
 
 UI.prototype.die = function() {
 	var stats = ui.actor.stats;
-	$("#death-turns").innerHTML = stats.turns;
-	$("#death-kills").innerHTML = stats.kills;
-	$("#death-oxygen").innerHTML = stats.oxygen;
-	$("#death-power").innerHTML = stats.power;
+	$("#death-turns").innerHTML = Math.round(stats.turns);
+	$("#death-kills").innerHTML = Math.round(stats.kills);
+	$("#death-oxygen").innerHTML = Math.round(stats.oxygen);
+	$("#death-power").innerHTML = Math.round(stats.power);
 	$("#death-screen").style.display = "block";
 };
 
