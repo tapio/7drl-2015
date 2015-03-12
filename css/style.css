@@ -136,16 +136,15 @@ canvas {
 }
 
 .menu {
-	position: absolute;
-	top: 3%;
-	left: 5%;
+	margin: 3% auto;
 	width: 90%;
-	height: 94%;
+	max-width: 600px;
 }
 
 h1 {
 	font-size: 2em;
-	margin: 16px 0 20px 0;
+	padding: 16px 0 16px 0;
+	margin: 0px;
 }
 
 table {
