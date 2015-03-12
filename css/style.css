@@ -113,6 +113,7 @@ canvas {
 #hud {
 	position: absolute;
 	padding: 6px;
+	font-size: 12px;
 	text-shadow: black 0 0 2px;
 	background-color: rgba(0, 0, 0, 0.5);
 	border-radius: 3px;

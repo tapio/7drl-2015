@@ -148,12 +148,14 @@ var ITEMS = {
 	},
 	// Items
 	gluetube: {
-		name: "Tube of glue", ch: "⊘", color: "#88c",
-		resource: "glue", amount: 5
+		name: "Patch kit", ch: "⊗", color: "#88c",
+		resource: "suit", amount: 15, canUse: true, canEquip: true, canConsume: true,
+		desc: "Patches leaking space suit."
 	},
 	oxygentank: {
 		name: "O₂ tank", ch: "⊚", color: "#fff",
-		resource: "oxygen", amount: 60, canUse: true, canEquip: true
+		resource: "oxygen", amount: 60, canUse: true, canEquip: true,
+		desc: "Provides portable oxygen reserves."
 	},
 	battery: {
 		name: "Battery", ch: "⊛", color: "#06f",

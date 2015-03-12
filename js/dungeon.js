@@ -12,7 +12,8 @@ function Dungeon(id, mapType) {
 	this.passableCache = [];
 	this.playerFov = [];
 	this.env = {
-		oxygenCost: 0
+		oxygenCost: 0,
+		suitCost: 0
 	};
 	var generators = {
 		base: this.generateBase.bind(this),

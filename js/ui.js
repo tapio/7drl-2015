@@ -154,6 +154,7 @@ UI.prototype.update = function() {
 		$("#messages").innerHTML = msgBuf;
 		this.messagesDirty = false;
 	}
+	$("#hud-suit").innerHTML = Math.ceil(this.actor.suit);
 	$("#hud-health").innerHTML = Math.ceil(this.actor.health);
 	$("#hud-oxygen").innerHTML = Math.ceil(this.actor.oxygen);
 	$("#hud-power").innerHTML = Math.ceil(this.actor.power);
@@ -300,11 +301,16 @@ UI.prototype.openShop = function() {
 };
 
 UI.prototype.updateStatsScreen = function() {
+	$("#stats-suit").innerHTML = Math.ceil(this.actor.suit);
+	var leakage = "no leaks";
+	if (this.actor.suitLeakage > 0)
+		leakage = "leaking %s O₂".format(this.actor.suitLeakage.toFixed(1));
+	$("#stats-suit-detail").innerHTML = leakage;
 	$("#stats-health").innerHTML = Math.ceil(this.actor.health);
 	$("#stats-oxygen").innerHTML = Math.ceil(this.actor.oxygen);
 	var o2cost = world.dungeon.env.oxygenCost;
-	$("#stats-oxygen-usage").innerHTML = o2cost;
-	$("#stats-oxygen-time").innerHTML = Math.ceil(this.actor.oxygen / o2cost);
+	//$("#stats-oxygen-usage").innerHTML = o2cost;
+	$("#stats-oxygen-time").innerHTML = Math.ceil(this.actor.oxygen / (o2cost + ui.actor.suitLeakage));
 	$("#stats-power").innerHTML = Math.ceil(this.actor.power);
 	// Environment
 	$("#stats-weather").innerHTML = world.dungeon == world.maps.base ? "(Indoors)" : "Good";

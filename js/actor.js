@@ -16,6 +16,8 @@ function Actor(x, y, def) {
 	this.equipped = this.inv.length ? this.inv[0] : null;
 	this.oxygen = 100;
 	this.health = def.health || 100;
+	this.suit = def.ai ? null : 100;
+	this.suitLeakage = 0;
 	this.power = 100;
 	this.ai = !def.ai ? null : {
 		type: def.ai,
@@ -135,7 +137,11 @@ Actor.prototype.shoot = function(x, y) {
 		// Accuracy?
 		if (Math.random() <= this.equipped.weapon.accuracy) {
 			var damage = randInt(wp.damage[0], wp.damage[1]);
-			target.health -= damage;
+			if (target.suit) {
+				var ratio = 0.25 + Math.random() * 0.5;
+				target.suit -= Math.ceil(ratio * damage);
+				target.health -= Math.floor((1-ratio) * damage);
+			} else target.health -= damage;
 			if (target.health <= 0) {
 				this.stats.kills++;
 				ui.msg("You killed " + target.name + "!", this);
@@ -212,10 +218,17 @@ Actor.prototype.doPath = function(checkItems, checkWorldChange) {
 };
 
 Actor.prototype.envTick = function() {
-	// Handle environment stuff
 	var env = world.dungeon.env;
+
+	this.suit -= env.suitCost;
+	if (this.suit < 0)
+		this.suit = 0;
+	if (this.suit < 50) {
+		this.suitLeakage = (1 - (this.suit / 50)) * 5;
+	} else this.suitLeakage = 0;
+
 	var oldOxygen = this.oxygen;
-	this.oxygen -= env.oxygenCost;
+	this.oxygen -= env.oxygenCost + this.suitLeakage;
 	if (this.oxygen <= 0) {
 		this.oxygen = 0;
 		this.health -= 5;
