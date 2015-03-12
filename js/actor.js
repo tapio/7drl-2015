@@ -126,7 +126,7 @@ Actor.prototype.shoot = function(x, y) {
 	if (target instanceof Actor) {
 		// Accuracy?
 		if (Math.random() <= this.equipped.weapon.accuracy) {
-			var damage = wp.damage;
+			var damage = randInt(wp.damage[0], wp.damage[1]);
 			target.health -= damage;
 			if (target.health <= 0) {
 				this.stats.kills++;

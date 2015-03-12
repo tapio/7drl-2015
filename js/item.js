@@ -18,7 +18,7 @@ function Item(def) {
 	this.weapon = !def.weapon ? null : {
 		accuracy: 0.5,
 		range: 0,
-		damage: 1,
+		damage: [0,0],
 		power: 0
 	};
 	for (var i in def.weapon) { this.weapon[i] = def.weapon[i]; }

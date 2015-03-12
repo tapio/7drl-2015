@@ -139,12 +139,12 @@ var ITEMS = {
 	// Weapons
 	knife: {
 		name: "Space knife", ch: "⚔", color: "#999", canEquip: true,
-		weapon: { accuracy: 0.8, damage: 20 },
+		weapon: { accuracy: 0.7, damage: [20,30] },
 		desc: "Can be used as a backup melee weapon."
 	},
 	gaussrifle: {
 		name: "Gauss rifle", ch: "⚕", color: "#999", canEquip: true,
-		weapon: { accuracy: 0.8, damage: 60, power: 5, range: 8 }
+		weapon: { accuracy: 0.8, damage: [40,60], power: 5, range: 8 }
 	},
 	// Items
 	gluetube: {
@@ -172,15 +172,15 @@ var ITEMS = {
 	// Mob weapons
 	ratmelee: {
 		name: "Rat bite", canEquip: true, canDrop: false,
-		weapon: { accuracy: 0.5, damage: 10 }
+		weapon: { accuracy: 0.5, damage: [5,15] }
 	},
 	wolfmelee: {
 		name: "Wolf bite", canEquip: true, canDrop: false,
-		weapon: { accuracy: 0.6, damage: 10 }
+		weapon: { accuracy: 0.6, damage: [10,20] }
 	},
 	bearmelee: {
 		name: "Bear claw", canEquip: true, canDrop: false,
-		weapon: { accuracy: 0.7, damage: 50 }
+		weapon: { accuracy: 0.7, damage: [20,50] }
 	},
 	// Devices
 	oxygenator: {
