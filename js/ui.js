@@ -109,6 +109,8 @@ function UI(actor) {
 		}
 		this_.updateShopScreen(this_.actor);
 	}, true);
+
+	window.addEventListener('resize', function() { ui.resetDisplay(); ui.render(); });
 }
 
 UI.prototype.msg = function(msg) {
@@ -145,7 +147,6 @@ UI.prototype.update = function() {
 	if (this.state == STATE.LOOK) cursor = "help";
 	else if (this.actor.path.length) cursor = "wait";
 	this.display.getContainer().style.cursor = cursor;
-	window.addEventListener('resize', function() { ui.resetDisplay(); ui.render(); });
 };
 
 UI.prototype.render = function() {
