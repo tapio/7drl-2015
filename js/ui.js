@@ -20,6 +20,8 @@ function UI(actor) {
 		new Item(ITEMS.oxygentank), new Item(ITEMS.battery),
 		new Item(ITEMS.medikit), new Item(ITEMS.gluetube)
 	];
+	this.shopInv[0].amount = 0;
+	this.shopInv[1].amount = 0;
 	this.shop = null;
 
 	if (!CONFIG.touch) {
