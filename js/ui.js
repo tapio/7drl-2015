@@ -37,7 +37,7 @@ function UI(actor) {
 				$("#equipped").addClass("btn-selected");
 				$("#look-button").removeClass("btn-selected");
 				$("#look-button").innerHTML = "☌";
-				this_.msg("Select target...");
+				this_.msg("Select target for " + this_.actor.equipped.name + "...");
 			} else this_.actor.use(this_.actor.equipped);
 		} else (enterMenu.bind($("#inventory-open")))();
 	}, true);
