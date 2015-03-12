@@ -243,6 +243,7 @@ UI.prototype.updateInventoryScreen = function() {
 		var item = inv[i];
 		var elem = document.createElement("div");
 		elem.className = "btn btn-square";
+		if (!CONFIG.touch) elem.className += " btn-no-touch";
 		elem.innerHTML = item.ch;
 		elem.title = item.name;
 		elem.style.color = item.color;
