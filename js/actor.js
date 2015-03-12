@@ -79,11 +79,27 @@ Actor.prototype.unequip = function(item) {
 
 Actor.prototype.use = function(item) {
 	if (item.resource) {
+		var maxAmount = 100;
+		if (this[item.resource] >= maxAmount) {
+			if (this == ui.actor)
+				ui.msg("Suit already full of %s.".format(item.resource));
+			return;
+		}
 		this[item.resource] += item.amount;
-		item.amount = 0;
-		this.unequip(item);
-		if (item.canConsume)
-			removeElem(this.inv, item);
+		if (this[item.resource] > maxAmount) {
+			item.amount = this[item.resource] - maxAmount;
+			this[item.resource] = maxAmount;
+		} else item.amount = 0;
+		if (item.amount <= 0) {
+			if (this == ui.actor)
+				ui.msg("Emptied %s to suit.".format(item.name));
+			this.unequip(item);
+			if (item.canConsume)
+				removeElem(this.inv, item);
+		} else {
+			if (this == ui.actor)
+				ui.msg("Filled suit's %s.".format(item.resource));
+		}
 	}
 };
 
