@@ -85,9 +85,11 @@ function UI(actor) {
 
 	$("#info-close").addEventListener("click", function() {
 		$("#info").style.display = "";
+		window.location.hash = "#game";
 	}, true);
 	$("#info-ok").addEventListener("click", function() {
 		$("#info").style.display = "";
+		window.location.hash = "#game";
 	}, true);
 	$("#mainmenu-howto").addEventListener("click", function() {
 		$("#info").style.display = "block";
@@ -97,6 +99,9 @@ function UI(actor) {
 	}, true);
 	$("#mainmenu-code").addEventListener("click", function() {
 		window.open("https://github.com/tapio/7drl-2015", "_blank");
+	}, true);
+	$("#restart").addEventListener("click", function() {
+		window.location.reload();
 	}, true);
 
 	$("#inventory-equip").addEventListener("click", function() {
