@@ -36,6 +36,9 @@ Dungeon.prototype.generateBase = function() {
 	var airlock = clone(TILES.airlock);
 	airlock.entrance = { mapId: "overworld", mapType: "overworld" };
 	this.setTile(this.start[0]+1, this.start[1]+1, airlock);
+	var gun = new Item(ITEMS.gaussrifle);
+	gun.pos = [ rooms[0].getRight(), rooms[0].getTop() ];
+	this.items.push(gun);
 
 	var freeTiles = [];
 	for (var y = 0; y < this.height; ++y) {
