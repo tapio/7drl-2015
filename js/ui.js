@@ -100,6 +100,9 @@ function UI(actor) {
 	$("#mainmenu-code").addEventListener("click", function() {
 		window.open("https://github.com/tapio/7drl-2015", "_blank");
 	}, true);
+	$("#mainmenu-bugs").addEventListener("click", function() {
+		window.open("https://github.com/tapio/7drl-2015/issues", "_blank");
+	}, true);
 	$("#restart").addEventListener("click", function() {
 		window.location.reload();
 	}, true);
