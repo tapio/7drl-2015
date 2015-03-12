@@ -146,7 +146,7 @@ Actor.prototype.doPath = function(checkItems, checkWorldChange) {
 			return false;
 		}
 		// Check items
-		if (checkItems && thing instanceof Item) {
+		if (checkItems && thing instanceof Item && !this.path.length) {
 			var item = thing;
 			if (item.canCarry) {
 				if (this.inv.length < this.maxItems) {
