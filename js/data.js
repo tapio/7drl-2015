@@ -101,21 +101,21 @@ var TILES = {
 		color: "#d00",
 		walkable: false,
 		transparent: false,
-		desc: "Big rock"
+		desc: "Big rock."
 	},
 	cave: {
 		ch: "☖",
 		color: "#555",
 		walkable: true,
 		transparent: true,
-		desc: "Cave entrance"
+		desc: "Cave entrance."
 	},
 	hill: {
 		ch: "▴",
 		color: [[255, 100, 0], 20],
-		walkable: false,
+		walkable: true,
 		transparent: true,
-		desc: "Steep hills."
+		desc: "Hills."
 	},
 	mountain: {
 		ch: "▲",
