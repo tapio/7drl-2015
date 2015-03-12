@@ -100,9 +100,20 @@ Actor.prototype.drop = function(item) {
 
 // Also accepts actor directly in x
 Actor.prototype.shoot = function(x, y) {
-	if (!this.equipped || !this.equipped.weapon)
+	if (!this.equipped || !this.equipped.weapon) {
+		if (this == ui.actor)
+			ui.msg("Equip a weapon to attack!");
 		return;
+	}
 	var wp = this.equipped.weapon;
+	// Range?
+	var r = wp.range ? wp.range : 1;
+	var d = dist(x, y, this.pos[0], this.pos[1]);
+	if (Math.floor(d) > r) {
+		if (this == ui.actor)
+			ui.msg("Target is out of range!");
+		return;
+	}
 	// Power?
 	if (wp.power && this.power < wp.power) {
 		if (this == ui.actor)

@@ -53,6 +53,8 @@ function distSq(x1, y1, x2, y2) {
 	return dx * dx + dy * dy;
 }
 
+function dist(x1, y1, x2, y2) { return Math.sqrt(distSq(x1, y1, x2, y2)); }
+
 function rnd() { return Math.random(); }
 
 function rand(min, max) { return Math.random() * (max - min) + min; }

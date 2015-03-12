@@ -137,6 +137,11 @@ var TILES = {
 
 var ITEMS = {
 	// Weapons
+	knife: {
+		name: "Space knife", ch: "⚔", color: "#999", canEquip: true,
+		weapon: { accuracy: 0.8, damage: 20 },
+		desc: "Can be used as a backup melee weapon."
+	},
 	gaussrifle: {
 		name: "Gauss rifle", ch: "⚕", color: "#999", canEquip: true,
 		weapon: { accuracy: 0.8, damage: 60, power: 5, range: 8 }

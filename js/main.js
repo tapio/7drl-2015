@@ -9,7 +9,7 @@ function start() {
 		$("#loading-text").innerHTML = "Initializing...";
 		world = new World();
 		var pl = new Actor(world.dungeon.start[0], world.dungeon.start[1], {
-			weapon: ITEMS.gaussrifle
+			weapon: ITEMS.knife
 		});
 		pl.updateVisibility();
 		world.dungeon.actors.push(pl);
