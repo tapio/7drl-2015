@@ -11,6 +11,7 @@ function start() {
 		var pl = new Actor(world.dungeon.start[0], world.dungeon.start[1], {
 			weapon: ITEMS.knife
 		});
+		pl.equipped = null;
 		pl.updateVisibility();
 		world.dungeon.actors.push(pl);
 		ui = new UI(pl);
