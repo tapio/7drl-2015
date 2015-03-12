@@ -138,7 +138,7 @@ var TILES = {
 var ITEMS = {
 	// Weapons
 	gaussrifle: {
-		name: "Gauss rifle", ch: "☤", color: "#999", canEquip: true,
+		name: "Gauss rifle", ch: "⚕", color: "#999", canEquip: true,
 		weapon: { accuracy: 0.8, damage: 60, power: 5, range: 8 }
 	},
 	// Items
@@ -187,7 +187,7 @@ var ITEMS = {
 		resource: "power", amount: Infinity ,
 		desc: "Radioisotope thermoelectric generator produces electricity from radioactive decay." },
 	printer: {
-		name: "3d printer", ch: "⚙", color: "#40c", canCarry: false,
+		name: "3d printer", ch: "⚒", color: "#40c", canCarry: false,
 		shop: true,
 		desc: "Creates things." }
 };
