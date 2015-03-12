@@ -88,7 +88,6 @@ Dungeon.prototype.generateOverworld = function() {
 	}).bind(this));
 
 	shuffle(caveCandidates);
-	console.log(caveCandidates.length);
 	var caveCount = Math.min(randInt(40, 45), caveCandidates.length);
 	for (var i = 0; i < caveCount; ++i) {
 		var cave = TILES.generateInstance(TILES.cave);
