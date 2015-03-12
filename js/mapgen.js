@@ -65,18 +65,20 @@ Dungeon.prototype.generateOverworld = function() {
 	var rocks = [ TILES.rock, TILES.rock2, TILES.rock3 ];
 	var noise = new ROT.Noise.Simplex();
 	var freeTiles = [];
-	var caveCount = 0;
+	var caveCandidates = [];
 	gen.create((function(x, y, wall) {
 		var mountainNoise = noise.get(x/20, y/20);
-		if (wall || mountainNoise > 0.6) {
+		if (wall || mountainNoise > 0.5) {
 			this.setTile(x, y, TILES.generateInstance(TILES.mountain));
+		} else if ((x <= 1 || y <= 1 || x >= this.width-2 || y >= this.height-2) && Math.random() < 0.667) {
+			this.setTile(x, y, TILES.generateInstance(TILES.mountain));
+		} else if ((x <= 2 || y <= 2 || x >= this.width-3 || y >= this.height-3) && Math.random() < 0.333) {
+			this.setTile(x, y, TILES.generateInstance(TILES.hill));
+		} else if (mountainNoise > 0.3) {
+			this.setTile(x, y, TILES.generateInstance(TILES.hill));
 		} else if (mountainNoise > 0.2) {
-			if (rnd() > 0.9) {
-				var cave = TILES.generateInstance(TILES.cave);
-				var id = this.id + "_cave_" + (++caveCount);
-				cave.entrance = { mapId: id, mapType: "cave" };
-				this.setTile(x, y, cave);
-			} else this.setTile(x, y, TILES.generateInstance(TILES.hill));
+			this.setTile(x, y, TILES.generateInstance(TILES.hill));
+			caveCandidates.push([x, y]);
 		} else if (rnd() > 0.95) {
 			this.setTile(x, y, rocks.random());
 		} else {
@@ -84,6 +86,18 @@ Dungeon.prototype.generateOverworld = function() {
 			freeTiles.push([x, y]);
 		}
 	}).bind(this));
+
+	shuffle(caveCandidates);
+	console.log(caveCandidates.length);
+	var caveCount = Math.min(randInt(40, 45), caveCandidates.length);
+	for (var i = 0; i < caveCount; ++i) {
+		var cave = TILES.generateInstance(TILES.cave);
+		var id = this.id + "_cave_" + i;
+		cave.entrance = { mapId: id, mapType: "cave" };
+		var cavePos = caveCandidates.pop();
+		this.setTile(cavePos[0], cavePos[1], cave);
+	}
+
 	shuffle(freeTiles);
 	this.start = freeTiles.pop();
 	// Air lock
