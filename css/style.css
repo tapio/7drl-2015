@@ -16,6 +16,13 @@ body {
 	font-size: 12px;
 }
 
+.footer {
+	font-size: 10px;
+	text-align: center;
+	color: #333;
+	margin-top: 30px;
+}
+
 canvas {
 	position: absolute;
 	z-index: -1;
