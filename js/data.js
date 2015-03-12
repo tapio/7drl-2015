@@ -127,7 +127,7 @@ var TILES = {
 	// Devices
 	oxygenator: {
 		name: "Oxygenator", ch: "♼", color: "#0c5",
-		resource: "oxygen", amount: 100, device: true,
+		resource: "oxygen", amount: 100, intake: "ice", device: true,
 		walkable: false,
 		transparent: true,
 		desc: "Produces oxygen water ice."
@@ -141,7 +141,7 @@ var TILES = {
 	},
 	printer: {
 		name: "3d printer", ch: "⚒", color: "#40c",
-		shop: true, amount: 0, device: true,
+		shop: true, amount: 0, intake: "mineral", device: true,
 		walkable: false,
 		transparent: true,
 		desc: "Creates things."
@@ -205,7 +205,7 @@ var ITEMS = {
 	},
 	waterice: {
 		name: "Water ice", ch: "▧", color: "#8dd",
-		resource: "ice", amount: 1,
+		resource: "ice", amount: 100,
 		desc: "Frozen water. Oxygenator can turn it into oxygen."
 	},
 	// Mob weapons

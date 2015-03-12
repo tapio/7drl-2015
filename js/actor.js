@@ -112,6 +112,17 @@ Actor.prototype.drop = function(item) {
 	ui.msg("Dropped " + item.name + ".", this);
 };
 
+Actor.prototype.unloadResource = function(resource) {
+	var i = 0, amount = 0;
+	while (i < this.inv.length) {
+		if (this.inv[i].resource == resource) {
+			amount += this.inv[i].amount;
+			this.inv.splice(i, 1);
+		} else i++;
+	}
+	return amount;
+}
+
 // Also accepts actor directly in x
 Actor.prototype.shoot = function(x, y) {
 	if (!this.equipped || !this.equipped.weapon) {
@@ -188,27 +199,45 @@ Actor.prototype.doPath = function(checkItems, checkWorldChange) {
 		// Check devices
 		if (checkItems && thing.device) {
 			if (thing.resource) {
-				var filled = false;
-				for (var i = 0; i < this.inv.length; ++i) {
-					var invItem = this.inv[i];
-					if (invItem.resource == thing.resource) {
-						invItem.amount = ITEMS[invItem.id].amount; // Refill
-						filled = true;
+				this.path = [];
+				if (thing.intake) {
+					var offloading = this.unloadResource(thing.intake);
+					if (offloading) {
+						thing.amount += offloading;
+						ui.msg("Offloaded %s %s units.".format(offloading, thing.resource), this);
 					}
 				}
-				if (filled) ui.msg("Filled all " + thing.resource + " containers.", this);
-				else ui.msg("You don't have any " + thing.resource + " containers to fill.", this);
-				this.path = [];
+				if (thing.amount <= 0) {
+					ui.msg("%s needs resources to produce %s.".format(thing.name, thing.resource), this);
+					return true;
+				}
+				var filled = 0, foundContainer = false;
+				for (var i = 0; i < this.inv.length && thing.amount > 0; ++i) {
+					var invItem = this.inv[i];
+					if (invItem.resource == thing.resource) {
+						foundContainer = true;
+						var maxAmount = ITEMS[invItem.id].amount;
+						var wantAmount = maxAmount - invItem.amount;
+						if (thing.amount >= wantAmount) {
+							filled += wantAmount;
+							invItem.amount += wantAmount;
+							thing.amount -= wantAmount;
+						} else {
+							filled += thing.amount;
+							invItem.amount += thing.amount;
+							thing.amount = 0;
+						}
+					}
+				}
+				if (!foundContainer)
+					ui.msg("You don't have any " + thing.resource + " containers to fill.", this);
+				else if (!filled)
+					ui.msg("All %s containers are already full. Units left %s.".format(thing.resource, thing.amount), this);
+				else
+					ui.msg("Refilled %s units of %s. Device now empty.".format(filled, thing.resource), this);
 				return true;
 			} else if (this == ui.actor && thing.shop) {
-				var i = 0;
-				while (i < this.inv.length) {
-					var invItem = this.inv[i];
-					if (invItem.resource == "mineral") {
-						thing.amount += invItem.amount;
-						removeElem(this.inv, invItem);
-					} else i++;
-				}
+				thing.amount += this.unloadResource(thing.intake);
 				ui.openShop(thing);
 				this.path = [];
 				return false
