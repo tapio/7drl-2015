@@ -203,6 +203,8 @@ UI.prototype.onClickInventoryItem = function(e) {
 };
 
 UI.prototype.updateInventoryScreen = function() {
+	var itemsElem = $("#inventory-items");
+	itemsElem.innerHTML = "";
 	$("#inventory-actions").style.display = "none";
 	ui.selectedInvItem = null;
 	var inv = this.actor.inv;
@@ -212,8 +214,6 @@ UI.prototype.updateInventoryScreen = function() {
 		return;
 	}
 	$("#inventory-capacity").innerHTML = "Capacity " + inv.length + "/" + this.actor.maxItems;
-	var itemsElem = $("#inventory-items");
-	itemsElem.innerHTML = "";
 	$("#inventory-details").innerHTML = "Click an item to see details and actions...";
 
 	ui.inventoryElems = [];
