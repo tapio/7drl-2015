@@ -83,6 +83,15 @@ function UI(actor) {
 	$("#mainmenu-close").addEventListener("click", exitMenu, true);
 	$("#shop-close").addEventListener("click", exitMenu, true);
 
+	$("#info-close").addEventListener("click", function() {
+		$("#info").style.display = "";
+	}, true);
+	$("#info-ok").addEventListener("click", function() {
+		$("#info").style.display = "";
+	}, true);
+	$("#mainmenu-howto").addEventListener("click", function() {
+		$("#info").style.display = "block";
+	}, true);
 	$("#mainmenu-credits").addEventListener("click", function() {
 		window.open("LICENSE.md", "_blank");
 	}, true);
@@ -109,6 +118,9 @@ function UI(actor) {
 		}
 		this_.updateShopScreen(this_.actor);
 	}, true);
+
+	if (!window.location.hash.contains("game"))
+		$("#info").style.display = "block";
 
 	window.addEventListener('resize', function() { ui.resetDisplay(); ui.render(); });
 }
