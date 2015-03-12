@@ -133,9 +133,11 @@ function UI(actor) {
 	window.addEventListener('resize', function() { ui.resetDisplay(); ui.render(); });
 }
 
-UI.prototype.msg = function(msg) {
-	this.messages.push(msg);
-	this.messagesDirty = true;
+UI.prototype.msg = function(msg, source) {
+	if (source === undefined || source == this.actor) {
+		this.messages.push(msg);
+		this.messagesDirty = true;
+	}
 };
 
 UI.prototype.update = function() {

@@ -68,8 +68,7 @@ Actor.prototype.move = function(dx, dy) {
 
 Actor.prototype.equip = function(item) {
 	this.equipped = item;
-	if (this == ui.actor)
-		ui.msg("Equipped " + item.name + ".");
+	ui.msg("Equipped " + item.name + ".", this);
 };
 
 Actor.prototype.unequip = function(item) {
@@ -81,8 +80,7 @@ Actor.prototype.use = function(item) {
 	if (item.resource) {
 		var maxAmount = 100;
 		if (this[item.resource] >= maxAmount) {
-			if (this == ui.actor)
-				ui.msg("Suit already full of %s.".format(item.resource));
+			ui.msg("Suit already full of %s.".format(item.resource), this);
 			return;
 		}
 		this[item.resource] += item.amount;
@@ -91,14 +89,12 @@ Actor.prototype.use = function(item) {
 			this[item.resource] = maxAmount;
 		} else item.amount = 0;
 		if (item.amount <= 0) {
-			if (this == ui.actor)
-				ui.msg("Emptied %s to suit.".format(item.name));
+			ui.msg("Emptied %s to suit.".format(item.name), this);
 			this.unequip(item);
 			if (item.canConsume)
 				removeElem(this.inv, item);
 		} else {
-			if (this == ui.actor)
-				ui.msg("Filled suit's %s.".format(item.resource));
+			ui.msg("Filled suit's %s.".format(item.resource), this);
 		}
 	}
 };
@@ -110,15 +106,13 @@ Actor.prototype.drop = function(item) {
 	removeElem(this.inv, item);
 	item.pos = clone(this.pos);
 	world.dungeon.items.push(item);
-	if (this == ui.actor)
-		ui.msg("Dropped " + item.name + ".");
+	ui.msg("Dropped " + item.name + ".", this);
 };
 
 // Also accepts actor directly in x
 Actor.prototype.shoot = function(x, y) {
 	if (!this.equipped || !this.equipped.weapon) {
-		if (this == ui.actor)
-			ui.msg("Equip a weapon to attack!");
+		ui.msg("Equip a weapon to attack!", this);
 		return;
 	}
 	var wp = this.equipped.weapon;
@@ -126,14 +120,12 @@ Actor.prototype.shoot = function(x, y) {
 	var r = wp.range ? wp.range : 1;
 	var d = dist(x, y, this.pos[0], this.pos[1]);
 	if (Math.floor(d) > r) {
-		if (this == ui.actor)
-			ui.msg("Target is out of range!");
+		ui.msg("Target is out of range!", this);
 		return;
 	}
 	// Power?
 	if (wp.power && this.power < wp.power) {
-		if (this == ui.actor)
-			ui.msg("Not enough power to shoot " + this.equipped.name + ", needs at least ⚡" + wp.power + ".");
+		ui.msg("Not enough power to shoot " + this.equipped.name + ", needs at least ⚡" + wp.power + ".", this);
 		return;
 	}
 	this.power -= wp.power;
@@ -146,24 +138,17 @@ Actor.prototype.shoot = function(x, y) {
 			target.health -= damage;
 			if (target.health <= 0) {
 				this.stats.kills++;
-				if (this == ui.actor)
-					ui.msg("You killed " + target.name + "!");
-				else if (target == ui.actor)
-					ui.msg(this.name + " kills you!");
+				ui.msg("You killed " + target.name + "!", this);
+				ui.msg(this.name + " kills you!", target);
 			} else {
-				if (this == ui.actor)
-					ui.msg("You hit " + target.name + " for " + damage + "!");
-				else if (target == ui.actor)
-					ui.msg(this.name + " hit you for " + damage + "!");
+				ui.msg("You hit " + target.name + " for " + damage + "!", this);
+				ui.msg(this.name + " hit you for " + damage + "!", target);
 			}
-		} else if (this == ui.actor) {
-			ui.msg("You missed " + target.name + "!");
-		} else if (target == ui.actor) {
-			ui.msg(this.name + " missed you!");
+		} else {
+			ui.msg("You missed " + target.name + "!", this);
+			ui.msg(this.name + " missed you!", target);
 		}
-	} else if (this == ui.actor) {
-		ui.msg("You didn't hit anything!");
-	}
+	} else ui.msg("You didn't hit anything!", this);
 }
 
 Actor.prototype.doPath = function(checkItems, checkWorldChange) {
@@ -187,11 +172,9 @@ Actor.prototype.doPath = function(checkItems, checkWorldChange) {
 				if (this.inv.length < this.maxItems) {
 					this.inv.push(item);
 					removeElem(world.dungeon.items, item);
-					if (this == ui.actor)
-						ui.msg("Picked up " + item.name + ".");
+					ui.msg("Picked up " + item.name + ".", this);
 				} else {
-					if (this == ui.actor)
-						ui.msg("Can't pick up " + item.name + ". Inventory full! ");
+					ui.msg("Can't pick up " + item.name + ". Inventory full!", this);
 				}
 				this.path = [];
 				return true;
@@ -204,10 +187,8 @@ Actor.prototype.doPath = function(checkItems, checkWorldChange) {
 						filled = true;
 					}
 				}
-				if (this == ui.actor) {
-					if (filled) ui.msg("Filled all " + item.resource + " containers.");
-					else ui.msg("You don't have any " + item.resource + " containers to fill.");
-				}
+				if (filled) ui.msg("Filled all " + item.resource + " containers.", this);
+				else ui.msg("You don't have any " + item.resource + " containers to fill.", this);
 				this.path = [];
 				return true;
 			} else if (this == ui.actor && item.shop) {
