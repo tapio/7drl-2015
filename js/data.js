@@ -124,6 +124,28 @@ var TILES = {
 		transparent: false,
 		desc: "Impassable mountains."
 	},
+	// Devices
+	oxygenator: {
+		name: "Oxygenator", ch: "♼", color: "#0c5",
+		resource: "oxygen", amount: Infinity, device: true,
+		walkable: false,
+		transparent: true,
+		desc: "Produces oxygen by separating it from CO₂."
+	},
+	rtg: {
+		name: "RTG", ch: "☢", color: "#fc0",
+		resource: "power", amount: Infinity, device: true,
+		walkable: false,
+		transparent: true,
+		desc: "Radioisotope thermoelectric generator (RTG) produces electricity from radioactive decay."
+	},
+	printer: {
+		name: "3d printer", ch: "⚒", color: "#40c",
+		shop: true, device: true,
+		walkable: false,
+		transparent: true,
+		desc: "Creates things."
+	},
 
 	generateInstance: function(proto) {
 		var tile = clone(proto);
@@ -183,20 +205,7 @@ var ITEMS = {
 	bearmelee: {
 		name: "Bear claw", canEquip: true, canDrop: false,
 		weapon: { accuracy: 0.7, damage: [20,50] }
-	},
-	// Devices
-	oxygenator: {
-		name: "Oxygenator", ch: "♼", color: "#0c5", canCarry: false,
-		resource: "oxygen", amount: Infinity,
-		desc: "Produces oxygen by separating it from CO₂." },
-	rtg: {
-		name: "RTG", ch: "☢", color: "#fc0", canCarry: false,
-		resource: "power", amount: Infinity ,
-		desc: "Radioisotope thermoelectric generator produces electricity from radioactive decay." },
-	printer: {
-		name: "3d printer", ch: "⚒", color: "#40c", canCarry: false,
-		shop: true,
-		desc: "Creates things." }
+	}
 };
 
 

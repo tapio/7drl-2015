@@ -60,7 +60,8 @@ Actor.prototype.moveTo = function(x, y) {
 		this.done = true; // Skip turn
 		return;
 	}
-	if (!world.dungeon.getTile(x, y).walkable) return;
+	var tile = world.dungeon.getTile(x, y);
+	if (!tile.walkable && !tile.device) return;
 	world.dungeon.findPath(x, y, this);
 };
 
@@ -174,33 +175,35 @@ Actor.prototype.doPath = function(checkItems, checkWorldChange) {
 		// Check items
 		if (checkItems && thing instanceof Item && !this.path.length) {
 			var item = thing;
-			if (item.canCarry) {
-				if (this.inv.length < this.maxItems) {
-					this.inv.push(item);
-					removeElem(world.dungeon.items, item);
-					ui.msg("Picked up " + item.name + ".", this);
-				} else {
-					ui.msg("Can't pick up " + item.name + ". Inventory full!", this);
-				}
-				this.path = [];
-				return true;
-			} else if (item.resource) {
+			if (this.inv.length < this.maxItems) {
+				this.inv.push(item);
+				removeElem(world.dungeon.items, item);
+				ui.msg("Picked up " + item.name + ".", this);
+			} else {
+				ui.msg("Can't pick up " + item.name + ". Inventory full!", this);
+			}
+			this.path = [];
+			return true;
+		}
+		// Check devices
+		if (checkItems && thing.device) {
+			if (thing.resource) {
 				var filled = false;
 				for (var i = 0; i < this.inv.length; ++i) {
 					var invItem = this.inv[i];
-					if (invItem.resource == item.resource) {
+					if (invItem.resource == thing.resource) {
 						invItem.amount = ITEMS[invItem.id].amount; // Refill
 						filled = true;
 					}
 				}
-				if (filled) ui.msg("Filled all " + item.resource + " containers.", this);
-				else ui.msg("You don't have any " + item.resource + " containers to fill.", this);
+				if (filled) ui.msg("Filled all " + thing.resource + " containers.", this);
+				else ui.msg("You don't have any " + thing.resource + " containers to fill.", this);
 				this.path = [];
 				return true;
-			} else if (this == ui.actor && item.shop) {
+			} else if (this == ui.actor && thing.shop) {
 				ui.openShop();
 				this.path = [];
-				return false;
+				return false
 			}
 		}
 		this.pos[0] = waypoint[0];

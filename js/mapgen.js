@@ -18,18 +18,17 @@ Dungeon.prototype.generateBase = function() {
 	var rooms = gen.getRooms();
 	if (rooms.length < 5 || rooms.length > 6)
 		return this.generateBase();
-	// Doors & devices
+	// Devices
+	this.setTile(rooms[1].getCenter()[0], rooms[1].getCenter()[1], TILES.oxygenator);
+	this.setTile(rooms[2].getCenter()[0], rooms[2].getCenter()[1], TILES.rtg);
+	this.setTile(rooms[3].getCenter()[0], rooms[3].getCenter()[1], TILES.printer);
+	// Doors
 	this.doors = [];
-	var devices = [ null, new Item(ITEMS.oxygenator), new Item(ITEMS.rtg), new Item(ITEMS.printer) ];
 	for (var i = 0; i < rooms.length; i++) {
 		rooms[i].getDoors((function(x, y) {
 			this.setTile(x, y, TILES.door_closed);
 			this.doors.push({ pos: [x, y], open: false });
 		}).bind(this));
-		if (devices[i]) {
-			devices[i].pos = clone(rooms[i].getCenter());
-			this.items.push(devices[i]);
-		}
 	}
 	this.start = [ rooms[0].getCenter()[0]-1, rooms[0].getCenter()[1]-1 ];
 	// Air lock
