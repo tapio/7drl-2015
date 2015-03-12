@@ -21,6 +21,12 @@ function Actor(x, y, def) {
 		type: def.ai,
 		target: null
 	};
+	this.stats = {
+		turns: 0,
+		kills: 0,
+		oxygen: 0,
+		power: 0
+	};
 	this.faction = def.ai ? 0 : 1;
 	this.done = false;
 }
@@ -104,6 +110,7 @@ Actor.prototype.shoot = function(x, y) {
 		return;
 	}
 	this.power -= wp.power;
+	this.stats.power += wp.power;
 	var target = x instanceof Actor ? x : world.dungeon.collide([x, y]);
 	if (target instanceof Actor) {
 		// Accuracy?
@@ -111,6 +118,7 @@ Actor.prototype.shoot = function(x, y) {
 			var damage = wp.damage;
 			target.health -= damage;
 			if (target.health <= 0) {
+				this.stats.kills++;
 				if (this == ui.actor)
 					ui.msg("You killed " + target.name + "!");
 				else if (target == ui.actor)
@@ -198,11 +206,13 @@ Actor.prototype.doPath = function(checkItems, checkWorldChange) {
 Actor.prototype.envTick = function() {
 	// Handle environment stuff
 	var env = world.dungeon.env;
+	var oldOxygen = this.oxygen;
 	this.oxygen -= env.oxygenCost;
 	if (this.oxygen <= 0) {
 		this.oxygen = 0;
 		this.health -= 5;
 	}
+	this.stats.oxygen += oldOxygen - this.oxygen;
 };
 
 Actor.prototype.act = function() {

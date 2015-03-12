@@ -28,6 +28,7 @@ World.prototype.update = function() {
 			this.currentActorIndex = 0;
 		var actor = this.dungeon.actors[this.currentActorIndex];
 		if (!actor.act()) break;
+		actor.stats.turns++;
 		if (actor.health <= 0) {
 			this.dungeon.actors.splice(this.currentActorIndex, 1);
 			if (actor == ui.actor) {

@@ -308,6 +308,11 @@ UI.prototype.updateStatsScreen = function() {
 }
 
 UI.prototype.die = function() {
+	var stats = ui.actor.stats;
+	$("#death-turns").innerHTML = stats.turns;
+	$("#death-kills").innerHTML = stats.kills;
+	$("#death-oxygen").innerHTML = stats.oxygen;
+	$("#death-power").innerHTML = stats.power;
 	$("#death-screen").style.display = "block";
 };
 
