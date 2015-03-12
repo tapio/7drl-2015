@@ -103,7 +103,7 @@ Dungeon.prototype.generateOverworld = function() {
 	airlock.entrance = { mapId: "base", mapType: "base" };
 	this.setTile(this.start[0], this.start[1], airlock);
 	// Items & mobs
-	this.generateItems(randInt(40,60), [ ITEMS.metal ], freeTiles);
+	this.generateItems(randInt(10,15), [ ITEMS.mineralsand, ITEMS.ironore ], freeTiles);
 	this.generateMobs(randInt(10,20), [ MOBS.rat, MOBS.wolf, MOBS.wolf ], freeTiles);
 };
 
@@ -117,6 +117,7 @@ Dungeon.prototype.generateCave = function() {
 	var theme = randInt(0, 2);
 	var groundTile = [TILES.iceground, TILES.rockground, TILES.sand][theme];
 	var wallTile = [TILES.icewall, TILES.rockwall, TILES.rockwall][theme];
+	var items = [[ITEMS.waterice], [ITEMS.ironore], [ITEMS.mineralsand]][theme];
 	var freeTiles = [];
 	// Basic borders
 	var gen0 = new ROT.Map.Arena(this.width, this.height);
@@ -154,8 +155,8 @@ Dungeon.prototype.generateCave = function() {
 	caveExit.entrance = { mapId: "overworld", mapType: "overworld" };
 	this.setTile(this.start[0], this.start[1], caveExit);
 	// Items & mobs
-	this.generateItems(randInt(40,60), [ ITEMS.metal ], freeTiles);
-	this.generateMobs(randInt(10,20), [ MOBS.rat, MOBS.rat, MOBS.bear ], freeTiles);
+	this.generateItems(randInt(20,40), items, freeTiles);
+	this.generateMobs(randInt(4,15), [ MOBS.rat, MOBS.rat, MOBS.rat, MOBS.rat, MOBS.bear ], freeTiles);
 };
 
 Dungeon.prototype.generateItems = function(amount, choices, freeTiles) {

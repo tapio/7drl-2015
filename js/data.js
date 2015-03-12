@@ -127,10 +127,10 @@ var TILES = {
 	// Devices
 	oxygenator: {
 		name: "Oxygenator", ch: "♼", color: "#0c5",
-		resource: "oxygen", amount: Infinity, device: true,
+		resource: "oxygen", amount: 100, device: true,
 		walkable: false,
 		transparent: true,
-		desc: "Produces oxygen by separating it from CO₂."
+		desc: "Produces oxygen water ice."
 	},
 	rtg: {
 		name: "RTG", ch: "☢", color: "#fc0",
@@ -189,9 +189,20 @@ var ITEMS = {
 		resource: "health", amount: 40, canUse: true, canEquip: true, canConsume: true,
 		desc: "Can heal wounds."
 	},
-	metal: {
-		name: "Scrap metal", ch: "-", color: "#999",
-		resource: "metal", amount: 1
+	ironore: {
+		name: "Iron ore", ch: "▥", color: "#730",
+		resource: "iron", amount: 1,
+		desc: "Rock rich in iron. Usable by 3d printer."
+	},
+	mineralsand: {
+		name: "Mineral sand", ch: "▦", color: "#cc4",
+		resource: "mineral", amount: 1,
+		desc: "Raw material for many kinds of 3d prints."
+	},
+	waterice: {
+		name: "Water ice", ch: "▧", color: "#8dd",
+		resource: "ice", amount: 1,
+		desc: "Frozen water. Oxygenator can turn it into oxygen."
 	},
 	// Mob weapons
 	ratmelee: {
