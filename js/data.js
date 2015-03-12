@@ -141,7 +141,7 @@ var TILES = {
 	},
 	printer: {
 		name: "3d printer", ch: "⚒", color: "#40c",
-		shop: true, device: true,
+		shop: true, amount: 0, device: true,
 		walkable: false,
 		transparent: true,
 		desc: "Creates things."
@@ -172,22 +172,26 @@ var ITEMS = {
 	gluetube: {
 		name: "Patch kit", ch: "⊗", color: "#88c",
 		resource: "suit", amount: 15, canUse: true, canEquip: true, canConsume: true,
-		desc: "Patches leaking space suit."
+		desc: "Patches leaking space suit.",
+		cost: 2
 	},
 	oxygentank: {
 		name: "O₂ tank", ch: "⊚", color: "#fff",
 		resource: "oxygen", amount: 60, canUse: true, canEquip: true,
-		desc: "Provides portable oxygen reserves."
+		desc: "Provides portable oxygen reserves.",
+		cost: 7
 	},
 	battery: {
 		name: "Battery", ch: "⊛", color: "#06f",
 		resource: "power", amount: 30, canUse: true, canEquip: true,
-		desc: "Powers equipment."
+		desc: "Powers equipment.",
+		cost: 5
 	},
 	medikit: {
 		name: "Medikit", ch: "⊕", color: "#833",
 		resource: "health", amount: 40, canUse: true, canEquip: true, canConsume: true,
-		desc: "Can heal wounds."
+		desc: "Can heal wounds.",
+		cost: 3
 	},
 	ironore: {
 		name: "Iron ore", ch: "▥", color: "#730",

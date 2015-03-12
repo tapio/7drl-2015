@@ -201,7 +201,15 @@ Actor.prototype.doPath = function(checkItems, checkWorldChange) {
 				this.path = [];
 				return true;
 			} else if (this == ui.actor && thing.shop) {
-				ui.openShop();
+				var i = 0;
+				while (i < this.inv.length) {
+					var invItem = this.inv[i];
+					if (invItem.resource == "mineral") {
+						thing.amount += invItem.amount;
+						removeElem(this.inv, invItem);
+					} else i++;
+				}
+				ui.openShop(thing);
 				this.path = [];
 				return false
 			}

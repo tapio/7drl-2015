@@ -19,9 +19,9 @@ Dungeon.prototype.generateBase = function() {
 	if (rooms.length < 5 || rooms.length > 6)
 		return this.generateBase();
 	// Devices
-	this.setTile(rooms[1].getCenter()[0], rooms[1].getCenter()[1], TILES.oxygenator);
-	this.setTile(rooms[2].getCenter()[0], rooms[2].getCenter()[1], TILES.rtg);
-	this.setTile(rooms[3].getCenter()[0], rooms[3].getCenter()[1], TILES.printer);
+	this.setTile(rooms[1].getCenter()[0], rooms[1].getCenter()[1], clone(TILES.oxygenator));
+	this.setTile(rooms[2].getCenter()[0], rooms[2].getCenter()[1], clone(TILES.rtg));
+	this.setTile(rooms[3].getCenter()[0], rooms[3].getCenter()[1], clone(TILES.printer));
 	// Doors
 	this.doors = [];
 	for (var i = 0; i < rooms.length; i++) {

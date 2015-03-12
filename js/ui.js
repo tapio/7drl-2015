@@ -20,6 +20,7 @@ function UI(actor) {
 		new Item(ITEMS.oxygentank), new Item(ITEMS.battery),
 		new Item(ITEMS.medikit), new Item(ITEMS.gluetube)
 	];
+	this.shop = null;
 
 	if (!CONFIG.touch) {
 		[].forEach.call(document.querySelectorAll(".btn"), function(elem) {
@@ -120,9 +121,11 @@ function UI(actor) {
 		this_.updateInventoryScreen();
 	}, true);
 	$("#shop-ok").addEventListener("click", function() {
-		// TODO: Cost etc.
-		if (this_.actor.inv.length < this_.actor.maxItems) {
+		if (this_.actor.inv.length < this_.actor.maxItems
+			&& this_.shop.amount >= this_.selectedInvItem.cost)
+		{
 			this_.actor.inv.push(new Item(ITEMS[this_.selectedInvItem.id]));
+			this_.shop.amount -= this_.selectedInvItem.cost;
 		}
 		this_.updateShopScreen(this_.actor);
 	}, true);
@@ -208,6 +211,8 @@ UI.prototype.resetDisplay = function() {
 	this.display.getContainer().addEventListener("click", input.onClick, true);
 };
 
+// INVENTORY
+
 UI.prototype.onClickInventoryItem = function(e) {
 	// this = clicked element
 	ui.inventoryElems.forEach(function(elem) { elem.removeClass("btn-selected"); });
@@ -257,17 +262,18 @@ UI.prototype.updateInventoryScreen = function() {
 	}
 };
 
+// PRINTER
+
 UI.prototype.onClickShopItem = function(e) {
 	// this = clicked element
 	ui.inventoryElems.forEach(function(elem) { elem.removeClass("btn-selected"); });
 	this.addClass("btn-selected");
 	var item = ui.selectedInvItem = ui.shopInv[this.dataset.index];
 	if (!item) return;
-	var desc = item.getDescription();
+	var desc = item.getDescription() + " Cost: " + item.cost;
 	$("#shop-details").innerHTML = desc;
 	$("#shop-actions").style.display = "block";
-	// TODO: Cost etc
-	var canCreate = ui.actor.inv.length < ui.actor.maxItems;
+	var canCreate = ui.actor.inv.length < ui.actor.maxItems && item.cost <= ui.shop.amount;
 	if (canCreate) $("#shop-ok").removeClass("btn-disabled");
 	else $("#shop-ok").addClass("btn-disabled");
 };
@@ -277,6 +283,7 @@ UI.prototype.updateShopScreen = function() {
 	ui.selectedInvItem = null;
 	var itemsElem = $("#shop-items");
 	itemsElem.innerHTML = "";
+	$("#shop-money").innerHTML = this.shop.amount;
 	$("#shop-details").innerHTML = "Select an item to produce...";
 
 	ui.inventoryElems = [];
@@ -294,11 +301,14 @@ UI.prototype.updateShopScreen = function() {
 	}
 };
 
-UI.prototype.openShop = function() {
+UI.prototype.openShop = function(tile) {
 	$("#shop").style.display = "block";
 	this.state = STATE.SHOP;
+	this.shop = tile;
 	this.updateShopScreen();
 };
+
+// STATS
 
 UI.prototype.updateStatsScreen = function() {
 	$("#stats-suit").innerHTML = Math.ceil(this.actor.suit);

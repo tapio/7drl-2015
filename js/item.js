@@ -15,6 +15,7 @@ function Item(def) {
 	this.resource = def.resource || null;
 	this.amount = def.amount || 0;
 	this.shop = def.shop || false;
+	this.cost = def.cost || 0;
 	this.weapon = !def.weapon ? null : {
 		accuracy: 0.5,
 		range: 0,
