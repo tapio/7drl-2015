@@ -50,6 +50,7 @@ World.prototype.update = function() {
 World.prototype.changeMap = function(actor, entrance) {
 	removeElem(this.dungeon.actors, actor);
 	this.dungeon.start = clone(actor.pos);
+	this.dungeon.playerFov = actor.fov;
 	if (!this.maps[entrance.mapId]) {
 		this.maps[entrance.mapId] = new Dungeon(entrance.mapId, entrance.mapType);
 	}
@@ -57,7 +58,7 @@ World.prototype.changeMap = function(actor, entrance) {
 	this.dungeon.actors.push(actor);
 	actor.pos[0] = this.dungeon.start[0];
 	actor.pos[1] = this.dungeon.start[1];
-	actor.fov = [];
+	actor.fov = this.dungeon.playerFov;
 	actor.updateVisibility();
 	this.currentActor = null;
 };

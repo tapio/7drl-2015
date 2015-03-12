@@ -10,6 +10,7 @@ function Dungeon(id, mapType) {
 	this.start = [0,0];
 	this.items = [];
 	this.passableCache = [];
+	this.playerFov = [];
 	this.env = {
 		oxygenCost: 0
 	};
