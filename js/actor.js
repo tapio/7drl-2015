@@ -41,10 +41,9 @@ Actor.prototype.updateVisibility = function() {
 	var dungeon = world.dungeon;
 	if (this.fov.length != dungeon.map.length)
 		this.fov = new Array(dungeon.width * dungeon.height);
-	this.fov.forEach(function(element, index, array) {
-		if (element == 1) array[index] = 0.5;
-		else if (element === undefined) array[index] = 0;
-	});
+	for (var i = 0, l = this.fov.length; i < l; ++i)
+		if (this.fov[i] == 1) this.fov[i] = 0.5;
+		else if (this.fov[i] === undefined) this.fov[i] = 0;
 	function callback(x, y, r, visibility) {
 		if (visibility > 0)
 			this.fov[x + y * dungeon.width] = 1;
