@@ -137,7 +137,7 @@ var TILES = {
 		resource: "oxygen", amount: 100, intake: "ice", device: true,
 		walkable: false,
 		transparent: true,
-		desc: "Oxygenator. Produces oxygen water ice."
+		desc: "Oxygenator. Produces oxygen from water ice."
 	},
 	generator: {
 		name: "Nuclear generator", ch: "☢", color: "#fc0",

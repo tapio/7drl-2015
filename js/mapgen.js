@@ -106,7 +106,7 @@ Dungeon.prototype.generateOverworld = function() {
 	this.setTile(this.start[0], this.start[1], airlock);
 	// Items & mobs
 	this.generateItems(randInt(10,15), [ ITEMS.mineralsand ], freeTiles);
-	this.generateMobs(randInt(8,12), [ MOBS.rat, MOBS.coyote, MOBS.wolf ], freeTiles);
+	this.generateMobs(randInt(15,25), [ MOBS.rat, MOBS.coyote, MOBS.wolf ], freeTiles);
 };
 
 Dungeon.prototype.generateCave = function() {
@@ -121,7 +121,7 @@ Dungeon.prototype.generateCave = function() {
 	var wallTile = [TILES.icewall, TILES.rockwall, TILES.rockwall][theme];
 	var items = [[ITEMS.waterice], [ITEMS.plutonium], [ITEMS.mineralsand]][theme];
 	var mobs = [
-		[ MOBS.rat, MOBS.rat, MOBS.rat, MOBS.rat, MOBS.polarbear ],
+		[ MOBS.rat, MOBS.rat, MOBS.rat, MOBS.polarbear ],
 		[ MOBS.rat, MOBS.rat, MOBS.rat, MOBS.rat, MOBS.bear ],
 		[ MOBS.rat, MOBS.rat, MOBS.rat, MOBS.coyote, MOBS.coyote ]
 	][theme];
@@ -163,7 +163,7 @@ Dungeon.prototype.generateCave = function() {
 	this.setTile(this.start[0], this.start[1], caveExit);
 	// Items & mobs
 	this.generateItems(randInt(10,20), items, freeTiles);
-	this.generateMobs(randInt(4,15), mobs, freeTiles);
+	this.generateMobs(randInt(8,20), mobs, freeTiles);
 };
 
 Dungeon.prototype.generateItems = function(amount, choices, freeTiles) {

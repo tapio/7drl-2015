@@ -150,10 +150,12 @@ Actor.prototype.shoot = function(x, y) {
 			var damage = randInt(wp.damage[0], wp.damage[1]);
 			if (target.suit) {
 				var ratio = 0.25 + Math.random() * 0.5;
-				target.suit -= Math.ceil(ratio * damage);
 				target.health -= Math.floor((1-ratio) * damage);
+				target.suit -= Math.ceil(ratio * damage);
+				if (target.suit < 0) target.suit = 0;
 			} else target.health -= damage;
 			if (target.health <= 0) {
+				target.health = 0;
 				this.stats.kills++;
 				ui.msg("You killed " + target.name + "!", this);
 				ui.msg(this.name + " kills you!", target);
@@ -270,9 +272,11 @@ Actor.prototype.envTick = function() {
 	this.oxygen -= env.oxygenCost + this.suitLeakage;
 	if (this.oxygen <= 0) {
 		this.oxygen = 0;
-		this.health -= 5;
-		if (this.health <= 0)
+		this.health -= 2;
+		if (this.health <= 0) {
+			this.health = 0;
 			ui.msg("You died due to lack of oxygen", this);
+		}
 	}
 	this.stats.oxygen += oldOxygen - this.oxygen;
 };
