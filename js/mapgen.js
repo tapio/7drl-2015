@@ -61,7 +61,7 @@ Dungeon.prototype.generateOverworld = function() {
 
 	var gen = new ROT.Map.Arena(this.width, this.height);
 	// General layout
-	var rocks = [ TILES.rock, TILES.rock2, TILES.rock3 ];
+	var rocks = [ TILES.rock, TILES.rock2, TILES.rock2, TILES.rock3, TILES.rock3, TILES.rock4 ];
 	var noise = new ROT.Noise.Simplex();
 	var freeTiles = [];
 	var caveCandidates = [];
@@ -79,7 +79,7 @@ Dungeon.prototype.generateOverworld = function() {
 			this.setTile(x, y, TILES.generateInstance(TILES.hill));
 			caveCandidates.push([x, y]);
 		} else if (rnd() > 0.95) {
-			this.setTile(x, y, rocks.random());
+			this.setTile(x, y, TILES.generateInstance(rocks.random()));
 		} else {
 			this.setTile(x, y, TILES.generateInstance(TILES.sand));
 			freeTiles.push([x, y]);

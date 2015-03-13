@@ -69,7 +69,7 @@ var TILES = {
 		desc: "Rocky wall."
 	},
 	iceground: {
-		ch: "░",
+		ch: "∷",
 		color: [[200, 255, 255], 20],
 		walkable: true,
 		transparent: true,
@@ -83,25 +83,32 @@ var TILES = {
 		desc: "Icy wall."
 	},
 	rock: {
-		ch: "▁",
+		ch: "○",
 		color: "#f40",
-		walkable: false,
+		walkable: true,
 		transparent: true,
-		desc: "Rock."
+		desc: "Crater."
 	},
 	rock2: {
-		ch: "▂",
+		ch: "▰",
 		color: "#c50",
 		walkable: false,
 		transparent: true,
 		desc: "Rock."
 	},
 	rock3: {
-		ch: "▃",
+		ch: "◾",
+		color: "#c50",
+		walkable: false,
+		transparent: true,
+		desc: "Big boulder."
+	},
+	rock4: {
+		ch: ["▟","▙"],
 		color: "#d00",
 		walkable: false,
 		transparent: false,
-		desc: "Big rock."
+		desc: "Large rock formation."
 	},
 	cave: {
 		ch: "☖",
