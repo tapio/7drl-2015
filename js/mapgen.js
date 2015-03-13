@@ -55,6 +55,8 @@ Dungeon.prototype.generateBase = function() {
 
 Dungeon.prototype.generateOverworld = function() {
 	this.env.oxygenCost = 1;
+	this.env.weatherString = "clear";
+	this.env.weatherEnabled = true;
 	this.width = randInt(80, 100);
 	this.height = randInt(60, 80);
 	this.map = new Array(this.width * this.height);

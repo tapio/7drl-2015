@@ -13,7 +13,12 @@ function Dungeon(id, mapType) {
 	this.playerFov = [];
 	this.env = {
 		oxygenCost: 0,
-		suitCost: 0
+		suitCost: 0,
+		visionMult: 1,
+		weatherEnabled: false,
+		weatherCounter: 0,
+		weatherIndex: 0,
+		weatherString: "(indoors)"
 	};
 	var generators = {
 		base: this.generateBase.bind(this),
@@ -22,7 +27,7 @@ function Dungeon(id, mapType) {
 	}
 	generators[mapType]();
 	this.passableCache.length = this.map.length;
-	this.update();
+	//this.update();
 }
 
 Dungeon.prototype.getTile = function(x, y) {
@@ -64,6 +69,23 @@ Dungeon.prototype.findPath = function(x, y, actor) {
 };
 
 Dungeon.prototype.update = function() {
+	if (this.env.weatherEnabled) {
+		if (ui.actor.stats.turns >= this.env.weatherCounter) {
+			this.env.weatherCounter = ui.actor.stats.turns + randInt(30, 60);
+			var weathers = [
+				{ i: 0, desc: "clear", vision: 1, suit: 0 },
+				{ i: 1, desc: "dark, vision halved", vision: 0.5, suit: 0 },
+				{ i: 2, desc: "sand storm, -0.5 suit", vision: 0.7, suit: 0.5 },
+			]
+			weathers.splice(this.env.weatherIndex, 1);
+			var weather = weathers.random();
+			this.env.suitCost = weather.suit;
+			this.env.visionMult = weather.vision;
+			this.env.weatherString = weather.desc;
+			this.env.weatherIndex = weather.i;
+			ui.msg("Weather changed to " + this.env.weatherString + ".");
+		}
+	}
 	if (this.doors.length) {
 		// Close all doors
 		for (var i = 0, l = this.doors.length; i < l; ++i)

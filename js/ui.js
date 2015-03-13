@@ -346,7 +346,7 @@ UI.prototype.updateStatsScreen = function() {
 	$("#stats-oxygen-time").innerHTML = Math.ceil(this.actor.oxygen / (o2cost + ui.actor.suitLeakage));
 	$("#stats-power").innerHTML = Math.ceil(this.actor.power);
 	// Environment
-	$("#stats-weather").innerHTML = world.dungeon == world.maps.base ? "(Indoors)" : "Good";
+	$("#stats-weather").innerHTML = world.dungeon.env.weatherString;
 	$("#stats-atmosphere").innerHTML = o2cost ? (-o2cost + " O₂") : "Breathable";
 }
 

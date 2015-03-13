@@ -50,7 +50,7 @@ Actor.prototype.updateVisibility = function() {
 			this.fov[x + y * dungeon.width] = 1;
 	}
 	var fov = new ROT.FOV.PreciseShadowcasting(dungeon.getTransparent.bind(dungeon));
-	fov.compute(this.pos[0], this.pos[1], this.vision, callback.bind(this));
+	fov.compute(this.pos[0], this.pos[1], Math.ceil(this.vision * dungeon.env.visionMult), callback.bind(this));
 };
 
 Actor.prototype.moveTo = function(x, y) {
