@@ -3,6 +3,8 @@ var world, ui; // Globals
 
 window.onload = function() {
 function start() {
+	try {
+
 	// Still add a small delay as otherwise Firefox,
 	// possibly WP8.1, seems fail on first try.
 	//window.setTimeout(function() {
@@ -40,6 +42,13 @@ function start() {
 		$("#loading").style.display = "none";
 		$("#game").style.display = "block";
 	//}, 100);
+
+
+	} catch(e) {
+		$("#loading").style.display = "block";
+		$("#loading").innerHTML = "ERROR: " + e.message + "\n" + e.stack;
+		console.error(e);
+	}
 }
 
 $("#loading-text").innerHTML = "Waiting for a font...";
