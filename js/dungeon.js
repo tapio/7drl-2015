@@ -25,7 +25,7 @@ function Dungeon(id, mapType) {
 		base: this.generateBase.bind(this),
 		overworld: this.generateOverworld.bind(this),
 		cave: this.generateCave.bind(this)
-	}
+	};
 	generators[mapType]();
 	this.passableCache.length = this.map.length;
 	//this.update();
@@ -76,8 +76,8 @@ Dungeon.prototype.update = function() {
 			var weathers = [
 				{ i: 0, desc: "clear", vision: 1, suit: 0 },
 				{ i: 1, desc: "dark, vision halved", vision: 0.5, suit: 0 },
-				{ i: 2, desc: "sand storm, -0.5 suit", vision: 0.7, suit: 0.5 },
-			]
+				{ i: 2, desc: "sand storm, -0.5 suit", vision: 0.7, suit: 0.5 }
+			];
 			weathers.splice(this.env.weatherIndex, 1);
 			var weather = weathers.random();
 			this.env.suitCost = weather.suit;

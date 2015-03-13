@@ -134,8 +134,8 @@ function UI(actor) {
 		this_.updateInventoryScreen();
 	}, true);
 	$("#shop-ok").addEventListener("click", function() {
-		if (this_.actor.inv.length < this_.actor.maxItems
-			&& this_.shop.amount >= this_.selectedInvItem.cost)
+		if (this_.actor.inv.length < this_.actor.maxItems &&
+			this_.shop.amount >= this_.selectedInvItem.cost)
 		{
 			this_.actor.inv.push(new Item(ITEMS[this_.selectedInvItem.id]));
 			this_.shop.amount -= this_.selectedInvItem.cost;
@@ -144,8 +144,9 @@ function UI(actor) {
 	}, true);
 
 	function toggleFullscreen() {
-		if (!document.fullscreenElement && !document.mozFullScreenElement
-		&& !document.webkitFullscreenElement && !document.msFullscreenElement) {
+		if (!document.fullscreenElement && !document.mozFullScreenElement &&
+			!document.webkitFullscreenElement && !document.msFullscreenElement)
+		{
 			var d = document.documentElement;
 			if (d.requestFullscreen) d.requestFullscreen();
 			else if (d.msRequestFullscreen) d.msRequestFullscreen();
@@ -366,7 +367,7 @@ UI.prototype.updateStatsScreen = function() {
 	// Environment
 	$("#stats-weather").innerHTML = world.dungeon.env.weatherString;
 	$("#stats-atmosphere").innerHTML = o2cost ? (-o2cost + " O₂") : "Breathable";
-}
+};
 
 UI.prototype.die = function() {
 	var stats = ui.actor.stats;

@@ -120,7 +120,7 @@ Actor.prototype.unloadResource = function(resource) {
 		} else i++;
 	}
 	return amount;
-}
+};
 
 // Also accepts actor directly in x
 Actor.prototype.shoot = function(x, y) {
@@ -168,7 +168,7 @@ Actor.prototype.shoot = function(x, y) {
 			ui.msg(this.name + " missed you!", target);
 		}
 	} else ui.msg("You didn't hit anything!", this);
-}
+};
 
 Actor.prototype.doPath = function(checkItems, checkWorldChange) {
 	if (this.path.length) {
@@ -241,15 +241,15 @@ Actor.prototype.doPath = function(checkItems, checkWorldChange) {
 				thing.amount += this.unloadResource(thing.intake);
 				ui.openShop(thing);
 				this.path = [];
-				return false
+				return false;
 			}
 		}
 		this.pos[0] = waypoint[0];
 		this.pos[1] = waypoint[1];
 		// Check for map change
 		if (checkWorldChange) {
-			var tile = world.dungeon.getTile(this.pos[0], this.pos[1])
-			if (tile.entrance && this.path.length == 0) {
+			var tile = world.dungeon.getTile(this.pos[0], this.pos[1]);
+			if (tile.entrance && this.path.length === 0) {
 				world.changeMap(this, tile.entrance);
 			}
 		}

@@ -195,4 +195,4 @@ Dungeon.prototype.spawnMobs = function(count) {
 			}
 		}
 	}
-}
+};

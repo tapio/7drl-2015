@@ -44,7 +44,7 @@ World.prototype.update = function() {
 		}
 		//else if (distSq(actor.pos[0], actor.pos[1], ui.actor.pos[0], ui.actor.pos[1]) < 6)
 		//	break;
-	};
+	}
 	this.roundTimer = Date.now() + 100;
 };
 
