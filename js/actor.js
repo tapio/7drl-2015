@@ -235,7 +235,7 @@ Actor.prototype.doPath = function(checkItems, checkWorldChange) {
 				else if (!filled)
 					ui.msg("All %s containers are already full. Units left %s.".format(thing.resource, thing.amount), this);
 				else
-					ui.msg("Refilled %s units of %s. Device now empty.".format(filled, thing.resource), this);
+					ui.msg("Refilled %s units of %s. Units left %s.".format(filled, thing.resource, thing.amount), this);
 				return true;
 			} else if (this == ui.actor && thing.shop) {
 				thing.amount += this.unloadResource(thing.intake);
