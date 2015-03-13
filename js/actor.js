@@ -271,6 +271,8 @@ Actor.prototype.envTick = function() {
 	if (this.oxygen <= 0) {
 		this.oxygen = 0;
 		this.health -= 5;
+		if (this.health <= 0)
+			ui.msg("You died due to lack of oxygen", this);
 	}
 	this.stats.oxygen += oldOxygen - this.oxygen;
 };

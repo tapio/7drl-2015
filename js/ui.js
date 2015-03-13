@@ -23,6 +23,8 @@ function UI(actor) {
 	this.shopInv[0].amount = 0;
 	this.shopInv[1].amount = 0;
 	this.shop = null;
+	this.warnings = [ "suit", "health", "oxygen", "power" ];
+	this.warningsGiven = [ false, false, false, false ];
 
 	if (!CONFIG.touch) {
 		[].forEach.call(document.querySelectorAll(".btn"), function(elem) {
@@ -184,6 +186,16 @@ UI.prototype.update = function() {
 	$("#hud-health").innerHTML = Math.ceil(this.actor.health);
 	$("#hud-oxygen").innerHTML = Math.ceil(this.actor.oxygen);
 	$("#hud-power").innerHTML = Math.ceil(this.actor.power);
+
+	var wThres = 30;
+	for (var i = 0; i < this.warnings.length; ++i) {
+		if (this.actor[this.warnings[i]] > wThres)
+			this.warningsGiven[i] = false;
+		else if (this.actor[this.warnings[i]] <= wThres && !this.warningsGiven[i]) {
+			this.warningsGiven[i] = true;
+			this.msg("Warning! Low %s.".format(this.warnings[i]));
+		}
+	}
 
 	if (this.state == STATE.SHOOT) {
 		$("#equipped").innerHTML = "✖";
