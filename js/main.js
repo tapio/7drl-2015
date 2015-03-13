@@ -22,12 +22,12 @@ function start() {
 		//ui.msg("Instructions available from the top right corner.");
 		(function tick() {
 			requestAnimationFrame(tick);
-			var t0 = window.performance.now();
+			//var t0 = window.performance.now();
 			input.updateKeys(ui.actor);
 			world.update();
 			ui.update();
 			ui.render();
-			var t1 = window.performance.now();
+			//var t1 = window.performance.now();
 			//console.log("dt", t1 - t0);
 		})();
 
