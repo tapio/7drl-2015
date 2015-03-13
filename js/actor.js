@@ -269,7 +269,8 @@ Actor.prototype.envTick = function() {
 	} else this.suitLeakage = 0;
 
 	var oldOxygen = this.oxygen;
-	this.oxygen -= env.oxygenCost + this.suitLeakage;
+	if (env.oxygenCost > 0)
+		this.oxygen -= env.oxygenCost + this.suitLeakage;
 	if (this.oxygen <= 0) {
 		this.oxygen = 0;
 		this.health -= 2;
