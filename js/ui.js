@@ -106,6 +106,9 @@ function UI(actor) {
 	$("#mainmenu-bugs").addEventListener("click", function() {
 		window.open("https://github.com/tapio/7drl-2015/issues", "_blank");
 	}, true);
+	$("#mainmenu-restart").addEventListener("click", function() {
+		window.location.reload();
+	}, true);
 	$("#restart").addEventListener("click", function() {
 		window.location.reload();
 	}, true);
