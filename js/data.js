@@ -166,7 +166,7 @@ var ITEMS = {
 	},
 	gaussrifle: {
 		name: "Gauss rifle", ch: "⚕", color: "#999", canEquip: true,
-		weapon: { accuracy: 0.8, damage: [40,60], power: 5, range: 8 }
+		weapon: { accuracy: 0.8, damage: [40,70], power: 5, range: 8 }
 	},
 	// Items
 	gluetube: {
@@ -211,7 +211,11 @@ var ITEMS = {
 	// Mob weapons
 	ratmelee: {
 		name: "Rat bite", canEquip: true, canDrop: false,
-		weapon: { accuracy: 0.5, damage: [5,15] }
+		weapon: { accuracy: 0.5, damage: [3,10] }
+	},
+	coyotemelee: {
+		name: "Coyote bite", canEquip: true, canDrop: false,
+		weapon: { accuracy: 0.6, damage: [7,12] }
 	},
 	wolfmelee: {
 		name: "Wolf bite", canEquip: true, canDrop: false,
@@ -219,21 +223,27 @@ var ITEMS = {
 	},
 	bearmelee: {
 		name: "Bear claw", canEquip: true, canDrop: false,
-		weapon: { accuracy: 0.7, damage: [20,50] }
+		weapon: { accuracy: 0.7, damage: [15,40] }
 	}
 };
 
 
 var MOBS = {
 	rat: {
-		name: "Space rat", ch: "r", color: "#d40", ai: "hunter",
-		health: 40, weapon: ITEMS.ratmelee, vision: 6 },
+		name: "Space rat", ch: "r", color: "#425", ai: "hunter",
+		health: 30, weapon: ITEMS.ratmelee, vision: 5 },
+	coyote: {
+		name: "Space coyote", ch: "c", color: "#973", ai: "hunter",
+		health: 60, weapon: ITEMS.coyotemelee, vision: 8 },
 	wolf: {
-		name: "Space wolf", ch: "w", color: "#f44", ai: "hunter",
+		name: "Space wolf", ch: "w", color: "#987", ai: "hunter",
 		health: 80, weapon: ITEMS.wolfmelee, vision: 8 },
 	bear: {
-		name: "Space bear", ch: "B", color: "#d40", ai: "hunter",
-		health: 200, weapon: ITEMS.bearmelee, vision: 8 }
+		name: "Space bear", ch: "B", color: "#633", ai: "hunter",
+		health: 180, weapon: ITEMS.bearmelee, vision: 9 },
+	polarbear: {
+		name: "Space polar bear", ch: "B", color: "#adf", ai: "hunter",
+		health: 200, weapon: ITEMS.bearmelee, vision: 9 }
 };
 
 
