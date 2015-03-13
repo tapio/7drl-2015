@@ -45,27 +45,30 @@ var input = {
 			$("#inventory-open").click();
 		}
 
+		if (e.keyCode == ROT.VK_LEFT || e.keyCode == ROT.VK_NUMPAD4 || e.keyCode == ROT.VK_H)
+			ui.actor.move(-1, 0);
+		else if (e.keyCode == ROT.VK_RIGHT || e.keyCode == ROT.VK_NUMPAD6 || e.keyCode == ROT.VK_L)
+			ui.actor.move(1, 0);
+		else if (e.keyCode == ROT.VK_UP || e.keyCode == ROT.VK_NUMPAD8 || e.keyCode == ROT.VK_K)
+			ui.actor.move(0, -1);
+		else if (e.keyCode == ROT.VK_DOWN || e.keyCode == ROT.VK_NUMPAD2 || e.keyCode == ROT.VK_J)
+			ui.actor.move(0, 1);
+		else if (e.keyCode == ROT.VK_INSERT || e.keyCode == ROT.VK_NUMPAD7 || e.keyCode == ROT.VK_Y)
+			ui.actor.move(-1, -1);
+		else if (e.keyCode == ROT.VK_PAGE_UP || e.keyCode == ROT.VK_NUMPAD9 || e.keyCode == ROT.VK_U)
+			ui.actor.move(1, -1);
+		else if (e.keyCode == ROT.VK_DELETE || e.keyCode == ROT.VK_NUMPAD1 || e.keyCode == ROT.VK_B)
+			ui.actor.move(-1, 1);
+		else if (e.keyCode == ROT.VK_PAGE_DOWN || e.keyCode == ROT.VK_NUMPAD3 || e.keyCode == ROT.VK_N)
+			ui.actor.move(1, 1);
+
 		e.preventDefault();
 	},
 	onKeyUp: function(e) {
 		input.pressed[e.keyCode] = false;
 	},
 
-	updateKeys: function(actor) {
-		if (ui.state != STATE.GAME && ui.state != STATE.LOOK)
-			return;
-		var dx = 0, dy = 0;
-		if (input.pressed[ROT.VK_LEFT] || input.pressed[ROT.VK_NUMPAD4] || input.pressed[ROT.VK_H])
-			dx -= 1;
-		if (input.pressed[ROT.VK_RIGHT] || input.pressed[ROT.VK_NUMPAD6] || input.pressed[ROT.VK_L])
-			dx += 1;
-		if (input.pressed[ROT.VK_UP] || input.pressed[ROT.VK_NUMPAD8] || input.pressed[ROT.VK_K])
-			dy -= 1;
-		if (input.pressed[ROT.VK_DOWN] || input.pressed[ROT.VK_NUMPAD2] || input.pressed[ROT.VK_J])
-			dy += 1;
-		if (dx || dy)
-			actor.move(dx, dy);
-	}
+	updateKeys: function(actor) { }
 };
 document.addEventListener('keydown', input.onKeyDown, false);
 document.addEventListener('keyup', input.onKeyUp, false);
