@@ -139,19 +139,19 @@ var TILES = {
 		transparent: true,
 		desc: "Produces oxygen water ice."
 	},
-	rtg: {
-		name: "RTG", ch: "☢", color: "#fc0",
-		resource: "power", amount: Infinity, device: true,
+	generator: {
+		name: "Nuclear generator", ch: "☢", color: "#fc0",
+		resource: "power", amount: 200, intake: "plutonium", device: true,
 		walkable: false,
 		transparent: true,
-		desc: "Radioisotope thermoelectric generator (RTG) produces electricity from radioactive decay."
+		desc: "Produces electricity from radioactive decay."
 	},
 	printer: {
 		name: "3d printer", ch: "⚒", color: "#40c",
 		shop: true, amount: 0, intake: "mineral", device: true,
 		walkable: false,
 		transparent: true,
-		desc: "Creates things."
+		desc: "Creates things from mineral sand."
 	},
 
 	generateInstance: function(proto) {
@@ -201,10 +201,10 @@ var ITEMS = {
 		desc: "Can heal wounds.",
 		cost: 3
 	},
-	ironore: {
-		name: "Iron ore", ch: "▥", color: "#730",
-		resource: "iron", amount: 1,
-		desc: "Rock rich in iron. Usable by 3d printer."
+	plutonium: {
+		name: "Plutonium", ch: "▥", color: "#730",
+		resource: "plutonium", amount: 100,
+		desc: "Radioactive material that the generator can convert to electricity."
 	},
 	mineralsand: {
 		name: "Mineral sand", ch: "▦", color: "#cc4",

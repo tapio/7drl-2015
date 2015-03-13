@@ -20,7 +20,7 @@ Dungeon.prototype.generateBase = function() {
 		return this.generateBase();
 	// Devices
 	this.setTile(rooms[1].getCenter()[0], rooms[1].getCenter()[1], clone(TILES.oxygenator));
-	this.setTile(rooms[2].getCenter()[0], rooms[2].getCenter()[1], clone(TILES.rtg));
+	this.setTile(rooms[2].getCenter()[0], rooms[2].getCenter()[1], clone(TILES.generator));
 	this.setTile(rooms[3].getCenter()[0], rooms[3].getCenter()[1], clone(TILES.printer));
 	// Doors
 	this.doors = [];
@@ -105,7 +105,7 @@ Dungeon.prototype.generateOverworld = function() {
 	airlock.entrance = { mapId: "base", mapType: "base" };
 	this.setTile(this.start[0], this.start[1], airlock);
 	// Items & mobs
-	this.generateItems(randInt(10,15), [ ITEMS.mineralsand, ITEMS.ironore ], freeTiles);
+	this.generateItems(randInt(10,15), [ ITEMS.mineralsand ], freeTiles);
 	this.generateMobs(randInt(8,12), [ MOBS.rat, MOBS.coyote, MOBS.wolf ], freeTiles);
 };
 
@@ -119,7 +119,7 @@ Dungeon.prototype.generateCave = function() {
 	var theme = randInt(0, 2);
 	var groundTile = [TILES.iceground, TILES.rockground, TILES.sand][theme];
 	var wallTile = [TILES.icewall, TILES.rockwall, TILES.rockwall][theme];
-	var items = [[ITEMS.waterice], [ITEMS.ironore], [ITEMS.mineralsand]][theme];
+	var items = [[ITEMS.waterice], [ITEMS.plutonium], [ITEMS.mineralsand]][theme];
 	var mobs = [
 		[ MOBS.rat, MOBS.rat, MOBS.rat, MOBS.rat, MOBS.polarbear ],
 		[ MOBS.rat, MOBS.rat, MOBS.rat, MOBS.rat, MOBS.bear ],
