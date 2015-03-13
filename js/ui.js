@@ -135,6 +135,24 @@ function UI(actor) {
 		this_.updateShopScreen(this_.actor);
 	}, true);
 
+	function toggleFullscreen() {
+		if (!document.fullscreenElement && !document.mozFullScreenElement
+		&& !document.webkitFullscreenElement && !document.msFullscreenElement) {
+			var d = document.documentElement;
+			if (d.requestFullscreen) d.requestFullscreen();
+			else if (d.msRequestFullscreen) d.msRequestFullscreen();
+			else if (d.mozRequestFullScreen) d.mozRequestFullScreen();
+			else if (d.webkitRequestFullscreen) d.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+		} else {
+			if (document.exitFullscreen) document.exitFullscreen();
+			else if (document.msExitFullscreen) document.msExitFullscreen();
+			else if (document.mozCancelFullScreen) document.mozCancelFullScreen();
+			else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+		}
+	}
+	$("#info-fullscreen").addEventListener("click", toggleFullscreen, true);
+	$("#mainmenu-fullscreen").addEventListener("click", toggleFullscreen, true);
+
 	if (!window.location.hash.contains("game"))
 		$("#info").style.display = "block";
 

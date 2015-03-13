@@ -16,6 +16,22 @@ body {
 	font-size: 12px;
 }
 
+:-webkit-full-screen {
+	width: 100%;
+	position: fixed;
+	top: 0;
+	background: none;
+}
+:fullscreen {
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	/* keeps correct aspect ratio and full image visible */
+	-o-object-fit: contain; /* Opera 12.1 */
+	object-fit: contain;
+}
+
 .footer {
 	font-size: 10px;
 	text-align: center;
@@ -31,7 +47,7 @@ canvas {
 #game { display: none; }
 
 #messages {
-	position: absolute;
+	position: fixed;
 	bottom: 0;
 	max-width: 70%;
 	padding: 8px 12px;
