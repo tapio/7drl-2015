@@ -213,3 +213,12 @@ td {
 #death-screen > div {
 	top: 35%;
 }
+
+#win-screen {
+	background-color: rgba(0, 64, 0, 0.7);
+	text-align: center;
+}
+
+#win-screen > div {
+	top: 35%;
+}

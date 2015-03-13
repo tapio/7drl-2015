@@ -111,8 +111,14 @@ function UI(actor) {
 	$("#mainmenu-restart").addEventListener("click", function() {
 		window.location.reload();
 	}, true);
-	$("#restart").addEventListener("click", function() {
+	$("#death-restart").addEventListener("click", function() {
 		window.location.reload();
+	}, true);
+	$("#win-restart").addEventListener("click", function() {
+		window.location.reload();
+	}, true);
+	$("#win-continue").addEventListener("click", function() {
+		$("#win-screen").style.display = "none";
 	}, true);
 
 	$("#inventory-equip").addEventListener("click", function() {
@@ -369,6 +375,15 @@ UI.prototype.die = function() {
 	$("#death-oxygen").innerHTML = Math.round(stats.oxygen);
 	$("#death-power").innerHTML = Math.round(stats.power);
 	$("#death-screen").style.display = "block";
+};
+
+UI.prototype.win = function() {
+	var stats = ui.actor.stats;
+	$("#win-turns").innerHTML = Math.round(stats.turns);
+	$("#win-kills").innerHTML = Math.round(stats.kills);
+	$("#win-oxygen").innerHTML = Math.round(stats.oxygen);
+	$("#win-power").innerHTML = Math.round(stats.power);
+	$("#win-screen").style.display = "block";
 };
 
 // rot.js extension
