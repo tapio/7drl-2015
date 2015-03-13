@@ -34,6 +34,7 @@ Dungeon.prototype.setTile = function(x, y, tile) {
 	this.map[x + y * this.width] = typeof tile == "string" ? TILES[tile] : tile;
 };
 
+// Don't use this for anything other than findPath
 Dungeon.prototype.getPassable = function(x, y) {
 	//return this.getTile(x, y).walkable;
 	return this.passableCache[x + y * this.width];
@@ -59,36 +60,33 @@ Dungeon.prototype.findPath = function(x, y, actor) {
 			actor.path.push([x, y]);
 		success = true;
 	});
-	this.passableCache[actor.pos[0] + actor.pos[1] * this.width] = false;
 	return success;
 };
 
 Dungeon.prototype.update = function() {
-	// Clear passable cache
-	for (var i = 0, l = this.map.length; i < l; ++i)
-		this.passableCache[i] = this.map[i].walkable;
-	// Close all doors
-	for (var i = 0, l = this.doors.length; i < l; ++i)
-		this.doors[i].open = false;
-	// Actor related updates
-	for (var i = 0, l = this.actors.length; i < l; ++i) {
-		var actor = this.actors[i];
-		var x = actor.pos[0];
-		var y = actor.pos[1];
-		this.passableCache[x + y * this.width] = false;
-		for (var i = 0, l = this.doors.length; i < l; ++i) {
-			var door = this.doors[i];
-			var dx = Math.abs(x - door.pos[0]);
-			var dy = Math.abs(y - door.pos[1]);
-			if (Math.max(dx, dy) <= 1)
-				door.open = true;
+	if (this.doors.length) {
+		// Close all doors
+		for (var i = 0, l = this.doors.length; i < l; ++i)
+			this.doors[i].open = false;
+		// Actors open doors in proximity
+		for (var i = 0, l = this.actors.length; i < l; ++i) {
+			var actor = this.actors[i];
+			var x = actor.pos[0];
+			var y = actor.pos[1];
+			for (var i = 0, l = this.doors.length; i < l; ++i) {
+				var door = this.doors[i];
+				var dx = Math.abs(x - door.pos[0]);
+				var dy = Math.abs(y - door.pos[1]);
+				if (Math.max(dx, dy) <= 1)
+					door.open = true;
+			}
 		}
-	}
-	// Update door tiles
-	for (var i = 0, l = this.doors.length; i < l; ++i) {
-		var pos = this.doors[i].pos;
-		var tile = this.doors[i].open ? TILES.door_open : TILES.door_closed;
-		this.setTile(pos[0], pos[1], tile);
+		// Update door tiles
+		for (var i = 0, l = this.doors.length; i < l; ++i) {
+			var pos = this.doors[i].pos;
+			var tile = this.doors[i].open ? TILES.door_open : TILES.door_closed;
+			this.setTile(pos[0], pos[1], tile);
+		}
 	}
 };
 
