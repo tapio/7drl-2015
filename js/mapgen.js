@@ -165,6 +165,12 @@ Dungeon.prototype.generateCave = function() {
 	// Items & mobs
 	this.generateItems(randInt(10,20), items, freeTiles);
 	this.generateMobs(randInt(8,20), this.mobProtos, freeTiles);
+	// Artifact?
+	if (Math.random() <= 0.3) {
+		var goalitem = new Item(ITEMS.goalitem);
+		goalitem.pos = freeTiles.pop();
+		this.items.push(goalitem);
+	}
 };
 
 Dungeon.prototype.generateItems = function(amount, choices, freeTiles) {

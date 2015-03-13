@@ -111,6 +111,15 @@ Dungeon.prototype.update = function() {
 			this.setTile(pos[0], pos[1], tile);
 		}
 	}
+	if (this == world.maps.base) {
+		var goalItems = 0;
+		for (var i = 0; i < this.items.length; ++i) {
+			if (this.items[i].id == ITEMS.goalitem.id)
+				goalItems++;
+		}
+		if (!ui.won && goalItems >= 3)
+			ui.win();
+	}
 };
 
 Dungeon.prototype.drawCollection = function(stuff, camera, display, player, threshold) {

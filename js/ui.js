@@ -25,6 +25,7 @@ function UI(actor) {
 	this.shop = null;
 	this.warnings = [ "suit", "health", "oxygen", "power" ];
 	this.warningsGiven = [ false, false, false, false ];
+	this.won = false;
 
 	if (!CONFIG.touch) {
 		[].forEach.call(document.querySelectorAll(".btn"), function(elem) {
@@ -118,6 +119,7 @@ function UI(actor) {
 		window.location.reload();
 	}, true);
 	$("#win-continue").addEventListener("click", function() {
+		this_.state = STATE.GAME;
 		$("#win-screen").style.display = "none";
 	}, true);
 
@@ -379,12 +381,14 @@ UI.prototype.die = function() {
 };
 
 UI.prototype.win = function() {
+	this.state = STATE.MENU;
 	var stats = ui.actor.stats;
 	$("#win-turns").innerHTML = Math.round(stats.turns);
 	$("#win-kills").innerHTML = Math.round(stats.kills);
 	$("#win-oxygen").innerHTML = Math.round(stats.oxygen);
 	$("#win-power").innerHTML = Math.round(stats.power);
 	$("#win-screen").style.display = "block";
+	this.won = true;
 };
 
 // rot.js extension

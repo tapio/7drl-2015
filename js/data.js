@@ -216,6 +216,11 @@ var ITEMS = {
 		resource: "ice", amount: 100,
 		desc: "Frozen water. Oxygenator can turn it into oxygen."
 	},
+	goalitem: {
+		name: "Alien artifact", ch: "⚛", color: "#f0f",
+		resource: "goal", amount: 1,
+		desc: "Mysterious object. Drop it to the base."
+	},
 	// Mob weapons
 	ratmelee: {
 		name: "Rat bite", canEquip: true, canDrop: false,
