@@ -11,6 +11,7 @@ function Dungeon(id, mapType) {
 	this.items = [];
 	this.passableCache = [];
 	this.playerFov = [];
+	this.mobProtos = [];
 	this.env = {
 		oxygenCost: 0,
 		suitCost: 0,

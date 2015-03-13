@@ -62,4 +62,7 @@ World.prototype.changeMap = function(actor, entrance) {
 	actor.fov = this.dungeon.playerFov;
 	actor.updateVisibility();
 	this.currentActor = null;
+	if (this.dungeon.mobProtos.length && this.dungeon.actors.length < 5) {
+		this.dungeon.spawnMobs(randInt(4, 7));
+	}
 };
