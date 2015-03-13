@@ -171,9 +171,10 @@ var ITEMS = {
 		weapon: { accuracy: 0.7, damage: [20,30] },
 		desc: "Can be used as a backup melee weapon."
 	},
-	gaussrifle: {
-		name: "Gauss rifle", ch: "⚕", color: "#999", canEquip: true,
-		weapon: { accuracy: 0.8, damage: [40,70], power: 5, range: 8 }
+	rifle: {
+		name: "Plasma rifle", ch: "⚕", color: "#999", canEquip: true,
+		weapon: { accuracy: 0.8, damage: [40,70], power: 5, range: 8 },
+		desc: "Accurate and effective long range weapon. Requires power to use."
 	},
 	// Items
 	gluetube: {
@@ -191,7 +192,7 @@ var ITEMS = {
 	battery: {
 		name: "Battery", ch: "⊛", color: "#06f",
 		resource: "power", amount: 30, canUse: true, canEquip: true,
-		desc: "Powers equipment.",
+		desc: "Portable power source for the rifle.",
 		cost: 5
 	},
 	medikit: {
