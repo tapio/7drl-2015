@@ -134,7 +134,7 @@ var TILES = {
 	// Devices
 	oxygenator: {
 		name: "Oxygenator", ch: "♼", color: "#0c5",
-		resource: "oxygen", amount: 100, intake: "ice", device: true,
+		resource: "oxygen", amount: 200, intake: "ice", device: true,
 		walkable: false,
 		transparent: true,
 		desc: "Oxygenator. Produces oxygen from water ice."
@@ -144,7 +144,7 @@ var TILES = {
 		resource: "power", amount: 200, intake: "plutonium", device: true,
 		walkable: false,
 		transparent: true,
-		desc: "Nuclear generator. Produces electricity from radioactive decay."
+		desc: "Nuclear generator. Produces electricity from radioactive decay. Bring plutonium."
 	},
 	printer: {
 		name: "3d printer", ch: "⚒", color: "#40c",
@@ -179,19 +179,19 @@ var ITEMS = {
 	// Items
 	gluetube: {
 		name: "Patch kit", ch: "⊗", color: "#88c",
-		resource: "suit", amount: 15, canUse: true, canEquip: true, canConsume: true,
+		resource: "suit", amount: 40, canUse: true, canEquip: true, canConsume: true,
 		desc: "Patches leaking space suit.",
 		cost: 2
 	},
 	oxygentank: {
 		name: "O₂ tank", ch: "⊚", color: "#fff",
-		resource: "oxygen", amount: 60, canUse: true, canEquip: true,
+		resource: "oxygen", amount: 80, canUse: true, canEquip: true,
 		desc: "Provides portable oxygen reserves.",
 		cost: 7
 	},
 	battery: {
 		name: "Battery", ch: "⊛", color: "#06f",
-		resource: "power", amount: 30, canUse: true, canEquip: true,
+		resource: "power", amount: 40, canUse: true, canEquip: true,
 		desc: "Portable power source for the rifle.",
 		cost: 5
 	},
