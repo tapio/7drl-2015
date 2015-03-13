@@ -162,7 +162,7 @@ Dungeon.prototype.generateCave = function() {
 	caveExit.entrance = { mapId: "overworld", mapType: "overworld" };
 	this.setTile(this.start[0], this.start[1], caveExit);
 	// Items & mobs
-	this.generateItems(randInt(20,40), items, freeTiles);
+	this.generateItems(randInt(10,20), items, freeTiles);
 	this.generateMobs(randInt(4,15), mobs, freeTiles);
 };
 
