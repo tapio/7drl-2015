@@ -235,7 +235,7 @@ UI.prototype.closeMenus = function() {
 };
 
 UI.prototype.resetDisplay = function() {
-	var w = Math.floor(window.innerWidth / 30 / CONFIG.spacing);
+	var w = Math.floor(window.innerWidth / 50 / CONFIG.spacing);
 	var h = Math.floor(window.innerHeight / 50 / CONFIG.spacing);
 	world.camera.center = [(w/2)|0, (h/2)|0];
 
@@ -249,7 +249,8 @@ UI.prototype.resetDisplay = function() {
 		fontSize: 48,
 		layout: "rect",
 		spacing: CONFIG.spacing,
-		fontFamily: CONFIG.fontFamily
+		fontFamily: CONFIG.fontFamily,
+		forceSquareRatio: true
 	});
 	$("#game").appendChild(this.display.getContainer());
 	this.display.getContainer().addEventListener("click", input.onClick, true);
